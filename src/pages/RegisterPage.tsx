@@ -20,6 +20,9 @@ const RegisterPage = () => {
     setIsLoading(true);
 
     try {
+        
+      console.log("Registering via:", API_ENDPOINTS.REGISTER);
+
       const response = await fetch(API_ENDPOINTS.REGISTER, {
         method: "POST",
         headers: { 
