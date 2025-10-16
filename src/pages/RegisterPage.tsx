@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import './components/Login.css';
 import { API_ENDPOINTS } from '../config/api';
+import { useNavigate } from 'react-router-dom';
+
+const navigate = useNavigate();
+
 
 const RegisterPage = () => {
   const [fullName, setFullName] = useState('');
@@ -53,6 +57,7 @@ const RegisterPage = () => {
     } finally {
       setIsLoading(false);
     }
+
   };
 
   return (
