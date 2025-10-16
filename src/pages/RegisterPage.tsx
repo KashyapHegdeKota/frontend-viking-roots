@@ -3,10 +3,11 @@ import './components/Login.css';
 import { API_ENDPOINTS } from '../config/api';
 import { useNavigate } from 'react-router-dom';
 
-const navigate = useNavigate();
 
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
+
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -46,7 +47,7 @@ const RegisterPage = () => {
         alert("Registration successful! Please login.");
         console.log(data);
         // Redirect to login page
-        window.location.href = '/login';
+        navigate('/login');
       } else {
         alert(data.error || "Registration failed. Please try again.");
         console.error("Registration error:", data);
