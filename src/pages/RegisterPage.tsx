@@ -1,22 +1,55 @@
 import React, { useState } from 'react';
 import './components/Login.css';
+import { API_ENDPOINTS } from '../config/api';
 
 const RegisterPage = () => {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     
     if (password !== confirmPassword) {
       alert('Passwords do not match!');
       return;
     }
-    
-    console.log({ fullName, email, password });
-    alert('Registration submitted!');
+
+    setIsLoading(true);
+
+    try {
+      const response = await fetch(API_ENDPOINTS.REGISTER, {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: fullName,
+          email,
+          password,
+          confirm_password: confirmPassword,
+        }),
+      });
+
+      const data = await response.json();
+      
+      if (response.ok) {
+        alert("Registration successful! Please login.");
+        console.log(data);
+        // Redirect to login page
+        window.location.href = '/login';
+      } else {
+        alert(data.error || "Registration failed. Please try again.");
+        console.error("Registration error:", data);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Something went wrong. Please check your connection and try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -88,8 +121,8 @@ const RegisterPage = () => {
                 required
               />
             </div>
-            <button role="button" type="submit" className="btn btn-custom w-100">
-              Sign Up
+            <button role="button" type="submit" className="btn btn-custom w-100" disabled={isLoading}>
+              {isLoading ? 'Signing Up...' : 'Sign Up'}
             </button>
             <div className="mt-3 text-center">
               <a href="/login">Already have an account? Login!</a>

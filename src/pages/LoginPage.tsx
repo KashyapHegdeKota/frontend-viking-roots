@@ -1,14 +1,50 @@
 import React, { useState } from 'react';
 import './components/Login.css';
+import { API_ENDPOINTS } from '../config/api';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log({ email, password });
-    alert('Login submitted!');
+    
+    setIsLoading(true);
+
+    try {
+      const response = await fetch(API_ENDPOINTS.LOGIN, {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+
+      const data = await response.json();
+      
+      if (response.ok) {
+        alert("Login successful!");
+        console.log(data);
+        // Store token if your backend returns one
+        if (data.token) {
+          localStorage.setItem('authToken', data.token);
+        }
+        // Redirect to home page or dashboard
+        window.location.href = '/';
+      } else {
+        alert(data.error || "Login failed. Please check your credentials.");
+        console.error("Login error:", data);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Something went wrong. Please check your connection and try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -56,8 +92,8 @@ const LoginPage = () => {
                 required
               />
             </div>
-            <button role="button" type="submit" className="btn btn-custom w-100">
-              Login
+            <button role="button" type="submit" className="btn btn-custom w-100" disabled={isLoading}>
+              {isLoading ? 'Logging in...' : 'Login'}
             </button>
             <div className="mt-3 text-center">
               <a href="/register">Not a member? Sign Up!</a>
