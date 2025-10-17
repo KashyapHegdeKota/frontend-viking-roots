@@ -2,6 +2,8 @@
 export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://your-django-backend.vercel.app';
 
 export const API_ENDPOINTS = {
-  REGISTER: `${API_BASE_URL}/register/`,
-  LOGIN: `${API_BASE_URL}/login/`,
+  REGISTER: `${API_BASE_URL}/form/register/`,
+  LOGIN: `${API_BASE_URL}/form/login/`,
+  START: `${API_BASE_URL}/api/questionaire/start/`,
+  MESSAGE: `${API_BASE_URL}/api/questionaire/message/`,
 };

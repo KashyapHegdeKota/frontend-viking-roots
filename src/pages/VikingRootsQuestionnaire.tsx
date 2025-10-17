@@ -7,7 +7,7 @@ interface Message {
   timestamp: Date;
 }
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://django-viking-roots.onrender.com';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const API_ENDPOINTS = {
   START: `${API_BASE_URL}/api/questionaire/start/`,
   MESSAGE: `${API_BASE_URL}/api/questionaire/message/`,
