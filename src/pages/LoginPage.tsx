@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import './components/Login.css';
 import { API_ENDPOINTS } from '../config/api';
 import { useNavigate } from 'react-router-dom';
-
 const LoginPage = () => {
   const navigate = useNavigate(); // ✅ must be inside the component
 
@@ -41,7 +40,7 @@ const LoginPage = () => {
         }
 
         // ✅ Redirect using React Router
-        navigate("/");
+        navigate("/questionnaire");
       } else {
         alert(data.error || "Login failed. Please check your credentials.");
         console.error("Login error:", data);
