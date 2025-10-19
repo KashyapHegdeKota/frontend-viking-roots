@@ -18,6 +18,8 @@ const VikingRootsQuestionnaire = () => {
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
+  const [editingIndex, setEditingIndex] = useState<number | null>(null);
+  const [editedContent, setEditedContent] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -114,6 +116,71 @@ const VikingRootsQuestionnaire = () => {
     }
   };
 
+  const startEdit = (index: number, content: string) => {
+    setEditingIndex(index);
+    setEditedContent(content);
+  };
+
+  const cancelEdit = () => {
+    setEditingIndex(null);
+    setEditedContent('');
+  };
+
+  const saveEdit = async (index: number) => {
+    if (!editedContent.trim()) return;
+
+    // Remove all messages from the edited message onwards
+    const messagesBeforeEdit = messages.slice(0, index);
+    
+    // Create the edited user message
+    const editedMessage: Message = {
+      role: 'user',
+      content: editedContent,
+      timestamp: new Date()
+    };
+
+    const newMessages = [...messagesBeforeEdit, editedMessage];
+    setMessages(newMessages);
+    setEditingIndex(null);
+    setEditedContent('');
+    setIsLoading(true);
+
+    try {
+      console.log("Resending edited message via:", API_ENDPOINTS.MESSAGE);
+
+      const response = await fetch(API_ENDPOINTS.MESSAGE, {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          message: editedContent,
+          chat_history: newMessages
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        const aiMessage: Message = {
+          role: 'model',
+          content: data.message,
+          timestamp: new Date()
+        };
+
+        setMessages([...newMessages, aiMessage]);
+      } else {
+        alert(data.error || 'Failed to resend message. Please try again.');
+        console.error('Resend message error:', data);
+      }
+    } catch (error) {
+      console.error('Error resending message:', error);
+      alert('Failed to resend message. Please check your connection and try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div style={{ 
       minHeight: '100vh', 
@@ -201,20 +268,105 @@ const VikingRootsQuestionnaire = () => {
                   key={index}
                   style={{
                     display: 'flex',
-                    justifyContent: msg.role === 'user' ? 'flex-end' : 'flex-start'
+                    justifyContent: msg.role === 'user' ? 'flex-end' : 'flex-start',
+                    flexDirection: 'column',
+                    alignItems: msg.role === 'user' ? 'flex-end' : 'flex-start'
                   }}
                 >
-                  <div style={{
-                    maxWidth: '70%',
-                    padding: '12px 16px',
-                    borderRadius: '12px',
-                    backgroundColor: msg.role === 'user' ? '#111' : '#f5f5f5',
-                    color: msg.role === 'user' ? '#fff' : '#111',
-                    fontSize: '15px',
-                    lineHeight: '1.5'
-                  }}>
-                    {msg.content}
-                  </div>
+                  {editingIndex === index ? (
+                    // Edit mode
+                    <div style={{
+                      maxWidth: '70%',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '8px'
+                    }}>
+                      <textarea
+                        value={editedContent}
+                        onChange={(e) => setEditedContent(e.target.value)}
+                        style={{
+                          padding: '12px 16px',
+                          fontSize: '15px',
+                          borderRadius: '12px',
+                          border: '2px solid #111',
+                          outline: 'none',
+                          resize: 'vertical',
+                          minHeight: '60px',
+                          fontFamily: 'inherit'
+                        }}
+                        autoFocus
+                      />
+                      <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
+                        <button
+                          onClick={() => saveEdit(index)}
+                          disabled={isLoading || !editedContent.trim()}
+                          style={{
+                            padding: '6px 16px',
+                            fontSize: '13px',
+                            fontWeight: '500',
+                            backgroundColor: '#111',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '6px',
+                            cursor: (isLoading || !editedContent.trim()) ? 'not-allowed' : 'pointer',
+                            opacity: (isLoading || !editedContent.trim()) ? 0.5 : 1
+                          }}
+                        >
+                          {isLoading ? 'Saving...' : 'Save & Resend'}
+                        </button>
+                        <button
+                          onClick={cancelEdit}
+                          disabled={isLoading}
+                          style={{
+                            padding: '6px 16px',
+                            fontSize: '13px',
+                            fontWeight: '500',
+                            backgroundColor: '#f5f5f5',
+                            color: '#111',
+                            border: '1px solid #e5e5e5',
+                            borderRadius: '6px',
+                            cursor: isLoading ? 'not-allowed' : 'pointer'
+                          }}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    // View mode
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', alignItems: msg.role === 'user' ? 'flex-end' : 'flex-start' }}>
+                      <div style={{
+                        maxWidth: '70%',
+                        padding: '12px 16px',
+                        borderRadius: '12px',
+                        backgroundColor: msg.role === 'user' ? '#111' : '#f5f5f5',
+                        color: msg.role === 'user' ? '#fff' : '#111',
+                        fontSize: '15px',
+                        lineHeight: '1.5'
+                      }}>
+                        {msg.content}
+                      </div>
+                      {msg.role === 'user' && !isLoading && (
+                        <button
+                          onClick={() => startEdit(index, msg.content)}
+                          style={{
+                            padding: '4px 12px',
+                            fontSize: '12px',
+                            backgroundColor: 'transparent',
+                            color: '#666',
+                            border: 'none',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            transition: 'color 0.2s'
+                          }}
+                          onMouseOver={(e) => e.currentTarget.style.color = '#111'}
+                          onMouseOut={(e) => e.currentTarget.style.color = '#666'}
+                        >
+                          ✏️ Edit
+                        </button>
+                      )}
+                    </div>
+                  )}
                 </div>
               ))}
               {isLoading && (
