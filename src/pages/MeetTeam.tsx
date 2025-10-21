@@ -24,14 +24,12 @@ const MeetTeam = () => {
   ];
 
   interface FeatureCardNBProps {
-  image: string;
-  title: string;
-  description: string;
-  href: string;
-  buttonText: string;
-}
+    image: string;
+    title: string;
+    description: string;
+  }
 
-const FeatureCardNB = ({ image, title, description, href, buttonText }: FeatureCardNBProps) => {
+  const FeatureCardNB = ({ image, title, description }: FeatureCardNBProps) => {
   return (
     <div className="feature-cardNB">
       <div className="feature-card-imageNB">
@@ -56,7 +54,12 @@ const FeatureCardNB = ({ image, title, description, href, buttonText }: FeatureC
 
       <div className="projects-grid">
         {features.map((feature, index) => (
-          <FeatureCardNB key={index} {...feature} />
+          <FeatureCardNB
+            key={index}
+            image={feature.image}
+            title={feature.title}
+            description={feature.description}
+          />
         ))}
       </div>
     </section>
