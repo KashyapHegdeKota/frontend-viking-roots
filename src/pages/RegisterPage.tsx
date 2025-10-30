@@ -44,10 +44,10 @@ const RegisterPage = () => {
       const data = await response.json();
       
       if (response.ok) {
-        alert("Registration successful! Please login.");
+        alert("Registration successful! Please check your email for the verification code.");
         console.log(data);
-        // Redirect to login page
-        navigate('/login');
+        // Redirect to OTP verification page with email
+        navigate('/verify-otp', { state: { email } });
       } else {
         alert(data.error || "Registration failed. Please try again.");
         console.error("Registration error:", data);
