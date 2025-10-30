@@ -6,4 +6,7 @@ export const API_ENDPOINTS = {
   LOGIN: `${API_BASE_URL}/form/login/`,
   START: `${API_BASE_URL}/api/questionaire/start/`,
   MESSAGE: `${API_BASE_URL}/api/questionaire/message/`,
+  VERIFY_OTP: `${API_BASE_URL}/verify-otp/`,
+  RESEND_OTP: `${API_BASE_URL}/resend-otp/`,
+
 };

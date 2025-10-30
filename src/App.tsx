@@ -4,7 +4,7 @@ import AboutPage from './pages/About';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import VikingRootsQuestionnaire from './pages/VikingRootsQuestionnaire';
-
+import OTPVerificationPage from './pages/AuthenticationPage';
 function App() {
   return (
     <Routes>
@@ -12,6 +12,7 @@ function App() {
       <Route path="/about" element={<AboutPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
+      <Route path="/verify-otp" element={<OTPVerificationPage />} />
       <Route path="/questionnaire" element={<VikingRootsQuestionnaire />} />
     </Routes>
   );
