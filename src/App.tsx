@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import VikingRootsQuestionnaire from './pages/VikingRootsQuestionnaire';
 import OTPVerificationPage from './pages/AuthenticationPage';
+import Gimli from './pages/Gimli';
 function App() {
   return (
     <Routes>
@@ -14,6 +15,7 @@ function App() {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/verify-otp" element={<OTPVerificationPage />} />
       <Route path="/questionnaire" element={<VikingRootsQuestionnaire />} />
+      <Route path="/gimli-saga" element={<Gimli />} />
     </Routes>
   );
 }
