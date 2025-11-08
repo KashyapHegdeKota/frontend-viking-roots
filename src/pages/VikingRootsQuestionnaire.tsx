@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import type { FormEvent } from 'react';
 
 interface Message {
@@ -14,6 +15,7 @@ const API_ENDPOINTS = {
 };
 
 const VikingRootsQuestionnaire = () => {
+  const navigate = useNavigate();
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -38,9 +40,10 @@ const VikingRootsQuestionnaire = () => {
 
       const response = await fetch(API_ENDPOINTS.START, {
         method: "POST",
-        headers: { 
+        headers: {
           "Content-Type": "application/json",
         },
+        credentials: 'include',
       });
 
       const data = await response.json();
@@ -85,9 +88,10 @@ const VikingRootsQuestionnaire = () => {
 
       const response = await fetch(API_ENDPOINTS.MESSAGE, {
         method: "POST",
-        headers: { 
+        headers: {
           "Content-Type": "application/json",
         },
+        credentials: 'include',
         body: JSON.stringify({
           message: inputMessage,
           chat_history: newMessages
@@ -131,7 +135,7 @@ const VikingRootsQuestionnaire = () => {
 
     // Remove all messages from the edited message onwards
     const messagesBeforeEdit = messages.slice(0, index);
-    
+
     // Create the edited user message
     const editedMessage: Message = {
       role: 'user',
@@ -150,9 +154,10 @@ const VikingRootsQuestionnaire = () => {
 
       const response = await fetch(API_ENDPOINTS.MESSAGE, {
         method: "POST",
-        headers: { 
+        headers: {
           "Content-Type": "application/json",
         },
+        credentials: 'include',
         body: JSON.stringify({
           message: editedContent,
           chat_history: newMessages
@@ -181,6 +186,11 @@ const VikingRootsQuestionnaire = () => {
     }
   };
 
+  const handleStopQuestionnaire = () => {
+    // Navigate to profile setup page
+    navigate('/profile/setup');
+  };
+
   return (
     <div style={{ 
       minHeight: '100vh', 
@@ -189,20 +199,40 @@ const VikingRootsQuestionnaire = () => {
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
     }}>
       {/* Header */}
-      <header style={{ 
-        padding: '20px', 
+      <header style={{
+        padding: '20px',
         borderBottom: '1px solid #e5e5e5',
         backgroundColor: '#fff'
       }}>
-        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-          <h1 style={{ 
-            margin: 0, 
-            fontSize: '20px', 
+        <div style={{ maxWidth: '800px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <h1 style={{
+            margin: 0,
+            fontSize: '20px',
             fontWeight: '600',
             color: '#111'
           }}>
             Viking Roots
           </h1>
+          {hasStarted && (
+            <button
+              onClick={handleStopQuestionnaire}
+              style={{
+                padding: '8px 16px',
+                fontSize: '14px',
+                fontWeight: '500',
+                backgroundColor: '#8b5cf6',
+                color: 'white',
+                border: 'none',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                transition: 'background-color 0.2s'
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#7c3aed'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#8b5cf6'}
+            >
+              Continue to Profile →
+            </button>
+          )}
         </div>
       </header>
 

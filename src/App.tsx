@@ -5,6 +5,9 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import VikingRootsQuestionnaire from './pages/VikingRootsQuestionnaire';
 import OTPVerificationPage from './pages/AuthenticationPage';
+import ImageUpload from './pages/ImageUpload';
+import ProfileSetup from './pages/ProfileSetup';
+import UserProfile from './pages/UserProfile';
 function App() {
   return (
     <Routes>
@@ -14,6 +17,10 @@ function App() {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/verify-otp" element={<OTPVerificationPage />} />
       <Route path="/questionnaire" element={<VikingRootsQuestionnaire />} />
+      <Route path="/upload" element={<ImageUpload />} />
+      <Route path="/profile/setup" element={<ProfileSetup />} />
+      <Route path="/profile/:username" element={<UserProfile />} />
+      <Route path="/profile" element={<UserProfile />} />
     </Routes>
   );
 }

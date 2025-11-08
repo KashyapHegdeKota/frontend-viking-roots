@@ -8,5 +8,6 @@ export const API_ENDPOINTS = {
   MESSAGE: `${API_BASE_URL}/api/questionaire/message/`,
   VERIFY_OTP: `${API_BASE_URL}/verify-otp/`,
   RESEND_OTP: `${API_BASE_URL}/resend-otp/`,
-
+  UPLOAD_IMAGE: `${API_BASE_URL}/form/upload-image/`,
+  GET_IMAGES: `${API_BASE_URL}/form/images/`,
 };
