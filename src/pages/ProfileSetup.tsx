@@ -14,33 +14,31 @@ const ProfileSetup: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // single place for validation and preview
+  const validateAndPreview = (file: File) => {
+    const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+    if (!validTypes.includes(file.type)) {
+      setErrorMessage('Invalid file type. Please select a JPEG, PNG, or WebP image.');
+      return;
+    }
+
+    const maxSize = 5 * 1024 * 1024; // 5MB
+    if (file.size > maxSize) {
+      setErrorMessage('File is too large. Maximum size is 5MB.');
+      return;
+    }
+
+    setSelectedFile(file);
+    setErrorMessage('');
+
+    const reader = new FileReader();
+    reader.onloadend = () => setPreviewUrl(reader.result as string);
+    reader.readAsDataURL(file);
+  };
+
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (file) {
-      // Validate file type
-      const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
-      if (!validTypes.includes(file.type)) {
-        setErrorMessage('Invalid file type. Please select a JPEG, PNG, or WebP image.');
-        return;
-      }
-
-      // Validate file size (5MB max for profile pictures)
-      const maxSize = 5 * 1024 * 1024; // 5MB
-      if (file.size > maxSize) {
-        setErrorMessage('File is too large. Maximum size is 5MB.');
-        return;
-      }
-
-      setSelectedFile(file);
-      setErrorMessage('');
-
-      // Create preview
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviewUrl(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
+    if (file) validateAndPreview(file);
   };
 
   const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
@@ -51,14 +49,8 @@ const ProfileSetup: React.FC = () => {
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     event.stopPropagation();
-
     const file = event.dataTransfer.files?.[0];
-    if (file) {
-      const syntheticEvent = {
-        target: { files: [file] }
-      } as React.ChangeEvent<HTMLInputElement>;
-      handleFileSelect(syntheticEvent);
-    }
+    if (file) validateAndPreview(file);
   };
 
   const handleUpload = async (event: React.FormEvent) => {
@@ -83,15 +75,13 @@ const ProfileSetup: React.FC = () => {
       const response = await fetch(`${apiBaseUrl}/form/profile/upload/`, {
         method: 'POST',
         body: formData,
-        credentials: 'include', // Include cookies for authentication
+        credentials: 'include',
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        // Successfully uploaded profile picture
         alert('Profile picture uploaded successfully!');
-        // Navigate to user profile page
         navigate(`/profile/${data.profile.username}`);
       } else {
         setErrorMessage(data.error || 'Upload failed. Please try again.');
@@ -107,9 +97,8 @@ const ProfileSetup: React.FC = () => {
   const handleReset = () => {
     setSelectedFile(null);
     setPreviewUrl(null);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
-    }
+    setErrorMessage('');
+    if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
   return (
@@ -165,9 +154,7 @@ const ProfileSetup: React.FC = () => {
           {/* Profile Information */}
           <div className="profile-info-section">
             <div className="form-group">
-              <label htmlFor="bio" className="form-label">
-                Bio
-              </label>
+              <label htmlFor="bio" className="form-label">Bio</label>
               <textarea
                 id="bio"
                 value={bio}
@@ -181,9 +168,7 @@ const ProfileSetup: React.FC = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="location" className="form-label">
-                Location (Optional)
-              </label>
+              <label htmlFor="location" className="form-label">Location (Optional)</label>
               <input
                 type="text"
                 id="location"
@@ -196,9 +181,7 @@ const ProfileSetup: React.FC = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="website" className="form-label">
-                Website (Optional)
-              </label>
+              <label htmlFor="website" className="form-label">Website (Optional)</label>
               <input
                 type="url"
                 id="website"
@@ -219,11 +202,7 @@ const ProfileSetup: React.FC = () => {
           )}
 
           {/* Submit Button */}
-          <button
-            type="submit"
-            className="submit-button"
-            disabled={uploading || !selectedFile}
-          >
+          <button type="submit" className="submit-button" disabled={uploading || !selectedFile}>
             {uploading ? (
               <>
                 <span className="spinner" />
@@ -237,9 +216,7 @@ const ProfileSetup: React.FC = () => {
             )}
           </button>
 
-          <p className="required-note">
-            * Profile picture is required to access social features
-          </p>
+          <p className="required-note">* Profile picture is required to access social features</p>
         </form>
       </div>
     </div>
