@@ -18,9 +18,10 @@ const LoginPage = () => {
 
       const response = await fetch(API_ENDPOINTS.LOGIN, {
         method: "POST",
-        headers: { 
+        headers: {
           "Content-Type": "application/json",
         },
+        credentials: 'include', // Important: Include cookies/session
         body: JSON.stringify({
           email,
           username: email,
