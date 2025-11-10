@@ -1,148 +1,123 @@
 import React from "react";
-import { useNavigate } from 'react-router-dom';
-import { Facebook, Instagram, Twitter, Linkedin, Youtube, Music } from "lucide-react";
+import { Facebook, Twitter, Instagram, Linkedin, Youtube } from "lucide-react";
+import "../styles/components.css";
 
 const Footer: React.FC = () => {
-  const navigate = useNavigate();
-
   const mainLinks = [
-    { name: "About", path: "/about" },
-    { name: "Gimli Saga", path: "/gimli-saga" },
-    { name: "Overview", path: "/overview" },
-    { name: "Partner", path: "/partner" },
-    { name: "Profile", path: "/profile" },
+    { name: "About", href: "/about" },
+    { name: "Gimli Saga", href: "/gimli" },
+    { name: "Overview", href: "/overview" },
+    { name: "Partner", href: "/partner" },
+    { name: "Profile", href: "/profile" },
   ];
 
   const policyLinks = [
-    { name: "Terms of Use", path: "/terms" },
-    { name: "Privacy Policy", path: "/privacy" },
-    { name: "Copyright Policy", path: "/copyright" },
+    { name: "Terms of Use", href: "/terms" },
+    { name: "Privacy Policy", href: "/privacy" },
+    { name: "Copyright Policy", href: "/copyright" },
+  ];
+
+  const socialLinks = [
+    { name: "Facebook", href: "https://www.facebook.com/VikingRoots/", icon: Facebook },
+    { name: "Twitter", href: "https://x.com/TheVikingRoots", icon: Twitter },
+    { name: "Instagram", href: "https://www.instagram.com/vikingroots/", icon: Instagram },
+    { name: "LinkedIn", href: "https://www.linkedin.com/company/vikingroots/", icon: Linkedin },
+    { name: "YouTube", href: "https://www.youtube.com/TwrvsyHt-edcSFWy3qDL3A", icon: Youtube },
   ];
 
   return (
-    <footer
-      style={{
-        backgroundColor: "#000000",
-        color: "#f0f0f0",
-        padding: "60px 20px",
-        marginTop: "auto",
-      }}
-    >
-      {/* Top Row: Links (left) + Social Icons (right) */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "flex-start",
-          marginBottom: "40px",
-          padding: "0 20px",
-        }}
-      >
-        {/* Main navigation links */}
-        <nav>
-          {mainLinks.map((link, idx) => (
-            <button
-              key={idx}
-              onClick={() => navigate(link.path)}
-              style={{
-                marginRight: "30px",
-                color: "#f5f5f5",
-                fontSize: "16px",
-                textDecoration: "none",
-                fontWeight: 500,
-                transition: "color 0.3s ease",
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-                padding: 0,
-              }}
-              onMouseOver={(e) => (e.currentTarget.style.color = "#76c7c0")}
-              onMouseOut={(e) => (e.currentTarget.style.color = "#f5f5f5")}
-            >
-              {link.name}
-            </button>
-          ))}
-        </nav>
-
-        {/* Social Media Icons */}
-        <div style={{ display: "flex", gap: "20px" }}>
-          <a href="https://www.facebook.com/VikingRoots/" target="_blank" rel="noopener noreferrer" style={iconStyle}>
-            <Facebook size={22} />
-          </a>
-          <a href="https://x.com/TheVikingRoots" target="_blank" rel="noopener noreferrer" style={iconStyle}>
-            <Twitter size={22} />
-          </a>
-          <a href="https://www.instagram.com/vikingroots/" target="_blank" rel="noopener noreferrer" style={iconStyle}>
-            <Instagram size={22} />
-          </a>
-          <a href="https://www.linkedin.com/company/vikingroots/" target="_blank" rel="noopener noreferrer" style={iconStyle}>
-            <Linkedin size={22} />
-          </a>
-          <a href="https://www.youtube.com/TwrvsyHt-edcSFWy3qDL3A" target="_blank" rel="noopener noreferrer" style={iconStyle}>
-            <Youtube size={22} />
-          </a>
-          <a href="https://www.tiktok.com/@thevikingroots" target="_blank" rel="noopener noreferrer" style={iconStyle}>
-            <Music size={22} />
-          </a>
+    <footer className="footer-wrapper">
+      {/* Top Section - Background Image */}
+      <div className="footer-hero">
+        <div className="footer-hero-content">
+          <h2 className="footer-hero-title">
+            Discover Your Ancestry with Viking Roots
+          </h2>
+          <p className="footer-hero-tagline">
+            Bridging Generations: Reconnecting Icelandic Families Through Ancestral Lineage and Heritage Discoveries
+          </p>
         </div>
       </div>
 
-      {/* Centered section */}
-      <div style={{ textAlign: "center", maxWidth: "1200px", margin: "0 auto" }}>
-        <h2 style={{ fontSize: "28px", fontWeight: 600, marginBottom: "10px", color: "#ffffff" }}>
-          Discover Your Ancestry with Viking Roots
-        </h2>
-        <p style={{ fontSize: "18px", marginBottom: "40px", color: "#cccccc", fontStyle: "italic" }}>
-          Bridging Generations: Reconnecting Icelandic Families Across Time and Distance
-        </p>
+      {/* Center Logo Circle - Overlapping both sections */}
+      <div className="footer-logo-circle">
+        <div className="footer-logo-image" role="img" aria-label="Viking Roots Logo" />
       </div>
 
-      <hr style={{ border: "none", height: "1px", backgroundColor: "#333", width: "60%", margin: "30px auto" }} />
+      {/* Bottom Section - White Background with Logo Cutout */}
+      <div className="footer-content-wrapper">
+        {/* SVG Cutout for Logo */}
+        <svg 
+          className="footer-cutout"
+          viewBox="0 0 1400 150"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M 0,150 L 0,0 L 630,0 Q 630,0 630,75 A 70,70 0 0,0 770,75 Q 770,0 770,0 L 1400,0 L 1400,150 Z"
+            fill="black"
+          />
+        </svg>
+        
+        <div className="footer">
+          <div className="footer-container">
+            {/* Navigation and Social Icons Row */}
+            <div className="footer-nav-social">
+              {/* Left Navigation Links */}
+              <nav>
+                <ul className="footer-links">
+                  {mainLinks.map((link, idx) => (
+                    <li key={idx}>
+                      <a href={link.href}>{link.name}</a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
 
-      <nav style={{ marginBottom: "30px", textAlign: "center" }}>
-        {policyLinks.map((link, idx) => (
-          <button
-            key={idx}
-            onClick={() => navigate(link.path)}
-            style={{
-              margin: "0 12px",
-              color: "#bbbbbb",
-              fontSize: "14px",
-              textDecoration: "none",
-              transition: "color 0.3s ease",
-              background: "none",
-              border: "none",
-              cursor: "pointer",
-              padding: 0,
-            }}
-            onMouseOver={(e) => (e.currentTarget.style.color = "#76c7c0")}
-            onMouseOut={(e) => (e.currentTarget.style.color = "#bbbbbb")}
-          >
-            {link.name}
-          </button>
-        ))}
-      </nav>
+              
+              <div className="footer-social">
+                {socialLinks.map((social, idx) => (
+                  <a
+                    key={idx}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Visit our ${social.name} page`}
+                  >
+                    <social.icon size={24} />
+                  </a>
+                ))}
+              </div>
+            </div>
 
-      <p style={{ fontSize: "15px", color: "#b0b0b0", lineHeight: "1.7", marginBottom: "20px", maxWidth: "750px", margin: "0 auto 20px", textAlign: "center" }}>
-        At Viking Ancestry, we are committed to preserving and sharing the rich cultural heritage of Norse peoples while respecting the privacy and dignity of all individuals.
-      </p>
+            
+            <div className="footer-bottom">
 
-      <p style={{ fontSize: "13px", color: "#a8a8a8", lineHeight: "1.7", maxWidth: "750px", margin: "0 auto 40px", textAlign: "center" }}>
-        We acknowledge and respect the indigenous peoples on whose traditional territories we gather and share our stories.
-      </p>
+              {/* Policy Links */}
+              <ul className="footer-legal">
+                {policyLinks.map((link, idx) => (
+                  <li key={idx}>
+                    <a href={link.href}>{link.name}</a>
+                  </li>
+                ))}
+              </ul>
 
-      <p style={{ fontSize: "13px", color: "#888", textAlign: "center" }}>
-        © Viking Roots 2025. All rights reserved.
-      </p>
+              
+              <p className="footer-statement">
+                At Viking Ancestry, we are committed to fostering a community that celebrates diversity, promotes equity, and ensures inclusion for all individuals. Our mission is to provide a platform where everybody can explore their ancestry and heritage with respect, dignity, and a sense of belonging.
+              </p>
+
+              <p className="footer-statement">
+                We acknowledge that Viking Roots® operates on the traditional territories of the indigenous peoples of our region.
+              </p>
+
+              {/* Copyright */}
+              <p className="footer-copyright">Copyright Viking Roots 2025</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </footer>
   );
-};
-
-const iconStyle: React.CSSProperties = {
-  color: "#f5f5f5",
-  transition: "color 0.3s ease",
-  textDecoration: "none",
-  cursor: "pointer",
 };
 
 export default Footer;

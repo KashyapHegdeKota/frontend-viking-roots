@@ -50,7 +50,7 @@ const Header = () => {
               }}
             >
               <img
-                src="\favicon-32x32.png"
+                src="/NewLogoRaw.png"
                 alt="Viking Roots Logo"
                 style={{
                   width: "32px",
