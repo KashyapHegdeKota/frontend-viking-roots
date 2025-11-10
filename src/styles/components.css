@@ -777,4 +777,18 @@ body {
   background-color: #a30000;
 }
 
+.Partner-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.Partner-container h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+  max-width: 800px;
+}
 
