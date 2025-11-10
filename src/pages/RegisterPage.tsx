@@ -30,9 +30,10 @@ const RegisterPage = () => {
 
       const response = await fetch(API_ENDPOINTS.REGISTER, {
         method: "POST",
-        headers: { 
+        headers: {
           "Content-Type": "application/json",
         },
+        credentials: 'include',
         body: JSON.stringify({
           username: fullName,
           email,
@@ -44,10 +45,10 @@ const RegisterPage = () => {
       const data = await response.json();
       
       if (response.ok) {
-        alert("Registration successful! Please check your email for the verification code.");
+        alert("Registration successful! You can now login.");
         console.log(data);
-        // Redirect to OTP verification page with email
-        navigate('/verify-otp', { state: { email } });
+        // Redirect to login page (OTP verification disabled)
+        navigate('/login');
       } else {
         alert(data.error || "Registration failed. Please try again.");
         console.error("Registration error:", data);
