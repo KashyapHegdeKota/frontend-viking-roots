@@ -2,13 +2,18 @@ import React, { useState } from 'react';
 import './components/Login.css';
 import { API_ENDPOINTS } from '../config/api';
 import { useNavigate } from 'react-router-dom';
+import MenuButton from '../components/MenuButton'
+
 const LoginPage = () => {
   const navigate = useNavigate(); // ✅ must be inside the component
-
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  // menu button states
+  const [menuOpen, setMenuOpen] = useState(false);
+  
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsLoading(true);
@@ -55,6 +60,24 @@ const LoginPage = () => {
   };
 
   return (
+  <>
+      {/* Menu Button Logic */}
+      <button 
+        className="mobile-menu-button" 
+        onClick={() => setMenuOpen(prev => !prev)}
+      >
+        <svg width="28" height="28" viewBox="0 0 24 24" stroke="currentColor" fill="none" strokeWidth="2">
+        <line x1="3" y1="6" x2="21" y2="6" />
+        <line x1="3" y1="12" x2="21" y2="12" />
+        <line x1="3" y1="18" x2="21" y2="18" />
+      </svg>
+      </button>
+
+      <MenuButton 
+        isOpen={menuOpen} 
+        onClose={() => setMenuOpen(false)} 
+      />
+      
     <div className="login-section d-flex align-items-center justify-content-center min-vh-100">
       <div className="row login-box">
 
@@ -115,6 +138,7 @@ const LoginPage = () => {
         </div>
       </div>
     </div>
+  </>
   );
 };
 
