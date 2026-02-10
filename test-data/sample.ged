@@ -1,0 +1,64 @@
+0 HEAD
+1 SOUR DemoApp
+1 GEDC
+2 VERS 5.5
+1 CHAR UTF-8
+0 @I1@ INDI
+1 NAME John /Doe/
+1 SEX M
+1 BIRT
+2 DATE 12 APR 1940
+2 PLAC Reykjavik, Iceland
+1 FAMS @F1@
+0 @I2@ INDI
+1 NAME Mary /Smith/
+1 SEX F
+1 BIRT
+2 DATE 5 MAY 1945
+2 PLAC Oslo, Norway
+1 FAMS @F1@
+0 @F1@ FAM
+1 HUSB @I1@
+1 WIFE @I2@
+1 MARR
+2 DATE 1 JUN 1965
+2 PLAC Bergen, Norway
+1 CHIL @I3@
+1 CHIL @I4@
+0 @I3@ INDI
+1 NAME Erik /Doe/
+1 SEX M
+1 BIRT
+2 DATE 10 OCT 1966
+2 PLAC Bergen, Norway
+1 FAMC @F1@
+1 FAMS @F2@
+0 @I4@ INDI
+1 NAME Anna /Doe/
+1 SEX F
+1 BIRT
+2 DATE 3 MAR 1970
+2 PLAC Bergen, Norway
+1 FAMC @F1@
+0 @I5@ INDI
+1 NAME Lisa /Eriksson/
+1 SEX F
+1 BIRT
+2 DATE 22 FEB 1970
+2 PLAC Stockholm, Sweden
+1 FAMS @F2@
+0 @F2@ FAM
+1 HUSB @I3@
+1 WIFE @I5@
+1 MARR
+2 DATE 14 FEB 1990
+2 PLAC Stockholm, Sweden
+1 CHIL @I6@
+0 @I6@ INDI
+1 NAME Karl /Eriksson/
+1 SEX M
+1 BIRT
+2 DATE 2 JUL 1992
+2 PLAC Stockholm, Sweden
+1 FAMC @F2@
+0 TRLR
