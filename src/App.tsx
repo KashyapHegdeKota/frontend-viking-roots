@@ -12,6 +12,9 @@ import Career from './pages/Career';
 import ImageUpload from './pages/ImageUpload';
 import ProfileSetup from './pages/ProfileSetup';
 import UserProfile from './pages/UserProfile';
+import HeritageDashboard from './pages/HeritageDashboard';
+import GedcomUploader from './pages/GedcomUploader';  
+import ManualAncestoryEntry from './pages/ManualAncestoryEntry';
 
 function App() {
   return (
@@ -30,6 +33,9 @@ function App() {
       <Route path="/profile/setup" element={<ProfileSetup />} />
       <Route path="/profile/:username" element={<UserProfile />} />
       <Route path="/profile" element={<UserProfile />} />
+      <Route path="/dashboard" element={<HeritageDashboard />} />
+      <Route path="/import-tree" element={<GedcomUploader />} />
+      <Route path="/ancestor/add" element={<ManualAncestoryEntry />} />
     </Routes>
   );
 }

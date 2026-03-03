@@ -175,22 +175,83 @@ const UserProfile: React.FC = () => {
         {/* Additional Sections */}
         <div className="profile-sections">
           <div className="section-tabs">
-            <button className="tab-button active">Posts</button>
+            <button className="tab-button active">My Heritage</button>
             <button className="tab-button">About</button>
             <button className="tab-button">Photos</button>
           </div>
 
           <div className="section-content">
-            <div className="empty-state">
-              <User size={48} />
-              <h3>Coming Soon</h3>
-              <p>Posts and social features will be available here.</p>
-              <button
-                onClick={() => navigate('/questionnaire')}
-                className="action-button"
-              >
-                Continue Questionnaire
-              </button>
+            <div className="empty-state" style={{ padding: '40px 20px', textAlign: 'center' }}>
+              <h3>Your Heritage Journey</h3>
+              <p style={{ color: '#666', marginBottom: '30px' }}>
+                Explore your family timeline, manage your tree, or import existing data.
+              </p>
+
+              <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
+                <button
+                  onClick={() => navigate('/questionnaire')}
+                  className="action-button"
+                  style={{
+                    backgroundColor: '#111',
+                    color: '#fff',
+                    padding: '12px 24px',
+                    borderRadius: '8px',
+                    border: 'none',
+                    cursor: 'pointer',
+                    fontWeight: '500'
+                  }}
+                >
+                  Continue Questionnaire
+                </button>
+
+                <button
+                  onClick={() => navigate('/dashboard')}
+                  className="action-button"
+                  style={{
+                    backgroundColor: '#8b5cf6',
+                    color: '#fff',
+                    padding: '12px 24px',
+                    borderRadius: '8px',
+                    border: 'none',
+                    cursor: 'pointer',
+                    fontWeight: '500'
+                  }}
+                >
+                  View My Dashboard
+                </button>
+
+                <button
+                  onClick={() => navigate('/import-tree')}
+                  className="action-button"
+                  style={{
+                    backgroundColor: '#f5f5f5',
+                    color: '#111',
+                    padding: '12px 24px',
+                    borderRadius: '8px',
+                    border: '1px solid #e5e5e5',
+                    cursor: 'pointer',
+                    fontWeight: '500'
+                  }}
+                >
+                  Import .GED File
+                </button>
+
+                <button
+                  onClick={() => navigate('/ancestor/add')}
+                  className="action-button"
+                  style={{
+                    backgroundColor: '#064e3b',
+                    color: '#fff',
+                    padding: '12px 24px',
+                    borderRadius: '8px',
+                    border: 'none',
+                    cursor: 'pointer',
+                    fontWeight: '500'
+                  }}
+                >
+                  + Add Ancestor Manually
+                </button>
+              </div>
             </div>
           </div>
         </div>

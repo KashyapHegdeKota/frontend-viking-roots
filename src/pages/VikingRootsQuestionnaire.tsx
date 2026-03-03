@@ -10,8 +10,8 @@ interface Message {
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const API_ENDPOINTS = {
-  START: `${API_BASE_URL}/api/questionaire/start/`,
-  MESSAGE: `${API_BASE_URL}/api/questionaire/message/`,
+  START: `${API_BASE_URL}/api/ai_interview/start/`,
+  MESSAGE: `${API_BASE_URL}/api/ai_interview/message/`,
 };
 
 const VikingRootsQuestionnaire = () => {
