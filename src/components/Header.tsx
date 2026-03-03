@@ -1,7 +1,33 @@
 import { useNavigate } from 'react-router-dom';
+import { Bell } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 const Header = () => {
   const navigate = useNavigate();
+  const [notificationCount, setNotificationCount] = useState(0);
+
+  useEffect(() => {
+    // Fetch notification count
+    const fetchNotificationCount = async () => {
+      try {
+        const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+        const response = await fetch(`${apiBaseUrl}/form/groups/invites/`, {
+          credentials: 'include',
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setNotificationCount(data.invites?.length || 0);
+        }
+      } catch (err) {
+        console.error('Error fetching notification count:', err);
+      }
+    };
+
+    fetchNotificationCount();
+    // Refresh count every 30 seconds
+    const interval = setInterval(fetchNotificationCount, 30000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <>
@@ -67,9 +93,53 @@ const Header = () => {
             style={{
               display: "flex",
               justifyContent: "flex-end",
+              alignItems: "center",
               flex: "1",
+              gap: "16px"
             }}
           >
+            {/* Notification Bell */}
+            <button
+              onClick={() => navigate('/notifications')}
+              style={{
+                position: 'relative',
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                padding: '8px',
+                color: 'white',
+                display: 'flex',
+                alignItems: 'center',
+                transition: 'opacity 0.3s ease'
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.opacity = '0.7'}
+              onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
+            >
+              <Bell size={22} />
+              {notificationCount > 0 && (
+                <span
+                  style={{
+                    position: 'absolute',
+                    top: '4px',
+                    right: '4px',
+                    backgroundColor: '#dc3545',
+                    color: 'white',
+                    borderRadius: '50%',
+                    width: '18px',
+                    height: '18px',
+                    fontSize: '11px',
+                    fontWeight: 'bold',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    border: '2px solid #000'
+                  }}
+                >
+                  {notificationCount > 9 ? '9+' : notificationCount}
+                </span>
+              )}
+            </button>
+
             <ul
               className="nav-desktop"
               style={{

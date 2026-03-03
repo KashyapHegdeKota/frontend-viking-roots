@@ -1,0 +1,454 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
+
+:root {
+  --g-primary: #0d6efd;
+  --g-dark: #212529;
+  --g-text: #333;
+  --g-text-light: #6c757d;
+  --g-danger: #dc3545;
+  --glass-bg: rgba(255, 255, 255, 0.92);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.5);
+  --glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* --- The Main Container with the Background Image --- */
+.group-page-container {
+  min-height: 100vh;
+  /* Exact image reference from your login.css */
+  background: url("/img/bride-and-groom-with-their-friends-SBI-300934909.jpg") no-repeat center center fixed;
+  background-size: cover;
+  font-family: 'Montserrat', sans-serif;
+  color: var(--g-text);
+  padding-bottom: 40px;
+}
+
+.group-wrapper {
+  max-width: 900px; /* Kept narrow as per original design but wider than login box */
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* --- Navigation --- */
+.group-nav {
+  padding: 20px 0;
+}
+
+.back-btn {
+  background: rgba(255, 255, 255, 0.8);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  backdrop-filter: blur(5px);
+}
+
+.back-btn:hover {
+  background: white;
+  transform: translateX(-3px);
+}
+
+/* --- Glass Card Style (Used everywhere) --- */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+/* --- Header Card --- */
+.header-card {
+  position: relative;
+}
+
+.cover-area {
+  height: 200px;
+  background: linear-gradient(135deg, #c88a65, #eab2a0);
+  position: relative;
+}
+
+.cover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.group-avatar-large {
+  position: absolute;
+  bottom: -30px;
+  left: 30px;
+  width: 100px;
+  height: 100px;
+  background: white;
+  border-radius: 50%;
+  padding: 4px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.group-avatar-large img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.header-content {
+  padding: 40px 30px 0 30px;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.group-name {
+  margin: 0 0 5px 0;
+  font-weight: 700;
+  font-size: 1.8rem;
+}
+
+.group-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.9rem;
+  color: var(--g-text-light);
+  flex-wrap: wrap;
+}
+
+.meta-pill {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(0,0,0,0.05);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.role-badge {
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge-admin {
+  background: var(--g-dark);
+  color: white;
+}
+
+.badge-member {
+  background: var(--g-primary);
+  color: white;
+}
+
+.group-description {
+  margin: 15px 0 20px;
+  line-height: 1.6;
+}
+
+/* --- Tabs --- */
+.group-tabs-row {
+  display: flex;
+  gap: 30px;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  margin-top: 20px;
+}
+
+.tab-link {
+  background: none;
+  border: none;
+  padding: 15px 5px;
+  font-weight: 600;
+  color: var(--g-text-light);
+  position: relative;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.tab-link:hover {
+  color: var(--g-primary);
+}
+
+.tab-link.active {
+  color: var(--g-primary);
+}
+
+.tab-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--g-primary);
+  border-radius: 3px 3px 0 0;
+}
+
+.tab-count {
+  background: rgba(0,0,0,0.1);
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  margin-left: 5px;
+  vertical-align: middle;
+}
+
+/* --- Create Post --- */
+.create-post-box {
+  padding: 20px;
+}
+
+.create-post-top {
+  display: flex;
+  gap: 15px;
+}
+
+.user-avatar, .user-avatar.small {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #555;
+  flex-shrink: 0;
+}
+
+.user-avatar.small {
+  width: 36px;
+  height: 36px;
+  font-size: 0.8rem;
+}
+
+.post-form {
+  flex: 1;
+}
+
+.post-textarea {
+  width: 100%;
+  border: none;
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 12px;
+  font-family: inherit;
+  resize: none;
+  transition: all 0.2s;
+  outline: none;
+}
+
+.post-textarea:focus {
+  background: white;
+  box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.25);
+  min-height: 100px;
+}
+
+.post-actions-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.char-count {
+  color: #aaa;
+}
+
+.btn-post {
+  background: var(--g-primary);
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-post:hover {
+  background: #0b5ed7;
+}
+
+/* --- Post Feed --- */
+.post-card {
+  padding: 20px;
+}
+
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.post-author-block {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.author-name {
+  font-weight: 700;
+  display: block;
+}
+
+.post-time {
+  font-size: 0.8rem;
+  color: var(--g-text-light);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.post-body {
+  white-space: pre-wrap;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+.post-image-wrapper {
+  margin-top: 15px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+.post-image-wrapper img {
+  width: 100%;
+  display: block;
+}
+
+.btn-icon-danger {
+  background: none;
+  border: none;
+  color: #ccc;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+
+.btn-icon-danger:hover {
+  background: #fff5f5;
+  color: var(--g-danger);
+}
+
+/* --- Members Section --- */
+.add-member-box {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.btn-add-member {
+  background: none;
+  border: none;
+  color: var(--g-primary);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.add-member-form {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.form-input {
+  flex: 1;
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.add-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-primary-sm, .btn-secondary-sm {
+  padding: 0 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary-sm { background: var(--g-primary); color: white; }
+.btn-secondary-sm { background: #eee; color: #333; }
+
+.members-list {
+  padding: 10px 20px;
+}
+
+.member-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.member-item:last-child { border-bottom: none; }
+
+.member-info { display: flex; align-items: center; gap: 12px; }
+
+.name { font-weight: 600; }
+
+.badge-admin-mini {
+  background: #333;
+  color: white;
+  font-size: 0.65rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 8px;
+  text-transform: uppercase;
+}
+
+.joined-date {
+  display: block;
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.member-actions { display: flex; gap: 5px; }
+
+.btn-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #eee;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #555;
+  transition: all 0.2s;
+}
+
+.btn-icon:hover { background: #f0f0f0; }
+.btn-icon.danger:hover { background: #fff5f5; color: var(--g-danger); border-color: #ffdce0; }

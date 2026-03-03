@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Upload, X, User } from 'lucide-react';
 import '../styles/ProfileSetup.css';
@@ -13,6 +13,29 @@ const ProfileSetup: React.FC = () => {
   const [uploading, setUploading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const checkProfileStatus = async () => {
+      try {
+        const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+        const response = await fetch(`${apiBaseUrl}/form/profile/status/`, {
+          credentials: 'include',
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          // If profile is already completed, redirect to group creation
+          if (data.profile_completed) {
+            navigate('/group/create');
+          }
+        }
+      } catch (error) {
+        console.error('Error checking profile status:', error);
+      }
+    };
+
+    checkProfileStatus();
+  }, [navigate]);
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -90,9 +113,8 @@ const ProfileSetup: React.FC = () => {
 
       if (response.ok) {
         // Successfully uploaded profile picture
-        alert('Profile picture uploaded successfully!');
-        // Navigate to user profile page
-        navigate(`/profile/${data.profile.username}`);
+        // Navigate to group creation page instead of profile
+        navigate(`/groups/${data.profile.username}`);
       } else {
         setErrorMessage(data.error || 'Upload failed. Please try again.');
       }

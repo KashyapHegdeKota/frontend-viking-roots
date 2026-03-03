@@ -191,6 +191,12 @@ const UserProfile: React.FC = () => {
               >
                 Continue Questionnaire
               </button>
+              <button
+              onClick={() => navigate('/group/create')}
+              className="action-button"
+            >
+              Explore Groups
+            </button>
             </div>
           </div>
         </div>

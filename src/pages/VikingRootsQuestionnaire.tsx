@@ -186,9 +186,32 @@ const VikingRootsQuestionnaire = () => {
     }
   };
 
-  const handleStopQuestionnaire = () => {
+  const handleStopQuestionnaire = async () => {
     // Navigate to profile setup page
-    navigate('/profile/setup');
+    try {
+      const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+      const response = await fetch(`${apiBaseUrl}/form/profile/status/`, {
+        credentials: 'include',
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        // If profile is already completed, redirect to group creation
+        if (data.profile_completed) {
+          navigate('/group/create');
+        } else {
+          // If profile not completed, redirect to profile setup
+          navigate('/profile/setup');
+        }
+      } else {
+        // If status check fails, default to profile setup
+        navigate('/profile/setup');
+      }
+    } catch (error) {
+      console.error('Error checking profile status:', error);
+      // If error occurs, default to profile setup
+      navigate('/profile/setup');
+    }
   };
 
   return (
@@ -366,13 +389,17 @@ const VikingRootsQuestionnaire = () => {
                     // View mode
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', alignItems: msg.role === 'user' ? 'flex-end' : 'flex-start' }}>
                       <div style={{
-                        maxWidth: '70%',
+                        maxWidth: '100%',
                         padding: '12px 16px',
                         borderRadius: '12px',
                         backgroundColor: msg.role === 'user' ? '#111' : '#f5f5f5',
                         color: msg.role === 'user' ? '#fff' : '#111',
                         fontSize: '15px',
-                        lineHeight: '1.5'
+                        lineHeight: '1.5',
+                        wordBreak: 'break-word',
+                        overflowWrap: 'break-word',
+                        whiteSpace: 'pre-wrap',
+                        width: 'fit-content'
                       }}>
                         {msg.content}
                       </div>

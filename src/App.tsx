@@ -8,6 +8,11 @@ import OTPVerificationPage from './pages/AuthenticationPage';
 import ImageUpload from './pages/ImageUpload';
 import ProfileSetup from './pages/ProfileSetup';
 import UserProfile from './pages/UserProfile';
+import GroupList from './pages/GroupList';
+import CreateGroup from './pages/CreateGroup';
+import GroupDetail from './pages/GroupDetail';
+import Notifications from './pages/Notifications';
+
 function App() {
   return (
     <Routes>
@@ -21,6 +26,12 @@ function App() {
       <Route path="/profile/setup" element={<ProfileSetup />} />
       <Route path="/profile/:username" element={<UserProfile />} />
       <Route path="/profile" element={<UserProfile />} />
+      {/* Group routes */}
+      <Route path="/groups/create" element={<CreateGroup />} />
+      <Route path="/groups/:username" element={<GroupList />} />
+      <Route path="/group/:groupId" element={<GroupDetail />} />
+      {/* Notifications route */}
+      <Route path="/notifications" element={<Notifications />} />
     </Routes>
   );
 }
