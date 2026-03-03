@@ -225,7 +225,7 @@ const UserProfile: React.FC = () => {
                   className="action-button"
                   style={{
                     backgroundColor: '#f5f5f5',
-                    color: '#111',
+                    color: '#f5f5f5',
                     padding: '12px 24px',
                     borderRadius: '8px',
                     border: '1px solid #e5e5e5',

@@ -56,6 +56,70 @@ const API_BASE = (import.meta as { env: Record<string, string> }).env.VITE_API_B
 const STEPS = ['Identity', 'Vital Stats', 'Facts & Stories', 'Review'];
 
 // ---------------------------------------------------------------------------
+// Shared styles (Updated to standard theme)
+// ---------------------------------------------------------------------------
+
+const pageStyle: React.CSSProperties = {
+  minHeight: '100vh',
+  backgroundColor: '#f9fafb', // Light gray background
+  display: 'flex',
+  alignItems: 'flex-start',
+  justifyContent: 'center',
+  padding: '40px 16px',
+  fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+  color: '#111',
+};
+
+const cardStyle: React.CSSProperties = {
+  width: '100%',
+  maxWidth: 620,
+  backgroundColor: '#fff',
+  border: '1px solid #e5e5e5',
+  borderRadius: '12px',
+  padding: '36px 40px',
+  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)',
+};
+
+const primaryBtnStyle: React.CSSProperties = {
+  padding: '11px 28px',
+  backgroundColor: '#8b5cf6', // Standard Purple Accent
+  border: 'none',
+  borderRadius: '8px',
+  color: '#fff',
+  fontSize: '14px',
+  fontWeight: 600,
+  cursor: 'pointer',
+  transition: 'background-color 0.2s ease',
+};
+
+const secondaryBtnStyle: React.CSSProperties = {
+  padding: '11px 24px',
+  backgroundColor: '#fff',
+  border: '1px solid #e5e5e5',
+  borderRadius: '8px',
+  color: '#666',
+  fontSize: '14px',
+  fontWeight: 500,
+  cursor: 'pointer',
+  transition: 'background-color 0.2s ease',
+};
+
+const inputStyle: React.CSSProperties = {
+  width: '100%',
+  padding: '10px 14px',
+  boxSizing: 'border-box',
+  backgroundColor: '#fff',
+  border: '1px solid #ccc',
+  borderRadius: '6px',
+  color: '#111',
+  fontSize: '14px',
+  outline: 'none',
+  fontFamily: 'inherit',
+};
+
+const selectStyle: React.CSSProperties = { ...inputStyle, cursor: 'pointer' };
+
+// ---------------------------------------------------------------------------
 // StepIndicator
 // ---------------------------------------------------------------------------
 
@@ -63,34 +127,34 @@ function StepIndicator({ current }: { current: number }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', marginBottom: 36 }}>
       {STEPS.map((label, i) => {
-        const done   = i < current;
+        const done = i < current;
         const active = i === current;
         return (
           <React.Fragment key={label}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1 }}>
               <div style={{
                 width: 32, height: 32, borderRadius: '50%',
-                background: done ? '#c8a96e' : active ? '#1a1208' : '#2a2010',
-                border: `2px solid ${active || done ? '#c8a96e' : '#3a2d1a'}`,
+                backgroundColor: done ? '#8b5cf6' : active ? '#f3f4f6' : '#fff',
+                border: `2px solid ${active || done ? '#8b5cf6' : '#e5e5e5'}`,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                color: done ? '#0a0704' : active ? '#c8a96e' : '#6b5a3a',
-                fontSize: 13, fontWeight: 700, fontFamily: "'Cinzel', serif",
-                transition: 'all 0.3s',
+                color: done ? '#fff' : active ? '#8b5cf6' : '#9ca3af',
+                fontSize: 14, fontWeight: 600,
+                transition: 'all 0.3s ease',
               }}>
                 {done ? '✓' : i + 1}
               </div>
               <span style={{
-                marginTop: 6, fontSize: 10, fontFamily: "'Cinzel', serif",
-                color: active ? '#c8a96e' : '#4a3a22', letterSpacing: 1,
+                marginTop: 8, fontSize: 12, fontWeight: 500,
+                color: active ? '#111' : '#6b7280',
               }}>
-                {label.toUpperCase()}
+                {label}
               </span>
             </div>
             {i < STEPS.length - 1 && (
               <div style={{
-                flex: 2, height: 2, marginBottom: 18,
-                background: i < current ? '#c8a96e' : '#2a2010',
-                transition: 'background 0.3s',
+                flex: 2, height: 2, marginBottom: 20,
+                backgroundColor: i < current ? '#8b5cf6' : '#e5e5e5',
+                transition: 'background-color 0.3s ease',
               }} />
             )}
           </React.Fragment>
@@ -104,48 +168,31 @@ function StepIndicator({ current }: { current: number }) {
 // FormField wrapper
 // ---------------------------------------------------------------------------
 
-function FormField({ label, children, hint }: {
-  label: string;
-  children: React.ReactNode;
-  hint?: string;
-}) {
+function FormField({ label, children, hint }: { label: string; children: React.ReactNode; hint?: string; }) {
   return (
     <div style={{ marginBottom: 20 }}>
       <label style={{
-        display: 'block', marginBottom: 6,
-        color: '#8b7355', fontSize: 10,
-        fontFamily: "'Cinzel', serif", letterSpacing: 1.5, textTransform: 'uppercase',
+        display: 'block', marginBottom: 8,
+        color: '#374151', fontSize: 13, fontWeight: 600,
       }}>
         {label}
       </label>
       {children}
-      {hint && <p style={{ margin: '4px 0 0', color: '#4a3a22', fontSize: 11 }}>{hint}</p>}
+      {hint && <p style={{ margin: '6px 0 0', color: '#6b7280', fontSize: 12 }}>{hint}</p>}
     </div>
   );
 }
 
-const inputStyle: React.CSSProperties = {
-  width: '100%', padding: '10px 14px', boxSizing: 'border-box',
-  background: '#0f0b06', border: '1px solid #3a2d1a', borderRadius: 6,
-  color: '#e8d5b0', fontFamily: "'Crimson Text', serif", fontSize: 15,
-  outline: 'none',
-};
-
-const selectStyle: React.CSSProperties = { ...inputStyle, cursor: 'pointer' };
 
 // ---------------------------------------------------------------------------
 // Location typeahead
 // ---------------------------------------------------------------------------
 
-function LocationTypeahead({ value, onSelect }: {
-  value: string;
-  onSelect: (name: string, id: number | null) => void;
-}) {
-  const [query, setQuery]     = useState(value);
+function LocationTypeahead({ value, onSelect }: { value: string; onSelect: (name: string, id: number | null) => void; }) {
+  const [query, setQuery] = useState(value);
   const [results, setResults] = useState<LocationResult[]>([]);
-  const [open, setOpen]       = useState(false);
+  const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  // FIX: useRef must receive an initial value. null is correct for a timeout handle.
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => { setQuery(value); }, [value]);
@@ -156,14 +203,11 @@ function LocationTypeahead({ value, onSelect }: {
     setLoading(true);
     timer.current = setTimeout(async () => {
       try {
-        const res  = await fetch(
-          `${API_BASE}/heritage/locations/?search=${encodeURIComponent(q)}`,
-          { credentials: 'include' }
-        );
+        const res = await fetch(`${API_BASE}/api/heritage/locations/?search=${encodeURIComponent(q)}`, { credentials: 'include' });
         const data = await res.json();
         setResults(data.locations || []);
         setOpen(true);
-      } catch { /* silent — typeahead failure is non-fatal */ }
+      } catch { /* silent */ }
       finally { setLoading(false); }
     }, 300);
   }, []);
@@ -191,31 +235,32 @@ function LocationTypeahead({ value, onSelect }: {
         style={inputStyle}
       />
       {loading && (
-        <span style={{ position: 'absolute', right: 12, top: 11, color: '#6b5a3a', fontSize: 12 }}>
+        <span style={{ position: 'absolute', right: 12, top: 11, color: '#9ca3af', fontSize: 12 }}>
           searching…
         </span>
       )}
       {open && results.length > 0 && (
         <div style={{
           position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 50,
-          background: '#120d06', border: '1px solid #3a2d1a', borderRadius: 6,
-          marginTop: 2, maxHeight: 200, overflowY: 'auto',
+          backgroundColor: '#fff', border: '1px solid #e5e5e5', borderRadius: 6,
+          marginTop: 4, maxHeight: 200, overflowY: 'auto',
+          boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
         }}>
           {results.map(loc => (
             <div
               key={loc.id}
               onMouseDown={() => pick(loc)}
               style={{
-                padding: '8px 14px', cursor: 'pointer',
-                color: '#c8b88a', fontSize: 13, fontFamily: "'Crimson Text', serif",
-                borderBottom: '1px solid #1a1208',
+                padding: '10px 14px', cursor: 'pointer',
+                color: '#111', fontSize: 14,
+                borderBottom: '1px solid #f3f4f6',
               }}
-              onMouseEnter={e => (e.currentTarget.style.background = '#1a1208')}
-              onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+              onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#f9fafb')}
+              onMouseLeave={e => (e.currentTarget.style.backgroundColor = '#fff')}
             >
               {loc.name}
               {loc.original_name && (
-                <span style={{ color: '#4a3a22', marginLeft: 8, fontSize: 11 }}>
+                <span style={{ color: '#6b7280', marginLeft: 8, fontSize: 12 }}>
                   ({loc.original_name})
                 </span>
               )}
@@ -224,11 +269,11 @@ function LocationTypeahead({ value, onSelect }: {
           <div
             onMouseDown={() => { onSelect(query, null); setOpen(false); }}
             style={{
-              padding: '8px 14px', cursor: 'pointer',
-              color: '#8b6f47', fontSize: 12, fontFamily: "'Cinzel', serif", letterSpacing: 1,
+              padding: '10px 14px', cursor: 'pointer',
+              color: '#8b5cf6', fontSize: 13, fontWeight: 500,
             }}
           >
-            + CREATE "{query}"
+            + Create "{query}"
           </div>
         </div>
       )}
@@ -241,8 +286,8 @@ function LocationTypeahead({ value, onSelect }: {
 // ---------------------------------------------------------------------------
 
 function FactsEditor({ facts, onChange }: { facts: Fact[]; onChange: (f: Fact[]) => void }) {
-  const [newKey, setNewKey]       = useState('');
-  const [newValue, setNewValue]   = useState('');
+  const [newKey, setNewKey] = useState('');
+  const [newValue, setNewValue] = useState('');
   const [customKey, setCustomKey] = useState(false);
 
   const add = () => {
@@ -257,42 +302,42 @@ function FactsEditor({ facts, onChange }: { facts: Fact[]; onChange: (f: Fact[])
 
   return (
     <div>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 14 }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 16 }}>
         {facts.map((f, i) => (
           <div key={i} style={{
-            background: '#1a1208', border: '1px solid #3a2d1a', borderRadius: 20,
-            padding: '4px 12px', display: 'flex', alignItems: 'center', gap: 8,
+            backgroundColor: '#f3f4f6', border: '1px solid #e5e5e5', borderRadius: 20,
+            padding: '6px 14px', display: 'flex', alignItems: 'center', gap: 8,
           }}>
-            <span style={{ color: '#8b7355', fontSize: 11, fontFamily: "'Cinzel', serif" }}>
+            <span style={{ color: '#4b5563', fontSize: 12, fontWeight: 600 }}>
               {f.key}:
             </span>
-            <span style={{ color: '#c8b88a', fontSize: 13, fontFamily: "'Crimson Text', serif" }}>
+            <span style={{ color: '#111', fontSize: 14 }}>
               {f.value}
             </span>
             <button
               onClick={() => remove(i)}
-              style={{ background: 'none', border: 'none', color: '#4a3a22', cursor: 'pointer', fontSize: 14, padding: 0 }}
+              style={{ background: 'none', border: 'none', color: '#9ca3af', cursor: 'pointer', fontSize: 14, padding: 0, marginLeft: 4 }}
             >✕</button>
           </div>
         ))}
         {facts.length === 0 && (
-          <p style={{ color: '#4a3a22', fontSize: 12, fontStyle: 'italic' }}>
+          <p style={{ color: '#6b7280', fontSize: 13, fontStyle: 'italic', margin: 0 }}>
             No facts added yet.
           </p>
         )}
       </div>
 
-      <div style={{ display: 'flex', gap: 8, alignItems: 'flex-end' }}>
+      <div style={{ display: 'flex', gap: 12, alignItems: 'flex-end' }}>
         <div style={{ flex: 1 }}>
-          <label style={{ color: '#6b5a3a', fontSize: 10, fontFamily: "'Cinzel', serif", letterSpacing: 1 }}>
-            FACT TYPE
+          <label style={{ color: '#374151', fontSize: 12, fontWeight: 600, display: 'block', marginBottom: 6 }}>
+            Fact Type
           </label>
           {customKey ? (
             <input
               value={newKey}
               onChange={e => setNewKey(e.target.value)}
-              placeholder="custom key"
-              style={{ ...inputStyle, marginTop: 4 }}
+              placeholder="e.g. Favorite Book"
+              style={inputStyle}
             />
           ) : (
             <select
@@ -301,37 +346,36 @@ function FactsEditor({ facts, onChange }: { facts: Fact[]; onChange: (f: Fact[])
                 if (e.target.value === '__custom__') { setCustomKey(true); setNewKey(''); }
                 else setNewKey(e.target.value);
               }}
-              style={{ ...selectStyle, marginTop: 4 }}
+              style={selectStyle}
             >
               <option value="">Select…</option>
               {COMMON_FACT_KEYS.map(k => (
                 <option key={k} value={k}>{k.replace(/_/g, ' ')}</option>
               ))}
-              <option value="__custom__">+ Custom key…</option>
+              <option value="__custom__">+ Custom type…</option>
             </select>
           )}
         </div>
         <div style={{ flex: 2 }}>
-          <label style={{ color: '#6b5a3a', fontSize: 10, fontFamily: "'Cinzel', serif", letterSpacing: 1 }}>
-            VALUE
+          <label style={{ color: '#374151', fontSize: 12, fontWeight: 600, display: 'block', marginBottom: 6 }}>
+            Value
           </label>
           <input
             value={newValue}
             onChange={e => setNewValue(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && add()}
             placeholder="e.g. Fisherman"
-            style={{ ...inputStyle, marginTop: 4 }}
+            style={inputStyle}
           />
         </div>
         <button
           onClick={add}
           style={{
-            padding: '10px 18px', background: '#8b6f47', border: 'none',
-            borderRadius: 6, color: '#0a0704',
-            fontFamily: "'Cinzel', serif", fontSize: 11, fontWeight: 700,
-            cursor: 'pointer', letterSpacing: 1, whiteSpace: 'nowrap',
+            padding: '10px 20px', backgroundColor: '#111', border: 'none',
+            borderRadius: '6px', color: '#fff', fontSize: 13, fontWeight: 600,
+            cursor: 'pointer', whiteSpace: 'nowrap', height: '40px'
           }}
-        >+ ADD</button>
+        >Add</button>
       </div>
     </div>
   );
@@ -341,51 +385,45 @@ function FactsEditor({ facts, onChange }: { facts: Fact[]; onChange: (f: Fact[])
 // Duplicate warning
 // ---------------------------------------------------------------------------
 
-function DuplicateWarning({ candidates, onIgnore, onViewExisting }: {
-  candidates: DuplicateCandidate[];
-  onIgnore: () => void;
-  onViewExisting: (id: string) => void;
-}) {
+function DuplicateWarning({ candidates, onIgnore, onViewExisting }: { candidates: DuplicateCandidate[]; onIgnore: () => void; onViewExisting: (id: string) => void; }) {
   return (
     <div style={{
-      background: '#1a1000', border: '1px solid #c8a96e',
+      backgroundColor: '#fffbeb', border: '1px solid #fcd34d',
       borderRadius: 8, padding: '16px 20px', marginBottom: 24,
     }}>
-      <p style={{ margin: '0 0 10px', color: '#c8a96e', fontFamily: "'Cinzel', serif", fontSize: 13 }}>
-        ⚠ Possible duplicates found
+      <p style={{ margin: '0 0 12px', color: '#b45309', fontWeight: 600, fontSize: 14, display: 'flex', alignItems: 'center', gap: 6 }}>
+        ⚠️ Possible duplicates found
       </p>
       {candidates.map(c => (
         <div key={c.id} style={{
           display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-          padding: '6px 0', borderBottom: '1px solid #2a1f00',
+          padding: '8px 0', borderBottom: '1px solid #fde68a',
         }}>
           <div>
-            <span style={{ color: '#e8d5b0', fontFamily: "'Crimson Text', serif", fontSize: 14 }}>
+            <span style={{ color: '#111', fontWeight: 500, fontSize: 14 }}>
               {c.name}
             </span>
             {c.birth_year && (
-              <span style={{ color: '#6b5a3a', marginLeft: 8, fontSize: 12 }}>b. {c.birth_year}</span>
+              <span style={{ color: '#6b7280', marginLeft: 8, fontSize: 13 }}>b. {c.birth_year}</span>
             )}
-            <span style={{ color: '#4a3a22', marginLeft: 8, fontSize: 11 }}>
+            <span style={{ color: '#d97706', marginLeft: 8, fontSize: 12, fontWeight: 500 }}>
               {Math.round(c.score * 100)}% match
             </span>
           </div>
           <button
             onClick={() => onViewExisting(c.id)}
             style={{
-              background: 'none', border: '1px solid #3a2d1a', borderRadius: 4,
-              padding: '3px 10px', color: '#8b7355',
-              fontFamily: "'Cinzel', serif", fontSize: 10, cursor: 'pointer',
+              backgroundColor: '#fff', border: '1px solid #fcd34d', borderRadius: 4,
+              padding: '4px 12px', color: '#b45309', fontSize: 12, fontWeight: 500, cursor: 'pointer',
             }}
-          >VIEW</button>
+          >Review</button>
         </div>
       ))}
       <button
         onClick={onIgnore}
         style={{
-          marginTop: 12, background: 'none', border: 'none',
-          color: '#8b6f47', fontFamily: "'Cinzel', serif",
-          fontSize: 11, cursor: 'pointer', textDecoration: 'underline',
+          marginTop: 16, background: 'none', border: 'none',
+          color: '#6b7280', fontSize: 13, cursor: 'pointer', textDecoration: 'underline', padding: 0
         }}
       >
         Not a duplicate — create anyway
@@ -400,39 +438,39 @@ function DuplicateWarning({ candidates, onIgnore, onViewExisting }: {
 
 function ReviewCard({ form }: { form: FormState }) {
   const rows: [string, string][] = [
-    ['Name',       form.name],
-    ['Relation',   form.relation],
-    ['Gender',     form.gender === 'M' ? 'Male' : form.gender === 'F' ? 'Female' : form.gender || '—'],
-    ['Born',       [form.birth_date, form.birth_year].filter(Boolean).join(' / ') || '—'],
-    ['Died',       [form.death_date, form.death_year].filter(Boolean).join(' / ') || '—'],
+    ['Name', form.name],
+    ['Relation', form.relation],
+    ['Gender', form.gender === 'M' ? 'Male' : form.gender === 'F' ? 'Female' : form.gender || '—'],
+    ['Born', [form.birth_date, form.birth_year].filter(Boolean).join(' / ') || '—'],
+    ['Died', [form.death_date, form.death_year].filter(Boolean).join(' / ') || '—'],
     ['Birthplace', form.birth_location_name || form.origin || '—'],
   ];
   return (
-    <div style={{ background: '#0f0b06', border: '1px solid #3a2d1a', borderRadius: 8, overflow: 'hidden' }}>
-      <div style={{ background: '#1a1208', padding: '10px 16px', borderBottom: '1px solid #3a2d1a' }}>
-        <span style={{ color: '#c8a96e', fontFamily: "'Cinzel', serif", fontSize: 12, letterSpacing: 2 }}>
-          ANCESTOR SUMMARY
+    <div style={{ backgroundColor: '#f9fafb', border: '1px solid #e5e5e5', borderRadius: 8, overflow: 'hidden' }}>
+      <div style={{ backgroundColor: '#f3f4f6', padding: '12px 16px', borderBottom: '1px solid #e5e5e5' }}>
+        <span style={{ color: '#4b5563', fontSize: 13, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.5 }}>
+          Ancestor Summary
         </span>
       </div>
       {rows.map(([label, val]) => (
-        <div key={label} style={{ display: 'flex', padding: '8px 16px', borderBottom: '1px solid #1a1208' }}>
-          <span style={{ width: 110, color: '#6b5a3a', fontSize: 11, fontFamily: "'Cinzel', serif" }}>
+        <div key={label} style={{ display: 'flex', padding: '10px 16px', borderBottom: '1px solid #e5e5e5' }}>
+          <span style={{ width: 120, color: '#6b7280', fontSize: 13, fontWeight: 500 }}>
             {label}
           </span>
-          <span style={{ color: '#c8b88a', fontSize: 14, fontFamily: "'Crimson Text', serif" }}>{val}</span>
+          <span style={{ color: '#111', fontSize: 14 }}>{val}</span>
         </div>
       ))}
       {form.facts.length > 0 && (
-        <div style={{ padding: '8px 16px' }}>
-          <span style={{ color: '#6b5a3a', fontSize: 11, fontFamily: "'Cinzel', serif" }}>Facts</span>
-          <div style={{ marginTop: 6, display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+        <div style={{ padding: '12px 16px' }}>
+          <span style={{ color: '#6b7280', fontSize: 13, fontWeight: 500, display: 'block', marginBottom: 8 }}>Facts</span>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
             {form.facts.map((f, i) => (
               <span key={i} style={{
-                background: '#1a1208', border: '1px solid #3a2d1a',
-                borderRadius: 12, padding: '2px 10px',
-                color: '#c8b88a', fontSize: 12, fontFamily: "'Crimson Text', serif",
+                backgroundColor: '#fff', border: '1px solid #ccc',
+                borderRadius: 16, padding: '4px 12px',
+                color: '#374151', fontSize: 13,
               }}>
-                {f.key}: {f.value}
+                <strong>{f.key}:</strong> {f.value}
               </span>
             ))}
           </div>
@@ -456,24 +494,23 @@ const INITIAL_FORM: FormState = {
 export default function ManualAncestorEntry() {
   const navigate = useNavigate();
 
-  const [step, setStep]             = useState(0);
-  const [form, setForm]             = useState<FormState>(INITIAL_FORM);
+  const [step, setStep] = useState(0);
+  const [form, setForm] = useState<FormState>(INITIAL_FORM);
   const [duplicates, setDuplicates] = useState<DuplicateCandidate[]>([]);
-  const [force, setForce]           = useState(false);
+  const [force, setForce] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [error, setError]           = useState('');
-  const [success, setSuccess]       = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
 
   const set = (field: keyof FormState, value: unknown) =>
     setForm(prev => ({ ...prev, [field]: value }));
 
-  // Pre-flight duplicate check triggered on name blur
   const checkDuplicates = useCallback(async () => {
     if (!form.name.trim() || force) return;
     try {
       const params = new URLSearchParams({ name: form.name });
       if (form.birth_year) params.set('birth_year', form.birth_year);
-      const res  = await fetch(`${API_BASE}/api/heritage/ancestor/check-duplicates/?${params}`, { credentials: 'include' });
+      const res = await fetch(`${API_BASE}/api/heritage/ancestor/check-duplicates/?${params}`, { credentials: 'include' });
       const data = await res.json();
       setDuplicates(data.duplicates || []);
     } catch { /* non-fatal */ }
@@ -488,22 +525,22 @@ export default function ManualAncestorEntry() {
     setSubmitting(true);
     setError('');
     try {
-      const res  = await fetch(`${API_BASE}/api/heritage/ancestor/`, {
-        method:  'POST',
+      const res = await fetch(`${API_BASE}/api/heritage/ancestor/`, {
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
         body: JSON.stringify({
-          name:                form.name.trim(),
-          relation:            form.relation.trim(),
-          gender:              form.gender,
-          birth_year:          form.birth_year ? parseInt(form.birth_year) : null,
-          birth_date:          form.birth_date || null,
-          death_year:          form.death_year ? parseInt(form.death_year) : null,
-          death_date:          form.death_date || null,
+          name: form.name.trim(),
+          relation: form.relation.trim(),
+          gender: form.gender,
+          birth_year: form.birth_year ? parseInt(form.birth_year) : null,
+          birth_date: form.birth_date || null,
+          death_year: form.death_year ? parseInt(form.death_year) : null,
+          death_date: form.death_date || null,
           birth_location_name: form.birth_location_name || null,
-          birth_location_id:   form.birth_location_id,
-          origin:              form.origin.trim() || null,
-          facts:               form.facts,
+          birth_location_id: form.birth_location_id,
+          origin: form.origin.trim() || null,
+          facts: form.facts,
           force,
         }),
       });
@@ -532,25 +569,33 @@ export default function ManualAncestorEntry() {
   if (success) {
     return (
       <div style={pageStyle}>
-        <GoogleFonts />
         <div style={cardStyle}>
           <div style={{ textAlign: 'center', padding: '40px 20px' }}>
-            <div style={{ fontSize: 48, marginBottom: 16 }}>ᚠ</div>
-            <h2 style={{ color: '#c8a96e', fontFamily: "'Cinzel', serif", margin: '0 0 10px' }}>
-              Ancestor Added to the Saga
+            <div style={{ width: 64, height: 64, backgroundColor: '#f0fdf4', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px', color: '#16a34a', fontSize: 32 }}>
+              ✓
+            </div>
+            <h2 style={{ color: '#111', fontSize: 24, fontWeight: 700, margin: '0 0 12px' }}>
+              Successfully Added
             </h2>
-            <p style={{ color: '#8b7355', fontFamily: "'Crimson Text', serif", fontSize: 16 }}>
-              {form.name} has been woven into your family tree.
+            <p style={{ color: '#666', fontSize: 16, marginBottom: 32 }}>
+              <strong>{form.name}</strong> has been added to your family tree.
             </p>
-            <div style={{ display: 'flex', gap: 12, justifyContent: 'center', marginTop: 28 }}>
+            <div style={{ display: 'flex', gap: 16, justifyContent: 'center' }}>
               <button
                 onClick={() => { setForm(INITIAL_FORM); setStep(0); setSuccess(false); setDuplicates([]); setForce(false); }}
                 style={secondaryBtnStyle}
+                onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#f9fafb')}
+                onMouseLeave={e => (e.currentTarget.style.backgroundColor = '#fff')}
               >
-                Add Another
+                Add Another Person
               </button>
-              <button onClick={() => navigate('/dashboard')} style={primaryBtnStyle}>
-                View Dashboard →
+              <button 
+                onClick={() => navigate('/dashboard')} 
+                style={primaryBtnStyle}
+                onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#7c3aed')}
+                onMouseLeave={e => (e.currentTarget.style.backgroundColor = '#8b5cf6')}
+              >
+                View Dashboard
               </button>
             </div>
           </div>
@@ -564,20 +609,19 @@ export default function ManualAncestorEntry() {
   // -------------------------------------------------------------------------
   return (
     <div style={pageStyle}>
-      <GoogleFonts />
       <div style={cardStyle}>
         <div style={{ marginBottom: 32 }}>
           <button
             onClick={() => navigate(-1)}
-            style={{ background: 'none', border: 'none', color: '#6b5a3a', cursor: 'pointer', fontSize: 13, marginBottom: 16, padding: 0 }}
+            style={{ background: 'none', border: 'none', color: '#666', cursor: 'pointer', fontSize: 14, fontWeight: 500, marginBottom: 20, padding: 0, display: 'flex', alignItems: 'center', gap: 4 }}
           >
             ← Back
           </button>
-          <h1 style={{ margin: 0, color: '#e8d5b0', fontFamily: "'Cinzel', serif", fontSize: 22, fontWeight: 900, letterSpacing: 2 }}>
+          <h1 style={{ margin: 0, color: '#111', fontSize: 28, fontWeight: 700 }}>
             Add an Ancestor
           </h1>
-          <p style={{ margin: '6px 0 0', color: '#6b5a3a', fontFamily: "'Crimson Text', serif", fontSize: 14 }}>
-            Weave a new thread into your family saga.
+          <p style={{ margin: '8px 0 0', color: '#666', fontSize: 15 }}>
+            Manually enter details for a family member.
           </p>
         </div>
 
@@ -593,9 +637,8 @@ export default function ManualAncestorEntry() {
 
         {error && (
           <div style={{
-            background: '#1a0800', border: '1px solid #d9534f', borderRadius: 6,
-            padding: '10px 16px', marginBottom: 20,
-            color: '#e87a6e', fontFamily: "'Crimson Text', serif", fontSize: 14,
+            backgroundColor: '#fef2f2', border: '1px solid #fecaca', borderRadius: 8,
+            padding: '12px 16px', marginBottom: 24, color: '#dc2626', fontSize: 14, fontWeight: 500
           }}>
             {error}
           </div>
@@ -609,7 +652,7 @@ export default function ManualAncestorEntry() {
                 value={form.name}
                 onChange={e => set('name', e.target.value)}
                 onBlur={checkDuplicates}
-                placeholder="e.g. Björn Ironside"
+                placeholder="e.g. Jane Doe"
                 style={inputStyle}
               />
             </FormField>
@@ -620,18 +663,18 @@ export default function ManualAncestorEntry() {
               </select>
             </FormField>
             <FormField label="Gender">
-              <div style={{ display: 'flex', gap: 10 }}>
+              <div style={{ display: 'flex', gap: 12 }}>
                 {([['M', 'Male'], ['F', 'Female'], ['O', 'Other / Unknown']] as [string, string][]).map(([val, label]) => (
                   <button
                     key={val}
                     onClick={() => set('gender', form.gender === val ? '' : val)}
                     style={{
-                      flex: 1, padding: '9px 0',
-                      background: form.gender === val ? '#2a1f0e' : 'transparent',
-                      border: `1px solid ${form.gender === val ? '#c8a96e' : '#3a2d1a'}`,
-                      borderRadius: 6,
-                      color: form.gender === val ? '#c8a96e' : '#6b5a3a',
-                      fontFamily: "'Cinzel', serif", fontSize: 11, cursor: 'pointer', letterSpacing: 1,
+                      flex: 1, padding: '10px 0',
+                      backgroundColor: form.gender === val ? '#f3e8ff' : '#fff',
+                      border: `1px solid ${form.gender === val ? '#8b5cf6' : '#e5e5e5'}`,
+                      borderRadius: '6px',
+                      color: form.gender === val ? '#6d28d9' : '#4b5563',
+                      fontSize: 14, fontWeight: 500, cursor: 'pointer', transition: 'all 0.2s',
                     }}
                   >
                     {label}
@@ -645,14 +688,14 @@ export default function ManualAncestorEntry() {
         {/* Step 1 — Vital Stats */}
         {step === 1 && (
           <div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
               <FormField label="Birth Year" hint="4-digit year">
                 <input
                   type="number" min="1000" max="2100"
                   value={form.birth_year}
                   onChange={e => set('birth_year', e.target.value)}
                   onBlur={checkDuplicates}
-                  placeholder="1872"
+                  placeholder="e.g. 1950"
                   style={inputStyle}
                 />
               </FormField>
@@ -664,7 +707,7 @@ export default function ManualAncestorEntry() {
                   type="number" min="1000" max="2100"
                   value={form.death_year}
                   onChange={e => set('death_year', e.target.value)}
-                  placeholder="1945"
+                  placeholder="e.g. 2020"
                   style={inputStyle}
                 />
               </FormField>
@@ -678,13 +721,13 @@ export default function ManualAncestorEntry() {
                 onSelect={(name, id) => { set('birth_location_name', name); set('birth_location_id', id); }}
               />
               {form.birth_location_id && (
-                <p style={{ margin: '4px 0 0', color: '#68b27a', fontSize: 11 }}>
-                  ✓ Matched to existing location (ID {form.birth_location_id})
+                <p style={{ margin: '6px 0 0', color: '#059669', fontSize: 13, fontWeight: 500 }}>
+                  ✓ Matched to existing location
                 </p>
               )}
             </FormField>
-            <FormField label="Origin (legacy)" hint="Plain-text fallback if no structured location available.">
-              <input value={form.origin} onChange={e => set('origin', e.target.value)} placeholder="e.g. Iceland" style={inputStyle} />
+            <FormField label="Origin (Legacy)" hint="Plain-text fallback if no structured location is available.">
+              <input value={form.origin} onChange={e => set('origin', e.target.value)} placeholder="e.g. Manitoba, Canada" style={inputStyle} />
             </FormField>
           </div>
         )}
@@ -692,8 +735,8 @@ export default function ManualAncestorEntry() {
         {/* Step 2 — Facts */}
         {step === 2 && (
           <div>
-            <p style={{ color: '#6b5a3a', fontFamily: "'Crimson Text', serif", fontSize: 14, marginTop: 0 }}>
-              Add any extra details — occupation, religion, the ship they arrived on, physical traits, or anything else worth preserving.
+            <p style={{ color: '#6b7280', fontSize: 14, marginTop: 0, marginBottom: 20, lineHeight: 1.5 }}>
+              Add any extra details such as occupation, religion, immigration details, or personal traits.
             </p>
             <FactsEditor facts={form.facts} onChange={facts => set('facts', facts)} />
           </div>
@@ -702,78 +745,47 @@ export default function ManualAncestorEntry() {
         {/* Step 3 — Review */}
         {step === 3 && (
           <div>
-            <p style={{ color: '#6b5a3a', fontFamily: "'Crimson Text', serif", fontSize: 14, marginTop: 0 }}>
-              Review the details below before adding this ancestor to your saga.
+            <p style={{ color: '#6b7280', fontSize: 14, marginTop: 0, marginBottom: 20 }}>
+              Please review the details below before adding this person to your tree.
             </p>
             <ReviewCard form={form} />
           </div>
         )}
 
         {/* Navigation */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 32 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 40, paddingTop: 24, borderTop: '1px solid #e5e5e5' }}>
           <button
             onClick={() => step > 0 ? setStep(s => s - 1) : navigate(-1)}
             style={secondaryBtnStyle}
+            onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#f9fafb')}
+            onMouseLeave={e => (e.currentTarget.style.backgroundColor = '#fff')}
           >
             {step === 0 ? 'Cancel' : '← Back'}
           </button>
+          
           {step < STEPS.length - 1 ? (
             <button
               onClick={() => setStep(s => s + 1)}
               disabled={!canProceed()}
-              style={{ ...primaryBtnStyle, opacity: canProceed() ? 1 : 0.4, cursor: canProceed() ? 'pointer' : 'not-allowed' }}
+              style={{ ...primaryBtnStyle, opacity: canProceed() ? 1 : 0.5, cursor: canProceed() ? 'pointer' : 'not-allowed' }}
+              onMouseEnter={e => canProceed() && (e.currentTarget.style.backgroundColor = '#7c3aed')}
+              onMouseLeave={e => canProceed() && (e.currentTarget.style.backgroundColor = '#8b5cf6')}
             >
-              Next →
+              Next Step →
             </button>
           ) : (
-            <button onClick={submit} disabled={submitting} style={{ ...primaryBtnStyle, opacity: submitting ? 0.7 : 1 }}>
-              {submitting ? 'Adding to Saga…' : 'Add to Saga ⚔'}
+            <button 
+              onClick={submit} 
+              disabled={submitting} 
+              style={{ ...primaryBtnStyle, backgroundColor: '#111', opacity: submitting ? 0.7 : 1 }}
+              onMouseEnter={e => !submitting && (e.currentTarget.style.backgroundColor = '#333')}
+              onMouseLeave={e => !submitting && (e.currentTarget.style.backgroundColor = '#111')}
+            >
+              {submitting ? 'Saving...' : 'Save Ancestor'}
             </button>
           )}
         </div>
       </div>
     </div>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Shared styles
-// ---------------------------------------------------------------------------
-
-const pageStyle: React.CSSProperties = {
-  minHeight: '100vh', background: '#080604',
-  display: 'flex', alignItems: 'flex-start', justifyContent: 'center',
-  padding: '40px 16px',
-};
-
-const cardStyle: React.CSSProperties = {
-  width: '100%', maxWidth: 620,
-  background: 'linear-gradient(160deg, #120d06 0%, #1a1208 100%)',
-  border: '1px solid #3a2d1a', borderRadius: 12,
-  padding: '36px 40px',
-  boxShadow: '0 12px 48px rgba(0,0,0,0.6)',
-};
-
-const primaryBtnStyle: React.CSSProperties = {
-  padding: '11px 28px',
-  background: 'linear-gradient(135deg, #8b6f47, #c8a96e)',
-  border: 'none', borderRadius: 7,
-  color: '#0a0704', fontFamily: "'Cinzel', serif", fontSize: 12, fontWeight: 700,
-  cursor: 'pointer', letterSpacing: 1,
-};
-
-const secondaryBtnStyle: React.CSSProperties = {
-  padding: '11px 24px', background: 'transparent',
-  border: '1px solid #3a2d1a', borderRadius: 7,
-  color: '#6b5a3a', fontFamily: "'Cinzel', serif", fontSize: 12, fontWeight: 700,
-  cursor: 'pointer', letterSpacing: 1,
-};
-
-function GoogleFonts() {
-  return (
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap"
-      rel="stylesheet"
-    />
   );
 }
