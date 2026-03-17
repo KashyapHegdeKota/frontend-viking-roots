@@ -64,10 +64,17 @@ export type GedcomFamily = {
   };
 };
 
+export type MarriageEvent = {
+  year: number;
+  husbandName: string;
+  wifeName: string;
+  place?: string;
+};
+
 // Value exports (classes and functions)
 export class AncestryGedcomParser {
-  private individuals: Map<string, GedcomIndividual> = new Map();
-  private families: Map<string, GedcomFamily> = new Map();
+  individuals: Map<string, GedcomIndividual> = new Map();
+  families: Map<string, GedcomFamily> = new Map();
   private currentRecord: 'INDI' | 'FAM' | 'SOUR' | 'OBJE' | 'SUBM' | null = null;
   private currentId: string = '';
   private currentTag: string = '';
@@ -111,13 +118,11 @@ export class AncestryGedcomParser {
     let tag = '';
     let value = '';
     
-    // Check for pointer (e.g., @I123@, @F456@, @S789@)
     const pointerMatch = rest.match(/^@([^@]+)@/);
     if (pointerMatch) {
       pointer = pointerMatch[1];
       const afterPointer = rest.substring(pointerMatch[0].length).trim();
       
-      // The tag is the first word after the pointer
       const tagMatch = afterPointer.match(/^(\S+)/);
       if (tagMatch) {
         tag = tagMatch[1];
@@ -126,7 +131,6 @@ export class AncestryGedcomParser {
         tag = afterPointer;
       }
     } else {
-      // Split by first space to get tag and value
       const firstSpace = rest.indexOf(' ');
       if (firstSpace > 0) {
         tag = rest.substring(0, firstSpace);
@@ -140,13 +144,11 @@ export class AncestryGedcomParser {
   }
 
   private processLine(level: number, tag: string, pointer: string | null, value: string): void {
-    // Update stack for context tracking
     while (this.tagStack.length > 0 && this.tagStack[this.tagStack.length - 1].level >= level) {
       this.tagStack.pop();
     }
     this.tagStack.push({ level, tag });
     
-    // Handle new records at level 0 with pointers
     if (level === 0 && pointer) {
       switch (tag) {
         case 'INDI':
@@ -162,7 +164,6 @@ export class AncestryGedcomParser {
         case 'SOUR':
         case 'OBJE':
         case 'SUBM':
-          // We don't process these record types in detail
           this.currentRecord = tag;
           this.currentId = pointer;
           break;
@@ -172,7 +173,6 @@ export class AncestryGedcomParser {
       return;
     }
     
-    // Process based on current record type
     switch (this.currentRecord) {
       case 'INDI':
         this.processIndividualLine(level, tag, value);
@@ -180,7 +180,6 @@ export class AncestryGedcomParser {
       case 'FAM':
         this.processFamilyLine(level, tag, value);
         break;
-      // We ignore SOUR, OBJE, SUBM records for now
     }
   }
 
@@ -188,7 +187,6 @@ export class AncestryGedcomParser {
     const individual = this.individuals.get(this.currentId);
     if (!individual) return;
     
-    // Handle different tags
     switch (tag) {
       case 'NAME':
         this.processName(value, individual);
@@ -227,7 +225,6 @@ export class AncestryGedcomParser {
         individual.residence.push({ place: value });
         break;
       case 'FAMS':
-        // Spouse family
         if (!individual.families) individual.families = {};
         if (!individual.families.spouse) individual.families.spouse = [];
         const familyId = value.replace(/@/g, '');
@@ -236,26 +233,14 @@ export class AncestryGedcomParser {
         }
         break;
       case 'FAMC':
-        // Child family - child can only have ONE set of parents in family-chart
         if (!individual.families) individual.families = {};
-        // Only set if not already set (to prevent multiple parents)
         if (!individual.families.children) {
           individual.families.children = [];
           const childFamilyId = value.replace(/@/g, '');
           individual.families.children.push(childFamilyId);
         }
         break;
-      case '_APID':
-      case '_PRIM':
-      case '_TREE':
-      case '_ENV':
-      case 'SOUR':
-      case 'OBJE':
-      case 'NOTE':
-        // Ignore these tags
-        break;
       case 'CONT':
-        // Handle continuation for places
         if (this.currentTag === 'BIRT' && individual.birth?.place) {
           individual.birth.place += ' ' + value;
         } else if (this.currentTag === 'DEAT' && individual.death?.place) {
@@ -266,7 +251,6 @@ export class AncestryGedcomParser {
   }
 
   private processName(nameValue: string, individual: GedcomIndividual): void {
-    // Handle name format like "Diana /Bristow/"
     const trimmedName = nameValue.trim();
     const surnameMatch = trimmedName.match(/\/([^/]+)\//);
     let surname = '';
@@ -289,15 +273,13 @@ export class AncestryGedcomParser {
     };
   }
 
-  private parseDate(dateStr: string): string {
+  parseDate(dateStr: string): string {
     if (!dateStr) return '';
     
-    // Remove qualifiers
     const cleanDate = dateStr
       .replace(/^(ABT|BEF|AFT|CAL|EST)\s+/i, '')
       .trim();
     
-    // Try to parse
     try {
       const date = new Date(cleanDate);
       if (!isNaN(date.getTime())) {
@@ -308,10 +290,9 @@ export class AncestryGedcomParser {
         });
       }
     } catch (e) {
-      // Continue to other parsing
+      // continue
     }
     
-    // Try to extract year
     const yearMatch = cleanDate.match(/\b(\d{4})\b/);
     if (yearMatch) return yearMatch[1];
     
@@ -356,7 +337,6 @@ export class AncestryGedcomParser {
   private convertToFamilyMemberFormat(): FamilyMember[] {
     const familyMembers: FamilyMember[] = [];
     
-    // First, create all individuals with basic data
     this.individuals.forEach((individual, id) => {
       const familyMember: FamilyMember = {
         id,
@@ -369,7 +349,6 @@ export class AncestryGedcomParser {
         rels: {}
       };
       
-      // Add optional fields
       if (individual.death?.date) {
         familyMember.data.death = individual.death.date;
       }
@@ -386,15 +365,11 @@ export class AncestryGedcomParser {
       familyMembers.push(familyMember);
     });
     
-    // Now build relationships - CRITICAL: Ensure each child has only ONE set of parents
     const childToParentMap = new Map<string, {father?: string, mother?: string}>();
     
-    // First pass: build map of children to their parents
     this.families.forEach(family => {
       if (family.children) {
         family.children.forEach(childId => {
-          // Only set parents if this child doesn't already have parents
-          // This prevents "child has more than 1 parent" error
           if (!childToParentMap.has(childId)) {
             childToParentMap.set(childId, {
               father: family.husband,
@@ -405,7 +380,6 @@ export class AncestryGedcomParser {
       }
     });
     
-    // Second pass: apply relationships based on the map
     familyMembers.forEach(member => {
       const parents = childToParentMap.get(member.id);
       if (parents) {
@@ -414,7 +388,6 @@ export class AncestryGedcomParser {
         if (parents.mother) member.rels.parents.push(parents.mother);
       }
       
-      // Build spouse relationships from families where this person is husband/wife
       this.families.forEach(family => {
         if (family.husband === member.id && family.wife) {
           if (!member.rels.spouses) member.rels.spouses = [];
@@ -430,14 +403,13 @@ export class AncestryGedcomParser {
       });
     });
     
-    // Third pass: build children relationships
     familyMembers.forEach(parent => {
       this.families.forEach(family => {
         if ((family.husband === parent.id || family.wife === parent.id) && family.children) {
           if (!parent.rels.children) parent.rels.children = [];
           family.children.forEach(childId => {
-            if (!parent.rels.children.includes(childId)) {
-              parent.rels.children.push(childId);
+            if (!parent.rels.children!.includes(childId)) {
+              parent.rels.children!.push(childId);
             }
           });
         }
@@ -447,7 +419,7 @@ export class AncestryGedcomParser {
     return familyMembers;
   }
 
-  private reset(): void {
+  reset(): void {
     this.individuals.clear();
     this.families.clear();
     this.currentRecord = null;
@@ -457,9 +429,42 @@ export class AncestryGedcomParser {
     this.tagStack = [];
     this.tempEvent = null;
   }
+
+  /** Extract marriage events with names resolved */
+  getMarriageEvents(): MarriageEvent[] {
+    const events: MarriageEvent[] = [];
+
+    this.families.forEach((family) => {
+      if (!family.marriage?.date) return;
+
+      const yearMatch = family.marriage.date.match(/\b(1[0-9]{3}|20[0-2][0-9])\b/);
+      if (!yearMatch) return;
+
+      const year = parseInt(yearMatch[1]);
+
+      const husb = family.husband ? this.individuals.get(family.husband) : undefined;
+      const wife = family.wife ? this.individuals.get(family.wife) : undefined;
+
+      const husbandName = husb
+        ? [husb.name?.given, husb.name?.surname].filter(Boolean).join(' ') || 'Unknown'
+        : 'Unknown';
+      const wifeName = wife
+        ? [wife.name?.given, wife.name?.surname].filter(Boolean).join(' ') || 'Unknown'
+        : 'Unknown';
+
+      events.push({
+        year,
+        husbandName,
+        wifeName,
+        place: family.marriage.place,
+      });
+    });
+
+    return events;
+  }
 }
 
-export async function parseGedcomFile(file: File): Promise<FamilyMember[]> {
+export async function parseGedcomFile(file: File): Promise<{ members: FamilyMember[]; marriages: MarriageEvent[] }> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     
@@ -469,16 +474,16 @@ export async function parseGedcomFile(file: File): Promise<FamilyMember[]> {
         const parser = new AncestryGedcomParser();
         const familyMembers = parser.parseGedcom(content);
         
-        // Validate data structure
         if (familyMembers.length === 0) {
           throw new Error('No valid family data found in GEDCOM file');
         }
         
-        // Log for debugging
-        console.log('Parsed', familyMembers.length, 'family members');
-        console.log('Sample data:', familyMembers.slice(0, 3));
+        const marriages = parser.getMarriageEvents();
         
-        resolve(familyMembers);
+        console.log('Parsed', familyMembers.length, 'family members');
+        console.log('Parsed', marriages.length, 'marriage events');
+        
+        resolve({ members: familyMembers, marriages });
       } catch (error) {
         console.error('Error parsing GEDCOM:', error);
         reject(new Error('Failed to parse GEDCOM file. Please ensure it\'s a valid GEDCOM 5.5 file.'));
@@ -493,7 +498,6 @@ export async function parseGedcomFile(file: File): Promise<FamilyMember[]> {
   });
 }
 
-// Helper function to extract basic info for debugging
 export function getGedcomStats(gedcomContent: string): {
   individualCount: number;
   familyCount: number;
@@ -502,8 +506,7 @@ export function getGedcomStats(gedcomContent: string): {
   const parser = new AncestryGedcomParser();
   const data = parser.parseGedcom(gedcomContent);
   
-  // Count families from internal map (private access)
-  const familyCount = (parser as any).families?.size || 0;
+  const familyCount = parser.families?.size || 0;
   
   const sampleIndividuals = data.slice(0, 5).map(ind => ({
     id: ind.id,

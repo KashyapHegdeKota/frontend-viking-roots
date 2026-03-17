@@ -1,10 +1,11 @@
 import React, { useRef, useState } from 'react';
 import * as f3 from 'family-chart';
 import 'family-chart/styles/family-chart.css';
-import type { FamilyMember } from '../components/GedcomToJSON';
+import type { FamilyMember, MarriageEvent } from '../components/GedcomToJSON';
 import { parseGedcomFile, AncestryGedcomParser, getGedcomStats } from '../components/GedcomToJSON';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import TimelinePanel from '../components/TimelinePanel';
 
 const INJECTED_STYLES = `
   @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&display=swap');
@@ -20,17 +21,14 @@ const INJECTED_STYLES = `
     --crimson:     #8b1a1a;
   }
 
-  /* ── Whole page background ── */
   body { background: #080602 !important; }
 
-  /* ── f3 link lines ── */
   #FamilyChart path.link {
     stroke: var(--gold-deep) !important;
     stroke-width: 1.5px !important;
     opacity: 0.8;
   }
 
-  /* ── Cards ── */
   #FamilyChart .card {
     border-radius: 2px !important;
     transition: box-shadow 0.25s, transform 0.2s !important;
@@ -60,7 +58,6 @@ const INJECTED_STYLES = `
     box-shadow: 0 0 0 2px var(--gold-bright), 0 8px 40px rgba(200,150,30,0.55), inset 0 1px 0 rgba(247,224,138,0.3) !important;
   }
 
-  /* ── Card text ── */
   #FamilyChart .card-label {
     color: var(--gold-bright) !important;
     font-family: 'Cormorant Garamond', serif !important;
@@ -77,11 +74,9 @@ const INJECTED_STYLES = `
     font-style: italic;
   }
 
-  /* ── Person placeholder icon ── */
   #FamilyChart .person-icon svg { color: var(--gold-deep) !important; }
   #FamilyChart .mini-tree svg   { color: var(--gold-mid) !important; }
 
-  /* ── Edit form panel ── */
   #FamilyChart .f3-form-cont {
     background: linear-gradient(170deg, #100d06 0%, #080602 100%) !important;
     border-left: 1px solid var(--gold-dim) !important;
@@ -170,7 +165,6 @@ const INJECTED_STYLES = `
     letter-spacing: 0 !important;
   }
 
-  /* history nav buttons */
   #FamilyChart .f3-history-controls button {
     background: transparent !important;
     border: 1px solid var(--gold-dim) !important;
@@ -179,11 +173,8 @@ const INJECTED_STYLES = `
     transition: all 0.2s !important;
   }
   #FamilyChart .f3-history-controls button:hover { border-color: var(--gold-bright) !important; color: var(--gold-bright) !important; }
-
-  /* hide default nav */
   #FamilyChart .f3-nav-cont { display: none !important; }
 
-  /* SVG card overrides for to-add placeholders */
   #FamilyChart .card-to-add .card-inner {
     border-style: dashed !important;
     border-color: var(--gold-dim) !important;
@@ -192,20 +183,20 @@ const INJECTED_STYLES = `
 `;
 
 const FamilyTree = () => {
-  
   const containerRef = useRef<HTMLDivElement>(null);
   const f3ChartRef = useRef<any>(null);
   const styleRef = useRef<HTMLStyleElement | null>(null);
 
   const [familyData, setFamilyData] = useState<FamilyMember[]>([]);
+  const [marriages, setMarriages] = useState<MarriageEvent[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [showTimeline, setShowTimeline] = useState(false);
   const [stats, setStats] = useState<{
     individualCount: number;
     familyCount: number;
     sampleIndividuals: Array<{ id: string; name: string }>;
   } | null>(null);
 
-  // Inject global styles once
   const injectStyles = () => {
     if (styleRef.current) return;
     const tag = document.createElement('style');
@@ -263,9 +254,12 @@ const FamilyTree = () => {
     setIsLoading(true);
     resetChart();
     try {
-      const parsedData = await parseGedcomFile(file);
-      setFamilyData(parsedData);
-      buildChart(parsedData);
+      const { members, marriages: marriageEvents } = await parseGedcomFile(file);
+      setFamilyData(members);
+      setMarriages(marriageEvents);
+      buildChart(members);
+      // Auto-show timeline on first load
+      setShowTimeline(true);
       const reader = new FileReader();
       reader.onload = (e) => setStats(getGedcomStats(e.target?.result as string));
       reader.readAsText(file);
@@ -287,55 +281,112 @@ const FamilyTree = () => {
 1 NAME John /Doe/
 1 SEX M
 1 BIRT
-2 DATE 1980
+2 DATE 15 MAR 1980
 2 PLAC New York, New York, USA
 1 FAMS @F1@
 0 @I2@ INDI
 1 NAME Jane /Smith/
 1 SEX F
 1 BIRT
-2 DATE 1982
+2 DATE 22 JUL 1982
 2 PLAC Los Angeles, California, USA
 1 FAMS @F1@
 0 @I3@ INDI
 1 NAME Bob /Doe/
 1 SEX M
 1 BIRT
-2 DATE 2005
+2 DATE 5 APR 2005
 2 PLAC Chicago, Illinois, USA
 1 FAMC @F1@
+0 @I4@ INDI
+1 NAME Margaret /Doe/
+1 SEX F
+1 BIRT
+2 DATE 1948
+2 PLAC Boston, Massachusetts, USA
+1 DEAT
+2 DATE 2019
+2 PLAC New York, New York, USA
+1 FAMS @F2@
+0 @I5@ INDI
+1 NAME Robert /Doe/
+1 SEX M
+1 BIRT
+2 DATE 1945
+2 PLAC Philadelphia, Pennsylvania, USA
+1 DEAT
+2 DATE 2015
+2 PLAC New York, New York, USA
+1 FAMS @F2@
+1 FAMC @F3@
+0 @I6@ INDI
+1 NAME Eleanor /Doe/
+1 SEX F
+1 BIRT
+2 DATE 1920
+2 PLAC London, England
+1 DEAT
+2 DATE 1998
+2 PLAC Philadelphia, Pennsylvania, USA
+1 FAMS @F3@
+0 @I7@ INDI
+1 NAME George /Doe/
+1 SEX M
+1 BIRT
+2 DATE 1918
+2 PLAC London, England
+1 DEAT
+2 DATE 1995
+2 PLAC Philadelphia, Pennsylvania, USA
+1 FAMS @F3@
 0 @F1@ FAM
 1 HUSB @I1@
 1 WIFE @I2@
 1 CHIL @I3@
 1 MARR
-2 DATE 10 JUN 2000
+2 DATE 10 JUN 2003
 2 PLAC Las Vegas, Nevada, USA
+0 @F2@ FAM
+1 HUSB @I5@
+1 WIFE @I4@
+1 CHIL @I1@
+1 MARR
+2 DATE 14 FEB 1970
+2 PLAC Boston, Massachusetts, USA
+0 @F3@ FAM
+1 HUSB @I7@
+1 WIFE @I6@
+1 CHIL @I5@
+1 MARR
+2 DATE 20 APR 1944
+2 PLAC London, England
 0 TRLR`;
+
     resetChart();
     const parser = new AncestryGedcomParser();
     const parsed = parser.parseGedcom(exampleGedcom);
+    const marriageEvents = parser.getMarriageEvents();
     setFamilyData(parsed);
+    setMarriages(marriageEvents);
     setStats(getGedcomStats(exampleGedcom));
     buildChart(parsed);
+    setShowTimeline(true);
   };
 
-  /* ── Shared style tokens for the toolbar UI ── */
   const gold = '#c8961e';
   const goldBright = '#f7e08a';
-  const blackDeep = '#08060200';
-  const blackPanel = '#0d0a05';
+  const goldDim = '#3a2a08';
   const borderColor = '#2a1e06';
 
   return (
-    
     <div style={{
       fontFamily: "'Cormorant Garamond', Georgia, serif",
       background: 'linear-gradient(180deg, #0a0702 0%, #060401 100%)',
       minHeight: '100vh',
       padding: '0',
     }}>
-      <Header/>
+      <Header />
+
       {/* ── Decorative header bar ── */}
       <div style={{
         background: 'linear-gradient(90deg, #080602 0%, #1a1206 30%, #221808 50%, #1a1206 70%, #080602 100%)',
@@ -344,20 +395,16 @@ const FamilyTree = () => {
         position: 'relative',
         overflow: 'hidden',
       }}>
-        {/* corner ornaments */}
         <div style={{ position: 'absolute', top: 12, left: 12, width: 36, height: 36,
           borderTop: `2px solid ${gold}`, borderLeft: `2px solid ${gold}`, opacity: 0.6 }} />
         <div style={{ position: 'absolute', top: 12, right: 12, width: 36, height: 36,
           borderTop: `2px solid ${gold}`, borderRight: `2px solid ${gold}`, opacity: 0.6 }} />
 
-        {/* title */}
         <div style={{ textAlign: 'center', marginBottom: 20 }}>
           <div style={{
             fontSize: '0.6rem', letterSpacing: '0.4em', color: gold,
             fontFamily: "'Cinzel', serif", textTransform: 'uppercase', marginBottom: 6, opacity: 0.8,
-          }}>
-            
-          </div>
+          }} />
           <h1 style={{
             fontFamily: "'Cinzel', serif",
             fontSize: 'clamp(1.4rem, 3vw, 2.2rem)',
@@ -369,7 +416,7 @@ const FamilyTree = () => {
             backgroundClip: 'text',
             letterSpacing: '0.12em',
           }}>
-           ✦ KinSnap ✦
+            ✦ KinSnap ✦
           </h1>
           <div style={{
             height: 1, background: `linear-gradient(90deg, transparent, ${gold}, transparent)`,
@@ -381,10 +428,7 @@ const FamilyTree = () => {
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, alignItems: 'flex-end', justifyContent: 'center' }}>
 
           {/* file upload */}
-          <label style={{
-            display: 'flex', flexDirection: 'column', gap: 4, cursor: 'pointer',
-          }}>
-            
+          <label style={{ display: 'flex', flexDirection: 'column', gap: 4, cursor: 'pointer' }}>
             <div style={{
               position: 'relative',
               border: `1px solid ${borderColor}`,
@@ -394,7 +438,6 @@ const FamilyTree = () => {
               color: goldBright,
               fontSize: '0.82rem',
               fontFamily: "'Cormorant Garamond', serif",
-              transition: 'border-color 0.2s',
               whiteSpace: 'nowrap',
             }}>
               Choose file…
@@ -413,7 +456,6 @@ const FamilyTree = () => {
             onClick={loadExampleData}
             disabled={isLoading}
             style={{
-              
               border: 'none',
               borderRadius: 2,
               padding: '10px 22px',
@@ -431,6 +473,46 @@ const FamilyTree = () => {
           >
             Load Example
           </button>
+
+          {/* Timeline toggle button */}
+          {familyData.length > 0 && (
+            <button
+              onClick={() => setShowTimeline(v => !v)}
+              style={{
+                background: showTimeline ? 'rgba(200,150,30,0.15)' : 'transparent',
+                border: `1px solid ${showTimeline ? gold : goldDim}`,
+                borderRadius: 2,
+                padding: '9px 18px',
+                fontFamily: "'Cinzel', serif",
+                fontSize: '0.62rem',
+                letterSpacing: '0.16em',
+                textTransform: 'uppercase',
+                color: showTimeline ? goldBright : gold,
+                cursor: 'pointer',
+                transition: 'all 0.25s',
+                whiteSpace: 'nowrap',
+                alignSelf: 'flex-end',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 7,
+              }}
+              onMouseOver={e => {
+                if (!showTimeline) {
+                  e.currentTarget.style.borderColor = gold;
+                  e.currentTarget.style.color = goldBright;
+                }
+              }}
+              onMouseOut={e => {
+                if (!showTimeline) {
+                  e.currentTarget.style.borderColor = goldDim;
+                  e.currentTarget.style.color = gold;
+                }
+              }}
+            >
+              <span style={{ fontSize: '0.75rem' }}>⧗</span>
+              {showTimeline ? 'Hide Timeline' : 'Show Timeline'}
+            </button>
+          )}
 
           {isLoading && (
             <span style={{ color: gold, fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', alignSelf: 'flex-end' }}>
@@ -473,7 +555,6 @@ const FamilyTree = () => {
           </div>
         )}
 
-        {/* bottom corner ornaments */}
         <div style={{ position: 'absolute', bottom: 12, left: 12, width: 36, height: 36,
           borderBottom: `2px solid ${gold}`, borderLeft: `2px solid ${gold}`, opacity: 0.6 }} />
         <div style={{ position: 'absolute', bottom: 12, right: 12, width: 36, height: 36,
@@ -490,23 +571,41 @@ const FamilyTree = () => {
           <p style={{ color: gold, fontSize: '1.2rem', marginBottom: 8, fontStyle: 'italic' }}>
             Upload a GEDCOM file or load the example to begin
           </p>
-          
         </div>
       )}
 
-      {/* ── Chart canvas ── */}
-      <div
-        ref={containerRef}
-        className="f3"
-        style={{
-          width: '100%',
+      {/* ── Main content: Timeline + Chart side by side ── */}
+      {familyData.length > 0 && (
+        <div style={{
+          display: 'flex',
           height: '900px',
           background: 'radial-gradient(ellipse at 50% 30%, #141008 0%, #0a0702 60%, #060401 100%)',
-          position: 'relative',
           borderTop: `1px solid ${borderColor}`,
-        }}
-      />
-      <Footer/>
+          overflow: 'hidden',
+        }}>
+          {/* Timeline Panel */}
+          <TimelinePanel
+            familyData={familyData}
+            marriages={marriages}
+            isVisible={showTimeline}
+            onClose={() => setShowTimeline(false)}
+          />
+
+          {/* Chart canvas */}
+          <div
+            ref={containerRef}
+            className="f3"
+            style={{
+              flex: 1,
+              height: '100%',
+              position: 'relative',
+              minWidth: 0,
+            }}
+          />
+        </div>
+      )}
+
+      <Footer />
     </div>
   );
 };
