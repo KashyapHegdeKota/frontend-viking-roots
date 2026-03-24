@@ -1,58 +1,21 @@
-import { useNavigate } from 'react-router-dom';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import ProjectsSection from '../components/ProjectSection';
-import '../styles/components.css';
+import { Navbar } from "@/components/navbar";
+import { Hero } from "@/components/hero";
+import { HowItWorks } from "@/components/how-it-works";
+import { FeaturedProject } from "@/components/featured-project";
+import { CtaSection } from "@/components/cta-section";
+import { Footer } from "@/components/footer";
 
-interface HomePageProps {
-  heroImage?: string; // optional, defaults if not provided
-}
-
-const HomePage: React.FC<HomePageProps> = ({ heroImage = '/HeroImageRight.webp' }) => {
-  const navigate = useNavigate();
-
+export default function HomePage() {
   return (
-    <div>
-      <Header />
-
-      {/* Hero Section */}
-      <section
-        className="hero"
-        style={{ backgroundImage: `url(${heroImage})` }} // dynamically set background
-      >
-        <div className="hero-overlay" />
-        <div className="hero-content">
-          <h1 className="hero-title">
-            Discover Your Ancestry with Viking Roots
-          </h1>
-          <p className="hero-description">
-            The Viking Roots project was created to help people learn about their heritage, 
-            understand their bloodlines and lineage, and help reunite families across generations.
-          </p>
-          <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <button onClick={() => navigate('/register')} className="hero-button">
-              Create Your Profile
-            </button>
-            <button onClick={() => navigate('/login')} className="hero-button" style={{ backgroundColor: '#76c7c0' }}>
-              Login
-            </button>
-          </div>
-        </div>
-        <div className="hero-decoration">
-          <img
-            src="/border.webp"
-            alt="Decorative Viking design"
-          />
-        </div>
-      </section>
-
-      {/* Projects Section */}
-      <ProjectsSection />
-
-      {/* Footer */}
+    <div className="min-h-screen bg-[#1c1919] font-sans">
+      <Navbar />
+      <main>
+        <Hero />
+        <HowItWorks />
+        <FeaturedProject />
+        <CtaSection />
+      </main>
       <Footer />
     </div>
   );
-};
-
-export default HomePage;
+}
