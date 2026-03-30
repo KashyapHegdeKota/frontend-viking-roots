@@ -70,20 +70,24 @@ body {
 }
 
 .mobile-menu-button {
-  position: fixed;   /* stays in viewport when scrolling */
-  top: 10px;         /* distance from top */
-  left: 10px;        /* distance from left */
-  display: block;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  display: none;
   background: #f9f9f9;
   border: 2px solid #000; 
   cursor: pointer;
   padding: 0.5rem;
-  z-index: 3000
-  
+  z-index: 3000;
 }
 
 .mobile-menu-button svg {
-  stroke: black;        /* Icon turns white on dark bg */
+  stroke: black;
+}
+
+/* Hide old mobile menu when inside the app layout */
+.app-layout .mobile-menu-button {
+  display: none !important;
 }
 
 

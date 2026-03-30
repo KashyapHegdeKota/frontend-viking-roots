@@ -15,27 +15,41 @@ import UserProfile from './pages/UserProfile';
 import HeritageDashboard from './pages/HeritageDashboard';
 import GedcomUploader from './pages/GedcomUploader';  
 import ManualAncestoryEntry from './pages/ManualAncestoryEntry';
+import SocialFeed from './pages/SocialFeed';
+import GroupsPage from './pages/GroupsPage';
+import AppLayout from './components/AppLayout';
+
+// Wrapper that adds the sidebar + topbar layout
+const WithLayout = ({ children }: { children: React.ReactNode }) => (
+  <AppLayout>{children}</AppLayout>
+);
 
 function App() {
   return (
     <Routes>
+      {/* Public routes - no sidebar */}
       <Route path="/" element={<HomePage />} />
-      <Route path="/about" element={<AboutPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/verify-otp" element={<OTPVerificationPage />} />
-      <Route path="/questionnaire" element={<VikingRootsQuestionnaire />} />
-      <Route path="/gimli-saga" element={<Gimli />} />
-      <Route path="/Overview" element={<Overview />} />
-      <Route path="/Partner" element={<Partner />} />
-      <Route path="/careers" element={<Career />} />
-      <Route path="/upload" element={<ImageUpload />} />
-      <Route path="/profile/setup" element={<ProfileSetup />} />
-      <Route path="/profile/:username" element={<UserProfile />} />
-      <Route path="/profile" element={<UserProfile />} />
-      <Route path="/dashboard" element={<HeritageDashboard />} />
-      <Route path="/import-tree" element={<GedcomUploader />} />
-      <Route path="/ancestor/add" element={<ManualAncestoryEntry />} />
+
+      {/* Authenticated routes - with sidebar layout */}
+      <Route path="/feed" element={<WithLayout><SocialFeed /></WithLayout>} />
+      <Route path="/groups" element={<WithLayout><GroupsPage /></WithLayout>} />
+      <Route path="/groups/:groupId" element={<WithLayout><GroupsPage /></WithLayout>} />
+      <Route path="/upload" element={<WithLayout><ImageUpload /></WithLayout>} />
+      <Route path="/dashboard" element={<WithLayout><HeritageDashboard /></WithLayout>} />
+      <Route path="/import-tree" element={<WithLayout><GedcomUploader /></WithLayout>} />
+      <Route path="/ancestor/add" element={<WithLayout><ManualAncestoryEntry /></WithLayout>} />
+      <Route path="/questionnaire" element={<WithLayout><VikingRootsQuestionnaire /></WithLayout>} />
+      <Route path="/profile/setup" element={<WithLayout><ProfileSetup /></WithLayout>} />
+      <Route path="/profile/:username" element={<WithLayout><UserProfile /></WithLayout>} />
+      <Route path="/profile" element={<WithLayout><UserProfile /></WithLayout>} />
+      <Route path="/about" element={<WithLayout><AboutPage /></WithLayout>} />
+      <Route path="/gimli-saga" element={<WithLayout><Gimli /></WithLayout>} />
+      <Route path="/Overview" element={<WithLayout><Overview /></WithLayout>} />
+      <Route path="/Partner" element={<WithLayout><Partner /></WithLayout>} />
+      <Route path="/careers" element={<WithLayout><Career /></WithLayout>} />
     </Routes>
   );
 }

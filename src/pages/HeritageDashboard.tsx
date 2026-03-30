@@ -1,6 +1,6 @@
 // src/pages/HeritageDashboard.tsx
 import React, { useState, useEffect } from 'react';
-import { Calendar, Users, Edit2, MapPin, X } from 'lucide-react';
+import { Calendar, Users, Edit2, MapPin, X, Download, ChevronDown, ExternalLink } from 'lucide-react';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
 
@@ -28,6 +28,7 @@ const HeritageDashboard: React.FC = () => {
   const [timeline, setTimeline] = useState<TimelineEvent[]>([]);
   const [ancestors, setAncestors] = useState<Ancestor[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showExportDropdown, setShowExportDropdown] = useState(false);
   
   // Edit State
   const [editingAncestor, setEditingAncestor] = useState<Ancestor | null>(null);
@@ -108,19 +109,92 @@ const HeritageDashboard: React.FC = () => {
   return (
     <div style={{ maxWidth: '900px', margin: '0 auto', padding: '20px' }}>
       {/* Header Tabs */}
-      <div style={{ display: 'flex', gap: '20px', marginBottom: '30px', borderBottom: '2px solid #e5e5e5' }}>
-        <button 
-          onClick={() => setActiveTab('timeline')}
-          style={{ padding: '10px 20px', border: 'none', background: 'transparent', cursor: 'pointer', borderBottom: activeTab === 'timeline' ? '3px solid #8b5cf6' : 'none', fontWeight: activeTab === 'timeline' ? 'bold' : 'normal' }}
-        >
-          <Calendar size={18} style={{ marginRight: '8px' }} /> Timeline
-        </button>
-        <button 
-          onClick={() => setActiveTab('tree')}
-          style={{ padding: '10px 20px', border: 'none', background: 'transparent', cursor: 'pointer', borderBottom: activeTab === 'tree' ? '3px solid #8b5cf6' : 'none', fontWeight: activeTab === 'tree' ? 'bold' : 'normal' }}
-        >
-          <Users size={18} style={{ marginRight: '8px' }} /> Family Tree
-        </button>
+      <div style={{ display: 'flex', gap: '20px', marginBottom: '30px', borderBottom: '2px solid #e5e5e5', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', gap: '20px' }}>
+          <button 
+            onClick={() => setActiveTab('timeline')}
+            style={{ padding: '10px 20px', border: 'none', background: 'transparent', cursor: 'pointer', borderBottom: activeTab === 'timeline' ? '3px solid #8b5cf6' : 'none', fontWeight: activeTab === 'timeline' ? 'bold' : 'normal' }}
+          >
+            <Calendar size={18} style={{ marginRight: '8px' }} /> Timeline
+          </button>
+          <button 
+            onClick={() => setActiveTab('tree')}
+            style={{ padding: '10px 20px', border: 'none', background: 'transparent', cursor: 'pointer', borderBottom: activeTab === 'tree' ? '3px solid #8b5cf6' : 'none', fontWeight: activeTab === 'tree' ? 'bold' : 'normal' }}
+          >
+            <Users size={18} style={{ marginRight: '8px' }} /> Family Tree
+          </button>
+        </div>
+
+        {/* Export Dropdown */}
+        <div style={{ position: 'relative' }}>
+          <button
+            onClick={() => setShowExportDropdown(!showExportDropdown)}
+            style={{
+              display: 'flex', alignItems: 'center', gap: '6px',
+              padding: '8px 18px', backgroundColor: '#111', color: '#fff',
+              border: 'none', borderRadius: '8px', fontSize: '14px',
+              fontWeight: '600', cursor: 'pointer', transition: 'background 0.2s'
+            }}
+          >
+            <Download size={16} /> Export GEDCOM <ChevronDown size={14} style={{ transform: showExportDropdown ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+          </button>
+
+          {showExportDropdown && (
+            <div style={{
+              position: 'absolute', top: '100%', right: 0, marginTop: '6px',
+              background: '#fff', border: '1px solid #e5e7eb', borderRadius: '12px',
+              boxShadow: '0 8px 24px rgba(0,0,0,0.12)', minWidth: '240px', zIndex: 50, overflow: 'hidden'
+            }}>
+              <button
+                onClick={async () => {
+                  setShowExportDropdown(false);
+                  try {
+                    const response = await fetch(`${API_BASE_URL}/api/heritage/export-gedcom/`, { credentials: 'include' });
+                    if (response.ok) {
+                      const blob = await response.blob();
+                      const url = window.URL.createObjectURL(blob);
+                      const a = document.createElement('a');
+                      a.href = url; a.download = 'family_tree.ged';
+                      document.body.appendChild(a); a.click();
+                      document.body.removeChild(a);
+                      window.URL.revokeObjectURL(url);
+                    } else { alert('Export failed.'); }
+                  } catch { alert('Network error.'); }
+                }}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: '10px', width: '100%',
+                  padding: '12px 16px', background: 'none', border: 'none',
+                  borderBottom: '1px solid #f3f4f6', cursor: 'pointer', fontSize: '14px',
+                  fontWeight: '500', color: '#374151', textAlign: 'left'
+                }}
+              >
+                <Download size={16} color="#6b7280" />
+                <div>
+                  <div>Download .GED File</div>
+                  <div style={{ fontSize: '12px', color: '#9ca3af', marginTop: '1px' }}>Save to your computer</div>
+                </div>
+              </button>
+              <button
+                onClick={() => {
+                  setShowExportDropdown(false);
+                  window.open('https://app.gedmatch.com/dnaupload/', '_blank', 'noopener,noreferrer');
+                }}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: '10px', width: '100%',
+                  padding: '12px 16px', background: 'none', border: 'none',
+                  cursor: 'pointer', fontSize: '14px', fontWeight: '500',
+                  color: '#374151', textAlign: 'left'
+                }}
+              >
+                <ExternalLink size={16} color="#8b5cf6" />
+                <div>
+                  <div>Export to GEDmatch</div>
+                  <div style={{ fontSize: '12px', color: '#9ca3af', marginTop: '1px' }}>Upload DNA data to gedmatch.com</div>
+                </div>
+              </button>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* TIMELINE VIEW (Sponsor Requirement) */}

@@ -251,6 +251,38 @@ const UserProfile: React.FC = () => {
                 >
                   + Add Ancestor Manually
                 </button>
+
+                <button
+                  onClick={() => navigate('/feed')}
+                  className="action-button"
+                  style={{
+                    backgroundColor: '#7c3aed',
+                    color: '#fff',
+                    padding: '12px 24px',
+                    borderRadius: '8px',
+                    border: 'none',
+                    cursor: 'pointer',
+                    fontWeight: '500'
+                  }}
+                >
+                  Community Feed
+                </button>
+
+                <button
+                  onClick={() => navigate('/groups')}
+                  className="action-button"
+                  style={{
+                    backgroundColor: '#1e40af',
+                    color: '#fff',
+                    padding: '12px 24px',
+                    borderRadius: '8px',
+                    border: 'none',
+                    cursor: 'pointer',
+                    fontWeight: '500'
+                  }}
+                >
+                  Groups
+                </button>
               </div>
             </div>
           </div>

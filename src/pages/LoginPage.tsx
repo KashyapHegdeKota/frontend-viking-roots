@@ -37,16 +37,26 @@ const LoginPage = () => {
       const data = await response.json();
 
       if (response.ok) {
-        alert("Login successful!");
         console.log(data);
+
+        // Store username for profile navigation
+        if (data.username) {
+          localStorage.setItem('username', data.username);
+        }
 
         // Store token if your backend provides one
         if (data.token) {
           localStorage.setItem('authToken', data.token);
         }
 
-        // ✅ Redirect using React Router
-        navigate("/questionnaire");
+        // Redirect based on profile status
+        if (data.profile_completed) {
+          // Existing user with completed profile → go to their profile
+          navigate(`/profile/${data.username}`);
+        } else {
+          // New user or incomplete profile → go to profile setup
+          navigate("/profile/setup");
+        }
       } else {
         alert(data.error || "Login failed. Please check your credentials.");
         console.error("Login error:", data);

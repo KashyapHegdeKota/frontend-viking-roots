@@ -1,0 +1,569 @@
+/* ===== Groups Page Styles ===== */
+
+.groups-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.groups-header {
+  margin-bottom: 25px;
+}
+
+.groups-header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 15px;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: #8b5cf6;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-bottom: 20px;
+  padding: 0;
+}
+
+.back-btn:hover {
+  text-decoration: underline;
+}
+
+/* Toolbar */
+.groups-toolbar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.group-search-input {
+  flex: 1;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  outline: none;
+}
+
+.group-search-input:focus {
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+.create-group-btn {
+  background: #8b5cf6;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+
+.create-group-btn:hover {
+  background: #7c3aed;
+}
+
+/* Groups Grid */
+.groups-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.group-card {
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.2s;
+}
+
+.group-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.group-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.group-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111;
+  cursor: pointer;
+  margin: 0;
+}
+
+.group-name:hover {
+  color: #8b5cf6;
+}
+
+.member-count {
+  font-size: 13px;
+  color: #888;
+  white-space: nowrap;
+}
+
+.group-desc {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 15px;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.group-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.group-creator {
+  font-size: 12px;
+  color: #999;
+}
+
+.join-btn-sm,
+.leave-btn-sm {
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.join-btn-sm {
+  background: #8b5cf6;
+  color: #fff;
+  border: none;
+}
+
+.join-btn-sm:hover {
+  background: #7c3aed;
+}
+
+.leave-btn-sm {
+  background: #fff;
+  color: #e11d48;
+  border: 1px solid #e11d48;
+}
+
+.leave-btn-sm:hover {
+  background: #fef2f2;
+}
+
+/* Group Detail */
+.group-detail-header {
+  margin-bottom: 30px;
+}
+
+.group-detail-header h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 10px;
+}
+
+.group-description {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 15px;
+  line-height: 1.5;
+}
+
+.group-meta {
+  display: flex;
+  gap: 20px;
+  font-size: 14px;
+  color: #888;
+  margin-bottom: 15px;
+}
+
+.group-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.join-btn,
+.leave-btn {
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.join-btn {
+  background: #8b5cf6;
+  color: #fff;
+  border: none;
+}
+
+.join-btn:hover {
+  background: #7c3aed;
+}
+
+.leave-btn {
+  background: #fff;
+  color: #e11d48;
+  border: 1px solid #e11d48;
+}
+
+.leave-btn:hover {
+  background: #fef2f2;
+}
+
+/* Group Content Grid */
+.group-content-grid {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 25px;
+}
+
+.group-posts-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Members Sidebar */
+.group-members-sidebar {
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 20px;
+  height: fit-content;
+  position: sticky;
+  top: 20px;
+}
+
+.group-members-sidebar h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111;
+  margin-bottom: 15px;
+}
+
+.members-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.member-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  transition: background 0.15s;
+}
+
+.member-item:hover {
+  background: #f5f3ff;
+}
+
+.member-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.member-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.member-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #111;
+}
+
+.role-badge {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 1px 6px;
+  border-radius: 4px;
+  width: fit-content;
+}
+
+.role-badge.admin {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.role-badge.moderator {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #fff;
+  border-radius: 16px;
+  padding: 30px;
+  max-width: 480px;
+  width: 90%;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.modal-content h2 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #111;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.cancel-btn {
+  padding: 10px 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+  color: #666;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.cancel-btn:hover {
+  background: #f5f5f5;
+}
+
+.submit-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #8b5cf6;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.submit-btn:hover:not(:disabled) {
+  background: #7c3aed;
+}
+
+.submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Post card styles inherited from SocialFeed.css */
+
+/* ===== Add / Remove Member Styles ===== */
+
+.add-member-btn {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  padding: 7px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.add-member-btn:hover {
+  background: #1d4ed8;
+}
+
+.remove-member-btn {
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+  transition: color 0.2s;
+  flex-shrink: 0;
+}
+
+.remove-member-btn:hover {
+  color: #ef4444;
+}
+
+.member-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Add Member Modal */
+.add-member-modal {
+  max-width: 440px;
+}
+
+.add-member-modal h2 {
+  font-size: 20px;
+  margin-bottom: 16px;
+}
+
+.member-search-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 12px;
+  box-sizing: border-box;
+}
+
+.member-search-input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.member-search-results {
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.member-search-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 4px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.member-search-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.member-username {
+  font-weight: 500;
+  font-size: 14px;
+  color: #333;
+}
+
+.add-btn-sm {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  padding: 5px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.add-btn-sm:hover {
+  background: #1d4ed8;
+}
+
+.add-btn-sm:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.no-results {
+  text-align: center;
+  color: #888;
+  padding: 20px 0;
+  font-size: 14px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .groups-container {
+    padding: 15px 12px;
+  }
+
+  .groups-toolbar {
+    flex-direction: column;
+  }
+
+  .groups-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .group-content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .group-members-sidebar {
+    position: static;
+  }
+
+  .group-detail-header h1 {
+    font-size: 24px;
+  }
+}

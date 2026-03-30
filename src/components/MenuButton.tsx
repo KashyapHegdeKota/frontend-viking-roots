@@ -29,6 +29,9 @@ const MenuButton = ({ isOpen, onClose }: MenuButtonProps) => {
           <ul className="mobile-menu-nav">
             <li><a href="/" onClick={onClose}>Home</a></li>
             <li><a href="/about" onClick={onClose}>About</a></li>
+            <li><a href="/feed" onClick={onClose}>Community Feed</a></li>
+            <li><a href="/groups" onClick={onClose}>Groups</a></li>
+            <li><a href="/profile" onClick={onClose}>My Profile</a></li>
             <li><a href="/gimli-saga" onClick={onClose}>Gimli Saga</a></li>
             <li><a href="/overview" onClick={onClose}>Overview</a></li>
             <li><a href="/partner" onClick={onClose}>Partner</a></li>
