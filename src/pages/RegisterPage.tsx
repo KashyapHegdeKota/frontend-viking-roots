@@ -1,41 +1,29 @@
-import React, { useState } from 'react';
-import './components/Login.css';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { API_ENDPOINTS } from '../config/api';
-import { useNavigate } from 'react-router-dom';
-import MenuButton from '../components/MenuButton'
+import { SiteHeader } from '../components/site-header';
+import '../styles/AuthPages.css';
 
-
-const RegisterPage = () => {
+export default function RegisterPage() {
   const navigate = useNavigate();
-
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  // menu button states
-  const [menuOpen, setMenuOpen] = useState(false);
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    
     if (password !== confirmPassword) {
-      alert('Passwords do not match!');
+      alert('Passwords do not match.');
       return;
     }
 
     setIsLoading(true);
-
     try {
-        
-      console.log("Registering via:", API_ENDPOINTS.REGISTER);
-
       const response = await fetch(API_ENDPOINTS.REGISTER, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
         body: JSON.stringify({
           username: fullName,
@@ -46,123 +34,79 @@ const RegisterPage = () => {
       });
 
       const data = await response.json();
-      
-      if (response.ok) {
-        alert("Registration successful! You can now login.");
-        console.log(data);
-        // Redirect to login page (OTP verification disabled)
-        navigate('/login');
-      } else {
-        alert(data.error || "Registration failed. Please try again.");
-        console.error("Registration error:", data);
+      if (!response.ok) {
+        alert(data.error || 'Registration failed.');
+        return;
       }
-    } catch (error) {
-      console.error("Error:", error);
-      alert("Something went wrong. Please check your connection and try again.");
+
+      navigate('/otp-verify', { state: { email } });
+    } catch {
+      alert('Network error. Please check your connection and try again.');
     } finally {
       setIsLoading(false);
     }
-
   };
 
   return (
-    <>
-    {/* Menu Button Logic */}
-      <button 
-        className="mobile-menu-button" 
-        onClick={() => setMenuOpen(prev => !prev)}
-      >
-        <svg width="28" height="28" viewBox="0 0 24 24" stroke="currentColor" fill="none" strokeWidth="2">
-        <line x1="3" y1="6" x2="21" y2="6" />
-        <line x1="3" y1="12" x2="21" y2="12" />
-        <line x1="3" y1="18" x2="21" y2="18" />
-      </svg>
-      </button>
+    <div className="auth-page">
+      <SiteHeader />
+      <main className="auth-main">
+        <div className="auth-card">
+          <h1>Create Account</h1>
+          <p>Start building your heritage profile.</p>
 
-      <MenuButton 
-        isOpen={menuOpen} 
-        onClose={() => setMenuOpen(false)} 
-      />
-    <div className="login-section d-flex align-items-center justify-content-center min-vh-100">
-      <div className="row login-box">
-        
-        <div className="col-12 col-md-7 login-image-container text-center bg-white p-5">
-          <div className="d-flex flex-column align-items-center justify-content-center h-100">
-            <img 
-              src="/img/Logo-Transparent.png" 
-              alt="Viking Roots Logo" 
-              className="logo-dark-login mb-6" 
-            />
-            <p className="text-center">
-              Discover Your Ancestry with Viking Roots
-            </p>
-          </div>
-        </div>
-
-        <div className="col-12 col-md-5 login-form-container p-5 bg-light-grey d-flex flex-column justify-content-center">
-          <h2 className="fw-bold text-center mb-4">Create Account</h2>
-          <form id="registerForm" onSubmit={handleSubmit} noValidate>
-            <div className="mb-3">
-              <label htmlFor="fullName" className="form-label">Full Name</label>
+          <form onSubmit={handleSubmit} className="auth-form">
+            <label>
+              Full Name
               <input
                 type="text"
-                className="form-control"
-                id="fullName"
-                placeholder="Enter your full name"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 required
                 autoFocus
               />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="email" className="form-label">Email address</label>
+            </label>
+
+            <label>
+              Email
               <input
                 type="email"
-                className="form-control"
-                id="email"
-                placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="password" className="form-label">Password</label>
+            </label>
+
+            <label>
+              Password
               <input
                 type="password"
-                className="form-control"
-                id="password"
-                placeholder="Create a password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
+            </label>
+
+            <label>
+              Confirm Password
               <input
                 type="password"
-                className="form-control"
-                id="confirmPassword"
-                placeholder="Re-enter your password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
               />
-            </div>
-            <button role="button" type="submit" className="btn btn-custom w-100" disabled={isLoading}>
+            </label>
+
+            <button type="submit" disabled={isLoading}>
               {isLoading ? 'Signing Up...' : 'Sign Up'}
             </button>
-            <div className="mt-3 text-center">
-              <a href="/login">Already have an account? Login!</a>
-            </div>
           </form>
-        </div>
-      </div>
-    </div>
-  </>
-  );
-};
 
-export default RegisterPage;
+          <div className="auth-links">
+            <Link to="/login">Already have an account? Login</Link>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+}

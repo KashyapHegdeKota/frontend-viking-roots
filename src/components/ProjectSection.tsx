@@ -1,46 +1,36 @@
-import FeatureCard from './FeatureCard';
+import { Link } from 'react-router-dom';
 
-const ProjectsSection = () => {
-  const features = [
-    {
-      image: "/Phase1.jpg",
-      title: "The Viking Roots Project Phase 1",
-      description: "In the first phase of this project, you can register your information and begin discovering your ancestral connections. Join thousands of others in mapping the Viking diaspora.",
-      href: "/overview",
-      buttonText: "Explore Phase 1"
-    },
-    {
-      image: "/Gimli Saga.png",
-      title: "Gimli Saga Book",
-      description: "The Gimli Saga brings the reader face-to-face with the lives, struggles, and triumphs of Icelandic settlers in Manitoba. A captivating journey through history.",
-      href: "/gimli",
-      buttonText: "Discover the Saga"
-    },
-    {
-      image: "/Donate.jpg",
-      title: "Support Our Mission",
-      description: "If you would like to support our work and help preserve Viking heritage for future generations, your contribution makes a meaningful difference.",
-      href: "/donate",
-      buttonText: "Donate Now"
-    }
-  ];
+const items = [
+  {
+    title: 'The Viking Roots Project',
+    description: 'Register, map your ancestry, and connect descendants across generations.',
+    href: '/overview',
+  },
+  {
+    title: 'Gimli Saga Book',
+    description: 'Discover stories from the original publication and contribute new chapters.',
+    href: '/gimli',
+  },
+  {
+    title: 'Support the Mission',
+    description: 'Help preserve heritage records and family stories for future generations.',
+    href: '/overview',
+  },
+];
 
+export default function ProjectsSection() {
   return (
-    <section className="projects-section">
-      <div className="projects-header">
-        <h1 className="projects-title">Explore Our Projects</h1>
-        <p className="projects-description">
-          Discover the various initiatives that connect modern Vikings with their ancestral heritage
-        </p>
-      </div>
-
-      <div className="projects-grid">
-        {features.map((feature, index) => (
-          <FeatureCard key={index} {...feature} />
+    <section style={{ maxWidth: 1100, margin: '0 auto', padding: '2rem 1rem' }}>
+      <h2 style={{ color: 'var(--surface-fg)', fontSize: '1.8rem', marginBottom: '0.75rem' }}>Explore Our Projects</h2>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(230px,1fr))', gap: 12 }}>
+        {items.map((item) => (
+          <article key={item.title} style={{ border: '1px solid var(--surface-border)', borderRadius: 12, background: 'var(--surface-elev)', padding: '1rem' }}>
+            <h3 style={{ marginTop: 0 }}>{item.title}</h3>
+            <p style={{ color: 'var(--surface-muted)' }}>{item.description}</p>
+            <Link to={item.href} style={{ color: '#b98d11', fontWeight: 700 }}>Learn more</Link>
+          </article>
         ))}
       </div>
     </section>
   );
-};
-
-export default ProjectsSection;
+}

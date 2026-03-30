@@ -1,0 +1,159 @@
+.groups-page {
+  min-height: 100vh;
+  background: var(--surface-bg);
+  color: var(--surface-fg);
+}
+
+.groups-wrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.groups-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.groups-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 0.8rem;
+  margin-top: 0.8rem;
+}
+
+.group-card,
+.group-detail-header,
+.group-members-sidebar,
+.create-post-card,
+.post-card,
+.modal-content {
+  border: 1px solid var(--surface-border);
+  background: var(--surface-elev);
+  border-radius: 12px;
+  padding: 0.9rem;
+}
+
+.group-name {
+  border: none;
+  background: none;
+  color: var(--surface-fg);
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0;
+  cursor: pointer;
+}
+
+.group-desc,
+.member-count {
+  color: var(--surface-muted);
+}
+
+.group-search-input,
+.member-search-input,
+.modal-content input,
+.modal-content textarea,
+.post-input {
+  width: 100%;
+  border: 1px solid var(--surface-border);
+  background: transparent;
+  color: var(--surface-fg);
+  border-radius: 10px;
+  padding: 0.55rem 0.7rem;
+}
+
+.create-group-btn,
+.join-btn,
+.leave-btn,
+.join-btn-sm,
+.leave-btn-sm,
+.submit-btn,
+.add-member-btn,
+.post-submit-btn {
+  border: 1px solid #e4bd46;
+  background: #e4bd46;
+  color: #111;
+  border-radius: 999px;
+  padding: 0.45rem 0.85rem;
+  font-weight: 700;
+}
+
+.cancel-btn,
+.back-btn {
+  border: 1px solid var(--surface-border);
+  background: transparent;
+  color: var(--surface-fg);
+  border-radius: 999px;
+  padding: 0.45rem 0.85rem;
+}
+
+.group-content-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 0.8rem;
+  margin-top: 0.8rem;
+}
+
+.post-footer {
+  color: var(--surface-muted);
+  display: flex;
+  gap: 0.9rem;
+}
+
+.member-item {
+  border: 1px solid var(--surface-border);
+  border-radius: 8px;
+  padding: 0.45rem 0.55rem;
+  margin-bottom: 0.45rem;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+.modal-content {
+  width: 100%;
+  max-width: 460px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.55rem;
+  margin-top: 0.7rem;
+}
+
+.member-search-results {
+  margin-top: 0.6rem;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.member-search-item {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid var(--surface-border);
+  border-radius: 8px;
+  padding: 0.45rem 0.6rem;
+}
+
+.member-search-item button {
+  border: 1px solid #e4bd46;
+  background: #e4bd46;
+  color: #111;
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+}
+
+@media (max-width: 900px) {
+  .group-content-grid {
+    grid-template-columns: 1fr;
+  }
+}
