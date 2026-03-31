@@ -40,13 +40,19 @@ export function SignUpModal({ open, onClose }: SignUpModalProps) {
   }, [open]);
 
   function handleBackdropClick(e: React.MouseEvent<HTMLDialogElement>) {
+    // 1. If the click originated from inside the dialog (like a button, input, or Enter key), ignore it.
+    if (e.target !== dialogRef.current) return;
+
     const rect = dialogRef.current?.getBoundingClientRect();
     if (!rect) return;
+    
+    // 2. Proceed with backdrop calculation
     const clickedOutside =
       e.clientX < rect.left ||
       e.clientX > rect.right ||
       e.clientY < rect.top ||
       e.clientY > rect.bottom;
+      
     if (clickedOutside) onClose();
   }
 
