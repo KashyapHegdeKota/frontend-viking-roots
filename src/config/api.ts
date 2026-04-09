@@ -29,4 +29,12 @@ export const API_ENDPOINTS = {
   STORY_PROMPTS: `${API_BASE_URL}/api/ai_interview/story/prompts/`,
   STORY_START: `${API_BASE_URL}/api/ai_interview/story/start/`,
   STORY_MESSAGE: `${API_BASE_URL}/api/ai_interview/story/message/`,
+
+  // Recognition
+  RECOGNITION_SETTINGS: `${API_BASE_URL}/api/recognition/settings/face-tagging/`,
+  RECOGNITION_ENROLL: `${API_BASE_URL}/api/recognition/faces/enroll/`,
+  RECOGNITION_STATUS: `${API_BASE_URL}/api/recognition/faces/status/`,
+  RECOGNITION_DELETE: `${API_BASE_URL}/api/recognition/faces/delete/`,
+  RECOGNITION_PENDING_TAGS: `${API_BASE_URL}/api/recognition/tags/pending/`,
+  RECOGNITION_REVIEW_TAG: (id: number) => `${API_BASE_URL}/api/recognition/tags/${id}/review/`,
 } as const;

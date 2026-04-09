@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { DashboardNavbar } from "@/components/dashboard-navbar";
-import { DashboardSidebar } from "@/components/dashboard-sidebar";
-import { NudgeBubble } from "@/components/nudge-bubble";
-import { PostCard } from "@/components/post-card";
+import { DashboardNavbar } from "../components/dashboard-navbar";
+import { DashboardSidebar } from "../components/dashboard-sidebar";
+import { NudgeBubble } from "../components/nudge-bubble";
+import { PostCard } from "../components/post-card";
 import { API_ENDPOINTS } from "../config/api";
-import { StoryInterviewModal } from "@/components/StoryInterviewModal";
+import { StoryInterviewModal } from "../components/StoryInterviewModal";
+import { PendingTagsNotification } from "../components/recognition/PendingTagsNotification";
 
 const GroupsSidebarWidget = () => {
   const [groups, setGroups] = useState<any[]>([]);
@@ -82,6 +83,8 @@ export default function DashboardPage() {
         
         <main className="flex-1 border-r border-[#262626] p-6">
           <div className="mx-auto max-w-2xl">
+            <PendingTagsNotification />
+            
             <div className="mb-8">
               <h1 className="text-2xl font-bold text-white">Welcome back!</h1>
               <p className="text-white/50">Here's what's happening in your family circle.</p>
