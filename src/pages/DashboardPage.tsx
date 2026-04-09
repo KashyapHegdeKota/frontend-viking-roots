@@ -5,6 +5,7 @@ import { NudgeBubble } from "@/components/nudge-bubble";
 import { PostCard } from "@/components/post-card";
 import { API_ENDPOINTS } from "../config/api";
 import { StoryInterviewModal } from "@/components/StoryInterviewModal";
+import { PendingTagsNotification } from "@/components/recognition/PendingTagsNotification";
 
 const GroupsSidebarWidget = () => {
   const [groups, setGroups] = useState<any[]>([]);
