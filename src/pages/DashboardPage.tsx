@@ -46,8 +46,12 @@ export default function DashboardPage() {
   const [selectedPrompt, setSelectedPrompt] = useState<string | null>(null);
   const [isStoryModalOpen, setIsStoryModalOpen] = useState(false);
 
-  useEffect(() => {
-    // Fetch feed
+  // New post state
+  const [postContent, setPostContent] = useState("");
+  const [postImage, setPostImage] = useState<File | null>(null);
+  const [isPosting, setIsPosting] = useState(false);
+
+  const fetchFeed = () => {
     fetch(API_ENDPOINTS.POSTS, { credentials: 'include' })
       .then((res) => res.json())
       .then((data) => {
@@ -58,6 +62,10 @@ export default function DashboardPage() {
         console.error("Error fetching posts:", err);
         setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    fetchFeed();
 
     // Fetch dynamic story prompts
     fetch(API_ENDPOINTS.STORY_PROMPTS, { credentials: 'include' })
@@ -75,6 +83,39 @@ export default function DashboardPage() {
     setIsStoryModalOpen(true);
   };
 
+  const handleCreatePost = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!postContent.trim() && !postImage) return;
+
+    setIsPosting(true);
+    try {
+      const formData = new FormData();
+      formData.append('content', postContent.trim());
+      if (postImage) {
+        formData.append('image', postImage);
+      }
+
+      const res = await fetch(API_ENDPOINTS.CREATE_POST, {
+        method: 'POST',
+        credentials: 'include',
+        body: formData,
+      });
+
+      if (res.ok) {
+        setPostContent("");
+        setPostImage(null);
+        fetchFeed(); // Re-fetch to show the new post
+      } else {
+        const err = await res.json();
+        alert(err.error || 'Failed to create post');
+      }
+    } catch (err) {
+      console.error('Error creating post:', err);
+    } finally {
+      setIsPosting(false);
+    }
+  };
+
   return (
     <div className="flex min-h-screen flex-col bg-[#0a0a0a]">
       <DashboardNavbar />
@@ -90,13 +131,74 @@ export default function DashboardPage() {
               <p className="text-white/50">Here's what's happening in your family circle.</p>
             </div>
 
+            {/* Create Post Box */}
+            <div className="mb-8 rounded-xl border border-[#262626] bg-[#171717] p-4">
+              <form onSubmit={handleCreatePost} className="flex flex-col gap-3">
+                <textarea
+                  value={postContent}
+                  onChange={(e) => setPostContent(e.target.value)}
+                  placeholder="Share a memory, photo, or update..."
+                  className="w-full resize-none rounded-lg bg-[#0a0a0a] p-3 text-sm text-white outline-none focus:ring-1 focus:ring-[#e4bd46] min-h-[80px] border border-[#262626]"
+                />
+                
+                {postImage && (
+                  <div className="relative w-max">
+                    <img 
+                      src={URL.createObjectURL(postImage)} 
+                      alt="Upload preview" 
+                      className="h-24 rounded-lg object-cover border border-[#262626]"
+                    />
+                    <button 
+                      type="button" 
+                      onClick={() => setPostImage(null)}
+                      className="absolute -top-2 -right-2 bg-red-500 rounded-full p-1 text-white hover:scale-110 transition-transform"
+                    >
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                      </svg>
+                    </button>
+                  </div>
+                )}
+
+                <div className="flex items-center justify-between mt-2">
+                  <label className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-semibold text-white/70 transition-colors hover:bg-[#262626] hover:text-white">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                      <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                      <polyline points="21 15 16 10 5 21"></polyline>
+                    </svg>
+                    Add Photo
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(e) => {
+                        if (e.target.files && e.target.files[0]) {
+                          setPostImage(e.target.files[0]);
+                        }
+                      }}
+                    />
+                  </label>
+
+                  <button
+                    type="submit"
+                    disabled={isPosting || (!postContent.trim() && !postImage)}
+                    className="rounded-lg bg-[#e4bd46] px-5 py-1.5 text-sm font-bold text-[#0a0a0a] disabled:opacity-50"
+                  >
+                    {isPosting ? 'Posting...' : 'Post'}
+                  </button>
+                </div>
+              </form>
+            </div>
+
             {loading ? (
               <div className="flex justify-center py-12">
                 <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#e4bd46] border-t-transparent" />
               </div>
             ) : posts.length === 0 ? (
               <div className="rounded-xl border border-[#262626] bg-[#171717] p-12 text-center">
-                <p className="mb-4 text-white/50">Your feed is empty. Start by following some family members!</p>
+                <p className="mb-4 text-white/50">Your feed is empty. Be the first to share something!</p>
               </div>
             ) : (
               <div className="flex flex-col gap-6">
