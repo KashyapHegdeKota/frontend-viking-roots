@@ -19,6 +19,7 @@ import ManualAncestoryEntry from "./pages/ManualAncestoryEntry";
 import UploadPage from "./pages/UploadPage";
 import FamilyTree from "./pages/FamilyTree";
 import SettingsPage from "./pages/SettingsPage";
+import ConnectionsPage from "./pages/ConnectionsPage";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
       <Route path="/feed" element={<SocialFeed />} />
       <Route path="/groups" element={<GroupsPage />} />
       <Route path="/groups/:groupId" element={<GroupsPage />} />
+      <Route path="/connections" element={<ConnectionsPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/otp-verify" element={<AuthenticationPage />} />
