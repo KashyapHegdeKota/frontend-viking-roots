@@ -78,9 +78,7 @@ export class AncestryGedcomParser {
   private currentRecord: 'INDI' | 'FAM' | 'SOUR' | 'OBJE' | 'SUBM' | null = null;
   private currentId: string = '';
   private currentTag: string = '';
-  private currentLevel: number = 0;
   private tagStack: Array<{ level: number; tag: string }> = [];
-  private tempEvent: any = null;
 
   parseGedcom(gedcomContent: string): FamilyMember[] {
     this.reset();
@@ -175,15 +173,15 @@ export class AncestryGedcomParser {
 
     switch (this.currentRecord) {
       case 'INDI':
-        this.processIndividualLine(level, tag, value);
+        this.processIndividualLine(tag, value);
         break;
       case 'FAM':
-        this.processFamilyLine(level, tag, value);
+        this.processFamilyLine(tag, value);
         break;
     }
   }
 
-  private processIndividualLine(level: number, tag: string, value: string): void {
+  private processIndividualLine(tag: string, value: string): void {
     const individual = this.individuals.get(this.currentId);
     if (!individual) return;
 
@@ -299,7 +297,7 @@ export class AncestryGedcomParser {
     return cleanDate;
   }
 
-  private processFamilyLine(level: number, tag: string, value: string): void {
+  private processFamilyLine(tag: string, value: string): void {
     const family = this.families.get(this.currentId);
     if (!family) return;
 
@@ -425,9 +423,7 @@ export class AncestryGedcomParser {
     this.currentRecord = null;
     this.currentId = '';
     this.currentTag = '';
-    this.currentLevel = 0;
     this.tagStack = [];
-    this.tempEvent = null;
   }
 
   /** Extract marriage events with names resolved */

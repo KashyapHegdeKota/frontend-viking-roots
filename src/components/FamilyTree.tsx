@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react';
 import * as f3 from 'family-chart';
 import 'family-chart/styles/family-chart.css';
-import type { FamilyMember, MarriageEvent } from './GedcomToJSON';
-import { parseGedcomFile, AncestryGedcomParser, getGedcomStats } from './GedcomToJSON';
+import type { FamilyMember, MarriageEvent } from './GedcomToJson';
+import { parseGedcomFile, AncestryGedcomParser, getGedcomStats } from './GedcomToJson';
 import TimelinePanel from './TimelinePanel';
 
 const INJECTED_STYLES = `

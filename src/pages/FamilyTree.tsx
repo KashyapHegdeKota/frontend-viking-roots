@@ -1,12 +1,10 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import * as f3 from 'family-chart';
 import 'family-chart/styles/family-chart.css';
 import type { FamilyMember, MarriageEvent } from '../components/GedcomToJson';
-import { parseGedcomFile, AncestryGedcomParser, getGedcomStats } from '../components/GedcomToJson';
 import Header from '../components/Header';
 import { Footer } from '../components/Footer';
 import TimelinePanel from '../components/TimelinePanel';
-import { useEffect } from 'react';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5173';
 
@@ -191,7 +189,7 @@ const FamilyTree = () => {
   const styleRef = useRef<HTMLStyleElement | null>(null);
 
   const [familyData, setFamilyData] = useState<FamilyMember[]>([]);
-  const [marriages, setMarriages] = useState<MarriageEvent[]>([]);
+  const [marriages] = useState<MarriageEvent[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showTimeline, setShowTimeline] = useState(false);
   const [stats, setStats] = useState<{
@@ -310,108 +308,6 @@ const FamilyTree = () => {
   useEffect(() => {
     fetchTreeData();
   }, []);
-
-  const loadExampleData = () => {
-    const exampleGedcom = `0 HEAD
-1 SOUR Ancestry.com Family Trees
-1 GEDC
-2 VERS 5.5.1
-1 CHAR UTF-8
-0 @I1@ INDI
-1 NAME John /Doe/
-1 SEX M
-1 BIRT
-2 DATE 15 MAR 1980
-2 PLAC New York, New York, USA
-1 FAMS @F1@
-0 @I2@ INDI
-1 NAME Jane /Smith/
-1 SEX F
-1 BIRT
-2 DATE 22 JUL 1982
-2 PLAC Los Angeles, California, USA
-1 FAMS @F1@
-0 @I3@ INDI
-1 NAME Bob /Doe/
-1 SEX M
-1 BIRT
-2 DATE 5 APR 2005
-2 PLAC Chicago, Illinois, USA
-1 FAMC @F1@
-0 @I4@ INDI
-1 NAME Margaret /Doe/
-1 SEX F
-1 BIRT
-2 DATE 1948
-2 PLAC Boston, Massachusetts, USA
-1 DEAT
-2 DATE 2019
-2 PLAC New York, New York, USA
-1 FAMS @F2@
-0 @I5@ INDI
-1 NAME Robert /Doe/
-1 SEX M
-1 BIRT
-2 DATE 1945
-2 PLAC Philadelphia, Pennsylvania, USA
-1 DEAT
-2 DATE 2015
-2 PLAC New York, New York, USA
-1 FAMS @F2@
-1 FAMC @F3@
-0 @I6@ INDI
-1 NAME Eleanor /Doe/
-1 SEX F
-1 BIRT
-2 DATE 1920
-2 PLAC London, England
-1 DEAT
-2 DATE 1998
-2 PLAC Philadelphia, Pennsylvania, USA
-1 FAMS @F3@
-0 @I7@ INDI
-1 NAME George /Doe/
-1 SEX M
-1 BIRT
-2 DATE 1918
-2 PLAC London, England
-1 DEAT
-2 DATE 1995
-2 PLAC Philadelphia, Pennsylvania, USA
-1 FAMS @F3@
-0 @F1@ FAM
-1 HUSB @I1@
-1 WIFE @I2@
-1 CHIL @I3@
-1 MARR
-2 DATE 10 JUN 2003
-2 PLAC Las Vegas, Nevada, USA
-0 @F2@ FAM
-1 HUSB @I5@
-1 WIFE @I4@
-1 CHIL @I1@
-1 MARR
-2 DATE 14 FEB 1970
-2 PLAC Boston, Massachusetts, USA
-0 @F3@ FAM
-1 HUSB @I7@
-1 WIFE @I6@
-1 CHIL @I5@
-1 MARR
-2 DATE 20 APR 1944
-2 PLAC London, England
-0 TRLR`;
-
-    resetChart();
-    const parser = new AncestryGedcomParser();
-    const parsed = parser.parseGedcom(exampleGedcom);
-    const marriageEvents = parser.getMarriageEvents();
-    setFamilyData(parsed);
-    setMarriages(marriageEvents);
-    setStats(getGedcomStats(exampleGedcom));
-    buildChart(parsed);
-    setShowTimeline(true);
-  };
 
   const gold = '#c8961e';
   const goldBright = '#f7e08a';
