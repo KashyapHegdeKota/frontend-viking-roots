@@ -13,7 +13,7 @@ const navItems = [
   },
   {
     label: "Circles",
-    href: "/dashboard/circles",
+    href: "/groups",
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
@@ -36,7 +36,7 @@ const navItems = [
   },
   {
     label: "Heritage",
-    href: "/dashboard/heritage",
+    href: "/heritage-dashboard",
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
