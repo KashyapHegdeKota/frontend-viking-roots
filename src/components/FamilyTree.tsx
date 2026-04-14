@@ -9,13 +9,13 @@ const INJECTED_STYLES = `
   @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&display=swap');
 
   :root {
-    --accent: #e4bd46;
+    --accent: #c88a65;
     --bg-main: #2f2a2a;
     --bg-card: #3a3434;
     --bg-panel: #2f2a2a;
     --text-light: #ffffff;
     --text-muted: #e0e0e0;
-    --border: #e4bd46;
+    --border: #c88a65;
   }
 
   body {
@@ -419,10 +419,10 @@ const FamilyTree = () => {
     setShowTimeline(true);
   };
 
-  const accent = '#e4bd46';
+  const accent = '#c88a65';
   const bgMain = '#2f2a2a';
   const bgCard = '#3a3434';
-  const border = '#e4bd46';
+  const border = '#c88a65';
 
   return (
     <div style={{
@@ -459,7 +459,7 @@ const FamilyTree = () => {
             color: accent,
             letterSpacing: '0.12em',
           }}>
-            ✦ KinSnap ✦
+            ✦ Viking Roots ✦
           </h1>
           <div style={{
             height: 1,

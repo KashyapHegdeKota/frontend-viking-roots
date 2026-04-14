@@ -18,7 +18,7 @@ const steps = [
 
 export function HowItWorks() {
   return (
-    <section className="w-full bg-[#262626] px-6 py-16 lg:py-20">
+    <section className="w-full border-t border-[#262626] bg-[#0a0a0a] px-6 py-16 lg:py-20">
       <div className="mx-auto max-w-7xl">
         <h2 className="mb-10 text-4xl font-bold text-white lg:text-5xl">
           How it works ?
@@ -28,12 +28,32 @@ export function HowItWorks() {
           {steps.map((step) => (
             <div
               key={step.title}
-              className="rounded-md border border-[#e4bd46] p-6"
+              className="relative rounded-md p-6"
             >
-              <h3 className="mb-3 text-base font-bold text-[#e4bd46] uppercase tracking-wide">
+              {/* Gradient Border using mask to keep background transparent */}
+              <div
+                className="absolute inset-0 rounded-md pointer-events-none"
+                style={{
+                  padding: "1px",
+                  background: "linear-gradient(135deg, #f5d5c6 0%, #c8967d 50%, #784a38 100%)",
+                  WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                  WebkitMaskComposite: "xor",
+                  maskComposite: "exclude",
+                }}
+              />
+              <h3 
+                className="mb-3 text-base font-bold uppercase tracking-wide"
+                style={{
+                  backgroundImage: "linear-gradient(135deg, #f5d5c6 0%, #c8967d 50%, #784a38 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                  color: "transparent",
+                }}
+              >
                 {step.title}
               </h3>
-              <p className="text-sm leading-relaxed text-white/80">
+              <p className="relative text-sm leading-relaxed text-white/80">
                 {step.description}
               </p>
             </div>

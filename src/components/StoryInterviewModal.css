@@ -48,7 +48,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 10px;
-  border: 1px solid #e4bd4633;
+  border: 1px solid #c88a6533;
 }
 
 .keeper-info h3 {
@@ -59,7 +59,7 @@
 }
 
 .keeper-info p {
-  color: #e4bd46;
+  color: #c88a65;
   font-size: 0.7rem;
   margin: 0;
   text-transform: uppercase;
@@ -107,7 +107,7 @@
 
 .chat-bubble.user {
   align-self: flex-end;
-  background: #e4bd46;
+  background: #c88a65;
   color: #000;
   font-weight: 500;
   border-bottom-right-radius: 0.25rem;
@@ -139,11 +139,11 @@
 }
 
 .story-input-area input:focus {
-  border-color: #e4bd46;
+  border-color: #c88a65;
 }
 
 .story-input-area button {
-  background: #e4bd46;
+  background: #c88a65;
   color: #000;
   border: none;
   width: 44px;

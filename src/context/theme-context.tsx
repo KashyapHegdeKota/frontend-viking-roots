@@ -10,7 +10,7 @@ interface ThemeContextValue {
 
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 
-const STORAGE_KEY = 'kinsnap-theme';
+const STORAGE_KEY = 'viking-roots-theme';
 
 function getInitialTheme(): Theme {
   const stored = localStorage.getItem(STORAGE_KEY);

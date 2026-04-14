@@ -25,7 +25,7 @@ const GroupsSidebarWidget = () => {
       <div className="flex flex-col gap-3">
         {groups.map((group) => (
           <div key={group.id} className="flex items-center gap-3">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#e4bd46]/10 text-xs font-bold text-[#e4bd46]">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#c88a65]/10 text-xs font-bold text-[#c88a65]">
               {group.name[0]}
             </div>
             <div className="flex-1 overflow-hidden">
@@ -138,7 +138,7 @@ export default function DashboardPage() {
                   value={postContent}
                   onChange={(e) => setPostContent(e.target.value)}
                   placeholder="Share a memory, photo, or update..."
-                  className="w-full resize-none rounded-lg bg-[#0a0a0a] p-3 text-sm text-white outline-none focus:ring-1 focus:ring-[#e4bd46] min-h-[80px] border border-[#262626]"
+                  className="w-full resize-none rounded-lg bg-[#0a0a0a] p-3 text-sm text-white outline-none focus:ring-1 focus:ring-[#c88a65] min-h-[80px] border border-[#262626]"
                 />
                 
                 {postImage && (
@@ -184,7 +184,7 @@ export default function DashboardPage() {
                   <button
                     type="submit"
                     disabled={isPosting || (!postContent.trim() && !postImage)}
-                    className="rounded-lg bg-[#e4bd46] px-5 py-1.5 text-sm font-bold text-[#0a0a0a] disabled:opacity-50"
+                    className="rounded-lg bg-[linear-gradient(to_right,#c88a65_-55%,white)] px-5 py-1.5 text-sm font-bold text-[#000] transition-all hover:bg-[linear-gradient(to_right,#eab2a0,white)] hover:text-white disabled:opacity-50"
                   >
                     {isPosting ? 'Posting...' : 'Post'}
                   </button>
@@ -194,7 +194,7 @@ export default function DashboardPage() {
 
             {loading ? (
               <div className="flex justify-center py-12">
-                <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#e4bd46] border-t-transparent" />
+                <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#c88a65] border-t-transparent" />
               </div>
             ) : posts.length === 0 ? (
               <div className="rounded-xl border border-[#262626] bg-[#171717] p-12 text-center">
@@ -232,20 +232,20 @@ export default function DashboardPage() {
                   <button 
                     key={idx}
                     onClick={() => handlePromptClick(prompt)}
-                    className="rounded-lg border border-[#262626] p-3 text-left text-xs text-white/70 transition-colors hover:border-[#e4bd46]/40 hover:text-white"
+                    className="rounded-lg border border-[#262626] p-3 text-left text-xs text-white/70 transition-colors hover:border-[#c88a65]/40 hover:text-white"
                   >
                     {prompt}
                   </button>
                 ))
               ) : (
                 <>
-                  <button onClick={() => handlePromptClick("What is your earliest childhood memory?")} className="rounded-lg border border-[#262626] p-3 text-left text-xs text-white/70 transition-colors hover:border-[#e4bd46]/40 hover:text-white">
+                  <button onClick={() => handlePromptClick("What is your earliest childhood memory?")} className="rounded-lg border border-[#262626] p-3 text-left text-xs text-white/70 transition-colors hover:border-[#c88a65]/40 hover:text-white">
                     What is your earliest childhood memory?
                   </button>
-                  <button onClick={() => handlePromptClick("What traditions did your family keep?")} className="rounded-lg border border-[#262626] p-3 text-left text-xs text-white/70 transition-colors hover:border-[#e4bd46]/40 hover:text-white">
+                  <button onClick={() => handlePromptClick("What traditions did your family keep?")} className="rounded-lg border border-[#262626] p-3 text-left text-xs text-white/70 transition-colors hover:border-[#c88a65]/40 hover:text-white">
                     What traditions did your family keep?
                   </button>
-                  <button onClick={() => handlePromptClick("Who was the storyteller in your family?")} className="rounded-lg border border-[#262626] p-3 text-left text-xs text-white/70 transition-colors hover:border-[#e4bd46]/40 hover:text-white">
+                  <button onClick={() => handlePromptClick("Who was the storyteller in your family?")} className="rounded-lg border border-[#262626] p-3 text-left text-xs text-white/70 transition-colors hover:border-[#c88a65]/40 hover:text-white">
                     Who was the storyteller in your family?
                   </button>
                 </>
@@ -255,6 +255,22 @@ export default function DashboardPage() {
 
           {/* Groups sidebar widget */}
           <GroupsSidebarWidget />
+          {/* Trending */}
+          <div className="rounded-xl border border-[#262626] bg-[#171717] p-4">
+            <h3 className="mb-3 text-sm font-bold text-white">Trending</h3>
+            <div className="flex flex-wrap gap-2">
+              {["#VintagePhotos", "#FamilyStories", "#GimliMB", "#IcelandicRoots", "#1950s", "#PrairieLife"].map(
+                (tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full border border-[#262626] px-3 py-1 text-xs text-white/60 transition-colors hover:border-[#c88a65]/40 hover:text-[#c88a65]"
+                  >
+                    {tag}
+                  </span>
+                )
+              )}
+            </div>
+          </div>
         </aside>
       </div>
 

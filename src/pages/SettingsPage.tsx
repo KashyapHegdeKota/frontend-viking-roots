@@ -88,7 +88,7 @@ export default function SettingsPage() {
                           </button>
                           <button 
                             onClick={() => handleReview(tag.id, 'accept')}
-                            className="px-3 py-1.5 rounded-lg bg-[#e4bd46] text-[#0a0a0a] text-xs font-bold"
+                            className="px-3 py-1.5 rounded-lg bg-[linear-gradient(to_right,#c88a65_-55%,white)] text-[#000] text-xs font-bold transition-all hover:bg-[linear-gradient(to_right,#eab2a0,white)] hover:text-white"
                           >
                             Accept
                           </button>

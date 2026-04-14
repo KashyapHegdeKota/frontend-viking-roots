@@ -21,22 +21,22 @@ export default function WelcomePage() {
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <Link to="/" className="flex items-center gap-3">
             <KinLogo />
-            <span className="text-xl font-bold text-white">KinSnap</span>
+            <span className="text-xl font-bold text-white">Viking Roots</span>
           </Link>
           <div className="flex items-center gap-4">
-            <button className="rounded-full p-2 text-white/60 transition-colors hover:text-[#e4bd46]">
+            <button className="rounded-full p-2 text-white/60 transition-colors hover:text-[#c88a65]">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
               </svg>
             </button>
-            <button className="rounded-full p-2 text-white/60 transition-colors hover:text-[#e4bd46]">
+            <button className="rounded-full p-2 text-white/60 transition-colors hover:text-[#c88a65]">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
                 <path d="M13.73 21a2 2 0 0 1-3.46 0" />
               </svg>
             </button>
             <div className="flex items-center gap-2">
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#e4bd46] text-sm font-bold text-[#0a0a0a]">
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#c88a65] text-sm font-bold text-[#0a0a0a]">
                 K
               </div>
               <span className="text-sm font-semibold text-white">Karen</span>
@@ -53,12 +53,12 @@ export default function WelcomePage() {
         <div className="w-full max-w-3xl">
           <div className="relative overflow-hidden rounded-2xl border border-[#262626] bg-[#262626]/60 p-8 shadow-2xl md:p-12">
             {/* Decorative sparkles */}
-            <div className="pointer-events-none absolute right-8 top-6 text-[#e4bd46]/30">
+            <div className="pointer-events-none absolute right-8 top-6 text-[#c88a65]/30">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
               </svg>
             </div>
-            <div className="pointer-events-none absolute right-24 top-16 text-[#e4bd46]/20">
+            <div className="pointer-events-none absolute right-24 top-16 text-[#c88a65]/20">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
               </svg>
@@ -77,13 +77,13 @@ export default function WelcomePage() {
             <div className="flex flex-col gap-8 md:flex-row">
               {/* Mascot speech bubble */}
               <div className="flex flex-col items-center gap-3 md:w-1/3">
-                <div className="flex h-20 w-20 items-center justify-center rounded-full border-2 border-[#e4bd46] bg-[#e4bd46]/10">
+                <div className="flex h-20 w-20 items-center justify-center rounded-full border-2 border-[#c88a65] bg-[#c88a65]/10">
                   <KinLogo size={48} />
                 </div>
-                <div className="relative rounded-xl border border-[#e4bd46]/30 bg-[#0a0a0a] p-4">
-                  <div className="absolute -top-2 left-1/2 h-4 w-4 -translate-x-1/2 rotate-45 border-l border-t border-[#e4bd46]/30 bg-[#0a0a0a]" />
+                <div className="relative rounded-xl border border-[#c88a65]/30 bg-[#0a0a0a] p-4">
+                  <div className="absolute -top-2 left-1/2 h-4 w-4 -translate-x-1/2 rotate-45 border-l border-t border-[#c88a65]/30 bg-[#0a0a0a]" />
                   <p className="relative text-center text-sm text-white/80">
-                    <span className="font-bold text-[#e4bd46]">Hello!</span> Let's build
+                    <span className="font-bold text-[#c88a65]">Hello!</span> Let's build
                     the first chapter of your family story.
                   </p>
                 </div>
@@ -91,7 +91,7 @@ export default function WelcomePage() {
                 {/* Decorative family photos collage */}
                 <div className="mt-4 hidden md:block">
                   <div className="relative h-32 w-40">
-                    <div className="absolute left-0 top-0 h-20 w-16 rotate-[-6deg] rounded-md border border-[#e4bd46]/20 bg-[#0a0a0a] p-1 shadow-lg">
+                    <div className="absolute left-0 top-0 h-20 w-16 rotate-[-6deg] rounded-md border border-[#c88a65]/20 bg-[#0a0a0a] p-1 shadow-lg">
                       <div className="flex h-full w-full items-center justify-center rounded bg-[#262626]">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6b7280" strokeWidth="1.5">
                           <rect x="3" y="3" width="18" height="18" rx="2" />
@@ -100,7 +100,7 @@ export default function WelcomePage() {
                         </svg>
                       </div>
                     </div>
-                    <div className="absolute left-8 top-2 h-20 w-16 rotate-[3deg] rounded-md border border-[#e4bd46]/20 bg-[#0a0a0a] p-1 shadow-lg">
+                    <div className="absolute left-8 top-2 h-20 w-16 rotate-[3deg] rounded-md border border-[#c88a65]/20 bg-[#0a0a0a] p-1 shadow-lg">
                       <div className="flex h-full w-full items-center justify-center rounded bg-[#262626]">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6b7280" strokeWidth="1.5">
                           <rect x="3" y="3" width="18" height="18" rx="2" />
@@ -109,7 +109,7 @@ export default function WelcomePage() {
                         </svg>
                       </div>
                     </div>
-                    <div className="absolute left-16 top-4 h-20 w-16 rotate-[8deg] rounded-md border border-[#e4bd46]/20 bg-[#0a0a0a] p-1 shadow-lg">
+                    <div className="absolute left-16 top-4 h-20 w-16 rotate-[8deg] rounded-md border border-[#c88a65]/20 bg-[#0a0a0a] p-1 shadow-lg">
                       <div className="flex h-full w-full items-center justify-center rounded bg-[#262626]">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6b7280" strokeWidth="1.5">
                           <rect x="3" y="3" width="18" height="18" rx="2" />
@@ -135,7 +135,7 @@ export default function WelcomePage() {
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     placeholder="Karen Erikkson"
-                    className="h-11 rounded-md border border-[#e4bd46] bg-transparent px-3 text-sm text-white placeholder-[#6b7280] outline-none focus:ring-2 focus:ring-[#e4bd46]/60"
+                    className="h-11 rounded-md border border-[#c88a65] bg-transparent px-3 text-sm text-white placeholder-[#6b7280] outline-none focus:ring-2 focus:ring-[#c88a65]/60"
                   />
                   <span className="text-xs text-[#6b7280]">Ex: Martha Johnsonson</span>
                 </div>
@@ -149,7 +149,7 @@ export default function WelcomePage() {
                     type="date"
                     value={birthDate}
                     onChange={(e) => setBirthDate(e.target.value)}
-                    className="h-11 rounded-md border border-[#e4bd46] bg-transparent px-3 text-sm text-white outline-none focus:ring-2 focus:ring-[#e4bd46]/60 [color-scheme:dark]"
+                    className="h-11 rounded-md border border-[#c88a65] bg-transparent px-3 text-sm text-white outline-none focus:ring-2 focus:ring-[#c88a65]/60 [color-scheme:dark]"
                   />
                   <span className="text-xs text-[#6b7280]">Ex: October 24, 1955</span>
                 </div>
@@ -164,7 +164,7 @@ export default function WelcomePage() {
                     value={birthPlace}
                     onChange={(e) => setBirthPlace(e.target.value)}
                     placeholder="Winnipeg, Manitoba"
-                    className="h-11 rounded-md border border-[#e4bd46] bg-transparent px-3 text-sm text-white placeholder-[#6b7280] outline-none focus:ring-2 focus:ring-[#e4bd46]/60"
+                    className="h-11 rounded-md border border-[#c88a65] bg-transparent px-3 text-sm text-white placeholder-[#6b7280] outline-none focus:ring-2 focus:ring-[#c88a65]/60"
                   />
                 </div>
 
@@ -178,13 +178,13 @@ export default function WelcomePage() {
                     value={familyOrigin}
                     onChange={(e) => setFamilyOrigin(e.target.value)}
                     placeholder="Icelandic, Norwegian..."
-                    className="h-11 rounded-md border border-[#e4bd46] bg-transparent px-3 text-sm text-white placeholder-[#6b7280] outline-none focus:ring-2 focus:ring-[#e4bd46]/60"
+                    className="h-11 rounded-md border border-[#c88a65] bg-transparent px-3 text-sm text-white placeholder-[#6b7280] outline-none focus:ring-2 focus:ring-[#c88a65]/60"
                   />
                 </div>
 
                 <button
                   type="submit"
-                  className="mt-2 h-12 w-full rounded-full bg-[#e4bd46] text-base font-bold tracking-widest text-[#0a0a0a] transition-opacity hover:opacity-90"
+                  className="mt-2 h-12 w-full rounded-full bg-[linear-gradient(to_right,#c88a65_-55%,white)] text-base font-bold tracking-widest text-[#000] transition-all hover:bg-[linear-gradient(to_right,#eab2a0,white)] hover:text-white"
                 >
                   NEXT
                 </button>
@@ -198,7 +198,7 @@ export default function WelcomePage() {
               </p>
               <button
                 onClick={() => navigate("/dashboard")}
-                className="text-sm font-semibold text-[#e4bd46] transition-opacity hover:opacity-80"
+                className="text-sm font-semibold text-[#c88a65] transition-opacity hover:opacity-80"
               >
                 Skip this for now &gt;
               </button>
@@ -218,13 +218,13 @@ export default function WelcomePage() {
             <span>English</span>
           </div>
           <nav className="flex gap-6">
-            <Link to="/about" className="text-xs text-white/40 transition-colors hover:text-[#e4bd46]">
+            <Link to="/about" className="text-xs text-white/40 transition-colors hover:text-[#c88a65]">
               About Us
             </Link>
-            <Link to="/help" className="text-xs text-white/40 transition-colors hover:text-[#e4bd46]">
+            <Link to="/help" className="text-xs text-white/40 transition-colors hover:text-[#c88a65]">
               Help
             </Link>
-            <Link to="/privacy" className="text-xs text-white/40 transition-colors hover:text-[#e4bd46]">
+            <Link to="/privacy" className="text-xs text-white/40 transition-colors hover:text-[#c88a65]">
               Privacy
             </Link>
           </nav>

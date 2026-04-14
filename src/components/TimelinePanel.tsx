@@ -64,7 +64,7 @@ function buildEvents(
 const TYPE_CONFIG = {
   birth: {
     icon: '✦',
-    color: '#e4bd46',      // accent
+    color: '#c88a65',      // accent
     glowColor: 'rgba(228,189,70,0.5)',
     label: 'BIRTH',
     bgColor: 'rgba(228,189,70,0.08)',
@@ -78,7 +78,7 @@ const TYPE_CONFIG = {
   },
   marriage: {
     icon: '◈',
-    color: '#e4bd46',      // accent
+    color: '#c88a65',      // accent
     glowColor: 'rgba(228,189,70,0.5)',
     label: 'MARRIAGE',
     bgColor: 'rgba(228,189,70,0.06)',
@@ -123,11 +123,11 @@ const TimelinePanel: React.FC<TimelinePanelProps> = ({
     .map(Number)
     .sort((a, b) => a - b);
 
-  const accent = '#e4bd46';
+  const accent = '#c88a65';
   const accentBright = '#f5d670';
   const bgMain = '#2f2a2a';
   const bgCard = '#3a3434';
-  const border = '#e4bd46';
+  const border = '#c88a65';
   const textLight = '#ffffff';
   const textMuted = '#e0e0e0';
 

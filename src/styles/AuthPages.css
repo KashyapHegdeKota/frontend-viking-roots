@@ -71,13 +71,23 @@
 .auth-card > button,
 .profile-actions button,
 .link-like {
-  border: 1px solid #e4bd46;
-  background: #e4bd46;
-  color: #111;
+  border: none;
+  background: linear-gradient(to right, #c88a65 -55%, white);
+  color: #000;
   border-radius: 999px;
   padding: 0.65rem 1rem;
   font-weight: 700;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.auth-form button:hover:not(:disabled),
+.chat-form button:hover:not(:disabled),
+.auth-card > button:hover:not(:disabled),
+.profile-actions button:hover:not(:disabled),
+.link-like:hover:not(:disabled) {
+  background: linear-gradient(to right, #eab2a0, white);
+  color: white;
 }
 
 .auth-links {
@@ -139,7 +149,7 @@
 
 .chat-bubble.user {
   justify-self: end;
-  background: #e4bd46;
+  background: #c88a65;
   color: #111;
 }
 

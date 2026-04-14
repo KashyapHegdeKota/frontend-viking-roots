@@ -352,7 +352,7 @@ const FamilyTree = () => {
             backgroundClip: 'text',
             letterSpacing: '0.12em',
           }}>
-            ✦ KinSnap ✦
+            ✦ Viking Roots ✦
           </h1>
           <div style={{
             height: 1, background: `linear-gradient(90deg, transparent, ${gold}, transparent)`,

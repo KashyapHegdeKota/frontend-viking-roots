@@ -113,12 +113,12 @@ export default function ConnectionsPage() {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search by username or name..."
-                    className="flex-1 rounded-lg border border-[#262626] bg-[#0a0a0a] px-4 py-2 text-white outline-none focus:border-[#e4bd46]"
+                    className="flex-1 rounded-lg border border-[#262626] bg-[#0a0a0a] px-4 py-2 text-white outline-none focus:border-[#c88a65]"
                   />
                   <button 
                     type="submit"
                     disabled={searching || !searchQuery.trim()}
-                    className="rounded-lg bg-[#e4bd46] px-6 py-2 font-bold text-[#0a0a0a] disabled:opacity-50"
+                    className="rounded-lg bg-[linear-gradient(to_right,#c88a65_-55%,white)] px-6 py-2 font-bold text-[#000] transition-all hover:bg-[linear-gradient(to_right,#eab2a0,white)] hover:text-white disabled:opacity-50"
                   >
                     {searching ? 'Searching...' : 'Search'}
                   </button>
@@ -130,7 +130,7 @@ export default function ConnectionsPage() {
                     {searchResults.map(user => (
                       <div key={user.id} className="flex items-center justify-between rounded-lg border border-[#262626] p-3">
                         <div className="flex items-center gap-3">
-                          <div className="h-10 w-10 rounded-full bg-[#262626] overflow-hidden flex items-center justify-center text-[#e4bd46] font-bold">
+                          <div className="h-10 w-10 rounded-full bg-[#262626] overflow-hidden flex items-center justify-center text-[#c88a65] font-bold">
                             {user.profile_picture_url ? (
                               <img src={user.profile_picture_url} alt={user.username} className="h-full w-full object-cover" />
                             ) : (
@@ -144,7 +144,7 @@ export default function ConnectionsPage() {
                         </div>
                         <button 
                           onClick={() => handleSendRequest(user.id)}
-                          className="rounded border border-[#e4bd46] px-3 py-1 text-xs font-bold text-[#e4bd46] hover:bg-[#e4bd46] hover:text-[#0a0a0a] transition-colors"
+                          className="rounded bg-[linear-gradient(to_right,#c88a65_-55%,white)] px-3 py-1 text-xs font-bold text-[#000] transition-all hover:bg-[linear-gradient(to_right,#eab2a0,white)] hover:text-white"
                         >
                           Connect
                         </button>
@@ -162,7 +162,7 @@ export default function ConnectionsPage() {
                     {requests.map(req => (
                       <div key={req.connection_id} className="flex items-center justify-between rounded-lg border border-[#262626] p-3">
                         <div className="flex items-center gap-3">
-                          <div className="h-10 w-10 rounded-full bg-[#262626] overflow-hidden flex items-center justify-center text-[#e4bd46] font-bold">
+                          <div className="h-10 w-10 rounded-full bg-[#262626] overflow-hidden flex items-center justify-center text-[#c88a65] font-bold">
                             {req.profile_picture_url ? (
                               <img src={req.profile_picture_url} alt={req.username} className="h-full w-full object-cover" />
                             ) : (
@@ -173,7 +173,7 @@ export default function ConnectionsPage() {
                         </div>
                         <button 
                           onClick={() => handleAcceptRequest(req.connection_id!)}
-                          className="rounded bg-[#e4bd46] px-4 py-1.5 text-xs font-bold text-[#0a0a0a] hover:scale-105 transition-transform"
+                          className="rounded bg-[linear-gradient(to_right,#c88a65_-55%,white)] px-4 py-1.5 text-xs font-bold text-[#000] transition-all hover:bg-[linear-gradient(to_right,#eab2a0,white)] hover:text-white hover:scale-105"
                         >
                           Accept
                         </button>
@@ -194,7 +194,7 @@ export default function ConnectionsPage() {
                   <div className="grid gap-3 sm:grid-cols-2">
                     {friends.map(friend => (
                       <div key={friend.id} className="flex items-center gap-3 rounded-lg border border-[#262626] p-3">
-                        <div className="h-10 w-10 rounded-full bg-[#262626] overflow-hidden flex items-center justify-center text-[#e4bd46] font-bold">
+                        <div className="h-10 w-10 rounded-full bg-[#262626] overflow-hidden flex items-center justify-center text-[#c88a65] font-bold">
                           {friend.profile_picture_url ? (
                             <img src={friend.profile_picture_url} alt={friend.username} className="h-full w-full object-cover" />
                           ) : (

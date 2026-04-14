@@ -105,11 +105,11 @@ export function DashboardSidebar() {
               to={item.href}
               className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold transition-colors ${
                 isActive
-                  ? "bg-[#e4bd46]/10 text-[#e4bd46]"
+                  ? "bg-[#c88a65]/10 text-[#c88a65]"
                   : "text-white/70 hover:bg-[#262626] hover:text-white"
               }`}
             >
-              <span className={isActive ? "text-[#e4bd46]" : "text-white/50"}>
+              <span className={isActive ? "text-[#c88a65]" : "text-white/50"}>
                 {item.icon}
               </span>
               {item.label}

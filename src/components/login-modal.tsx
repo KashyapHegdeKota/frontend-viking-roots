@@ -23,6 +23,8 @@ export function LoginModal({ open, onClose, onSignUpClick }: LoginModalProps) {
   }, [open]);
 
   function handleBackdropClick(e: React.MouseEvent<HTMLDialogElement>) {
+    if (e.target !== dialogRef.current) return;
+    
     const rect = dialogRef.current?.getBoundingClientRect();
     if (!rect) return;
     const clickedOutside =
@@ -48,7 +50,7 @@ export function LoginModal({ open, onClose, onSignUpClick }: LoginModalProps) {
     >
       <div className="mb-8 flex items-center gap-3">
         <KinLogo size={48} />
-        <span className="text-2xl font-bold tracking-wide text-white">KinSnap</span>
+        <span className="text-2xl font-bold tracking-wide text-white">Viking Roots</span>
       </div>
 
       <h2 className="mb-8 text-4xl font-bold text-white">Welcome</h2>
@@ -69,7 +71,7 @@ export function LoginModal({ open, onClose, onSignUpClick }: LoginModalProps) {
             id="loginEmail"
             type="email"
             required
-            className="h-11 rounded-md border border-[#e4bd46] bg-transparent px-3 text-sm text-white outline-none focus:ring-2 focus:ring-[#e4bd46]/60"
+            className="h-11 rounded-md border border-[#c88a65] bg-transparent px-3 text-sm text-white outline-none focus:ring-2 focus:ring-[#c88a65]/60"
           />
         </div>
 
@@ -81,13 +83,13 @@ export function LoginModal({ open, onClose, onSignUpClick }: LoginModalProps) {
             id="loginPassword"
             type="password"
             required
-            className="h-11 rounded-md border border-[#e4bd46] bg-transparent px-3 text-sm text-white outline-none focus:ring-2 focus:ring-[#e4bd46]/60"
+            className="h-11 rounded-md border border-[#c88a65] bg-transparent px-3 text-sm text-white outline-none focus:ring-2 focus:ring-[#c88a65]/60"
           />
         </div>
 
         <button
           type="submit"
-          className="mt-2 h-12 w-full rounded-full bg-[#e4bd46] text-base font-bold tracking-widest text-[#0a0a0a] transition-opacity hover:opacity-90"
+          className="mt-2 h-12 w-full rounded-full bg-[linear-gradient(to_right,#c88a65_-55%,white)] text-base font-bold tracking-widest text-[#000] transition-all hover:bg-[linear-gradient(to_right,#eab2a0,white)] hover:text-white"
         >
           SIGN IN
         </button>
@@ -96,13 +98,13 @@ export function LoginModal({ open, onClose, onSignUpClick }: LoginModalProps) {
           <button
             type="button"
             onClick={handleSignUpClick}
-            className="text-[#e4bd46] transition-opacity hover:opacity-80"
+            className="text-[#c88a65] transition-opacity hover:opacity-80"
           >
             Sign Up
           </button>
           <button
             type="button"
-            className="text-[#e4bd46] transition-opacity hover:opacity-80"
+            className="text-[#c88a65] transition-opacity hover:opacity-80"
           >
             Forgot Password?
           </button>

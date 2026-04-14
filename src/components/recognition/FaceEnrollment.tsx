@@ -89,7 +89,7 @@ export function FaceEnrollment() {
       <div className="mb-4 flex items-center justify-between">
         <div>
           <h3 className="text-lg font-bold text-white">Face Enrollment</h3>
-          <p className="text-sm text-white/50">Help KinSnap recognize you in photos shared by friends.</p>
+          <p className="text-sm text-white/50">Help Viking Roots recognize you in photos shared by friends.</p>
         </div>
         <div className={`px-3 py-1 rounded-full text-xs font-bold ${status?.is_enrolled ? 'bg-green-500/10 text-green-500' : 'bg-yellow-500/10 text-yellow-500'}`}>
           {status?.is_enrolled ? 'Enrolled' : 'Not Enrolled'}
@@ -110,7 +110,7 @@ export function FaceEnrollment() {
         </div>
       ) : (
         <form onSubmit={handleUpload} className="space-y-4">
-          <div className="rounded-lg border-2 border-dashed border-[#262626] p-8 text-center transition-colors hover:border-[#e4bd46]/40">
+          <div className="rounded-lg border-2 border-dashed border-[#262626] p-8 text-center transition-colors hover:border-[#c88a65]/40">
             <input
               type="file"
               multiple
@@ -133,7 +133,7 @@ export function FaceEnrollment() {
           <button
             type="submit"
             disabled={uploading || selectedFiles.length === 0}
-            className="w-full rounded-lg bg-[#e4bd46] py-2 text-sm font-bold text-[#0a0a0a] transition-transform hover:scale-[1.02] disabled:opacity-50 disabled:hover:scale-100"
+            className="w-full rounded-lg bg-[linear-gradient(to_right,#c88a65_-55%,white)] py-2 text-sm font-bold text-[#000] transition-all hover:bg-[linear-gradient(to_right,#eab2a0,white)] hover:text-white hover:scale-[1.02] disabled:opacity-50 disabled:hover:scale-100"
           >
             {uploading ? 'Processing...' : 'Complete Enrollment'}
           </button>

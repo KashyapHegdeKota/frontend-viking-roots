@@ -96,7 +96,7 @@ export function SignUpModal({ open, onClose }: SignUpModalProps) {
       <>
         <div className="mb-6 flex items-center gap-3">
           <KinLogo size={48} />
-          <span className="text-2xl font-bold tracking-wide text-white">KinSnap</span>
+          <span className="text-2xl font-bold tracking-wide text-white">Viking Roots</span>
         </div>
 
         <h2 className="mb-6 text-3xl font-bold text-white">Join our community</h2>
@@ -114,7 +114,7 @@ export function SignUpModal({ open, onClose }: SignUpModalProps) {
               required
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="h-10 rounded-md border border-[#e4bd46] bg-transparent px-3 text-sm text-white outline-none focus:ring-2 focus:ring-[#e4bd46]/60"
+              className="h-10 rounded-md border border-[#c88a65] bg-transparent px-3 text-sm text-white outline-none focus:ring-2 focus:ring-[#c88a65]/60"
             />
           </div>
 
@@ -128,7 +128,7 @@ export function SignUpModal({ open, onClose }: SignUpModalProps) {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="h-10 rounded-md border border-[#e4bd46] bg-transparent px-3 text-sm text-white outline-none focus:ring-2 focus:ring-[#e4bd46]/60"
+              className="h-10 rounded-md border border-[#c88a65] bg-transparent px-3 text-sm text-white outline-none focus:ring-2 focus:ring-[#c88a65]/60"
             />
           </div>
 
@@ -142,7 +142,7 @@ export function SignUpModal({ open, onClose }: SignUpModalProps) {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="h-10 rounded-md border border-[#e4bd46] bg-transparent px-3 text-sm text-white outline-none focus:ring-2 focus:ring-[#e4bd46]/60"
+              className="h-10 rounded-md border border-[#c88a65] bg-transparent px-3 text-sm text-white outline-none focus:ring-2 focus:ring-[#c88a65]/60"
             />
           </div>
 
@@ -156,14 +156,14 @@ export function SignUpModal({ open, onClose }: SignUpModalProps) {
               required
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="h-10 rounded-md border border-[#e4bd46] bg-transparent px-3 text-sm text-white outline-none focus:ring-2 focus:ring-[#e4bd46]/60"
+              className="h-10 rounded-md border border-[#c88a65] bg-transparent px-3 text-sm text-white outline-none focus:ring-2 focus:ring-[#c88a65]/60"
             />
           </div>
 
           <button
             type="submit"
             disabled={isLoading}
-            className="mt-2 h-12 w-full rounded-full bg-[#e4bd46] text-base font-bold tracking-widest text-[#0a0a0a] transition-opacity hover:opacity-90 disabled:opacity-60"
+            className="mt-2 h-12 w-full rounded-full bg-[linear-gradient(to_right,#c88a65_-55%,white)] text-base font-bold tracking-widest text-[#000] transition-all hover:bg-[linear-gradient(to_right,#eab2a0,white)] hover:text-white disabled:opacity-60"
           >
             {isLoading ? "Creating account..." : "CREATE ACCOUNT"}
           </button>

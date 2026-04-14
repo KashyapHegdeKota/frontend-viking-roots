@@ -24,7 +24,7 @@ export function PendingTagsNotification() {
   if (pendingCount === 0) return null;
 
   return (
-    <div className="rounded-xl border border-[#e4bd46]/30 bg-[#e4bd46]/10 p-4 mb-6 flex items-center justify-between">
+    <div className="rounded-xl border border-[#c88a65]/30 bg-[#c88a65]/10 p-4 mb-6 flex items-center justify-between">
       <div className="flex items-center gap-3">
         <span className="text-xl">👤</span>
         <div>
@@ -34,7 +34,7 @@ export function PendingTagsNotification() {
       </div>
       <Link 
         to="/settings"
-        className="px-4 py-1.5 rounded-lg bg-[#e4bd46] text-[#0a0a0a] text-xs font-bold transition-transform hover:scale-105"
+        className="px-4 py-1.5 rounded-lg bg-[linear-gradient(to_right,#c88a65_-55%,white)] text-[#000] text-xs font-bold transition-all hover:bg-[linear-gradient(to_right,#eab2a0,white)] hover:text-white hover:scale-105"
       >
         Review Now
       </Link>

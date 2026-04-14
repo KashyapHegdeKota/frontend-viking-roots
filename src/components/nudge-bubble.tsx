@@ -20,8 +20,8 @@ export function NudgeBubble({
   if (dismissed) return null;
 
   return (
-    <div className="relative rounded-xl border border-[#e4bd46]/30 bg-[#262626] p-4 shadow-lg">
-      <div className="absolute -bottom-2 left-8 h-4 w-4 rotate-45 border-b border-r border-[#e4bd46]/30 bg-[#262626]" />
+    <div className="relative rounded-xl border border-[#c88a65]/30 bg-[#262626] p-4 shadow-lg">
+      <div className="absolute -bottom-2 left-8 h-4 w-4 rotate-45 border-b border-r border-[#c88a65]/30 bg-[#262626]" />
 
       <div className="flex items-start justify-between gap-3">
         <p className="text-sm font-semibold text-white">{question}</p>
@@ -39,7 +39,7 @@ export function NudgeBubble({
       <div className="mt-3 flex items-center gap-3">
         <button
           onClick={onPrimary}
-          className="rounded-full border border-[#e4bd46] px-4 py-1.5 text-xs font-bold text-[#e4bd46] transition-colors hover:bg-[#e4bd46] hover:text-[#0a0a0a]"
+          className="rounded-full bg-[linear-gradient(to_right,#c88a65_-55%,white)] px-4 py-1.5 text-xs font-bold text-[#000] transition-all hover:bg-[linear-gradient(to_right,#eab2a0,white)] hover:text-white"
         >
           {primaryAction}
         </button>
