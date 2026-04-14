@@ -46,7 +46,20 @@ const navItems = [
       </svg>
     ),
   },
-  // ADDED: AI Interview Link
+  // ADDED: Family Tree Link
+  {
+    label: "Family Tree",
+    href: "/familytree",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="16" y="16" width="6" height="6" rx="1" />
+        <rect x="2" y="16" width="6" height="6" rx="1" />
+        <rect x="9" y="2" width="6" height="6" rx="1" />
+        <path d="M5 16v-3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v3" />
+        <path d="M12 8v3" />
+      </svg>
+    ),
+  },
   {
     label: "AI Interview",
     href: "/ai-interview",
@@ -108,7 +121,7 @@ export function DashboardSidebar() {
     <aside className="sticky top-[57px] hidden h-[calc(100vh-57px)] w-52 shrink-0 flex-col border-r border-[#262626] bg-[#0a0a0a] py-6 lg:flex">
       <nav className="flex flex-1 flex-col gap-1 px-3">
         {navItems.map((item) => {
-          // Changed to check if pathname starts with href to keep it active on subpages
+          // Check if pathname starts with href to keep it active on subpages
           const isActive = location.pathname === item.href || location.pathname.startsWith(`${item.href}/`);
           
           return (

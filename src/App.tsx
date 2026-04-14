@@ -51,7 +51,7 @@ function App() {
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/profile/:username" element={<UserProfile />} />
           <Route path="/heritage-dashboard" element={<HeritageDashboard />} />
-          <Route path="/ancestor/add" element={<ManualAncestoryEntry />} />
+          <Route path="/ancestor/add" element={<ManualAncestoryEntry />} /> // TODO: This is currenlty inaccessible and the page also needs modifications 
           <Route path="/familytree" element={<FamilyTree />} />
           <Route path="/settings" element={<SettingsPage />} />
         </Route>

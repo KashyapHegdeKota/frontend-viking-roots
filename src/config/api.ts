@@ -9,6 +9,11 @@ export const API_ENDPOINTS = {
   LOGIN: `${API_BASE_URL}/form/login/`,
   PROFILE_STATUS: `${API_BASE_URL}/form/profile/status/`,
   PROFILE: `${API_BASE_URL}/form/profile/`,
+  
+  // ADDED: The missing profile endpoints
+  PROFILE_UPDATE: `${API_BASE_URL}/form/profile/update/`,
+  PROFILE_UPLOAD_PICTURE: `${API_BASE_URL}/form/profile/upload/`,
+
   START: `${API_BASE_URL}/api/ai_interview/start/`,
   MESSAGE: `${API_BASE_URL}/api/ai_interview/message/`,
   VERIFY_OTP: `${API_BASE_URL}/verify-otp/`,
