@@ -1,11 +1,11 @@
-import Header from '../components/Header';
+
 import { Footer } from '../components/Footer';
 import ProjectsSection from '../components/ProjectSection';
 
 export default function Overview() {
   return (
     <div style={{ minHeight: '100vh', background: 'var(--surface-bg)', color: 'var(--surface-fg)' }}>
-      <Header />
+      
       <main style={{ maxWidth: 1000, margin: '0 auto', padding: '2rem 1rem' }}>
         <h1>Discover Viking Roots</h1>
         <p style={{ color: 'var(--surface-muted)' }}>

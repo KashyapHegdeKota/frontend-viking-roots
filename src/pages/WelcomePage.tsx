@@ -16,37 +16,6 @@ export default function WelcomePage() {
 
   return (
     <div className="flex min-h-screen flex-col bg-[#0a0a0a]">
-      {/* Navbar */}
-      <header className="w-full border-b border-[#262626] bg-[#0a0a0a]">
-        <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <Link to="/" className="flex items-center gap-3">
-            <KinLogo />
-            <span className="text-xl font-bold text-white">Viking Roots</span>
-          </Link>
-          <div className="flex items-center gap-4">
-            <button className="rounded-full p-2 text-white/60 transition-colors hover:text-[#c88a65]">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-              </svg>
-            </button>
-            <button className="rounded-full p-2 text-white/60 transition-colors hover:text-[#c88a65]">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
-                <path d="M13.73 21a2 2 0 0 1-3.46 0" />
-              </svg>
-            </button>
-            <div className="flex items-center gap-2">
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#c88a65] text-sm font-bold text-[#0a0a0a]">
-                K
-              </div>
-              <span className="text-sm font-semibold text-white">Karen</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M6 9l6 6 6-6" />
-              </svg>
-            </div>
-          </div>
-        </nav>
-      </header>
 
       {/* Main content */}
       <main className="flex flex-1 items-center justify-center px-6 py-12">

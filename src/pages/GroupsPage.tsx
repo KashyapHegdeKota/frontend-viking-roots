@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { API_BASE_URL, API_ENDPOINTS } from '../config/api';
-import { SiteHeader } from '../components/site-header';
 import '../styles/Groups.css';
 
 interface SearchUser {
@@ -195,7 +194,7 @@ export default function GroupsPage() {
 
     return (
       <div className="groups-page">
-        <SiteHeader />
+        
         <main className="groups-wrap">
           <button className="back-btn" onClick={() => navigate('/groups')}>Back to groups</button>
 
@@ -284,7 +283,7 @@ export default function GroupsPage() {
 
   return (
     <div className="groups-page">
-      <SiteHeader />
+      
       <main className="groups-wrap">
         <section className="groups-header">
           <h1>Community Groups</h1>

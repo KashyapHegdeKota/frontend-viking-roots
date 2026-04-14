@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Header from '../components/Header';
+
 import { Footer } from '../components/Footer';
 import { API_BASE_URL } from '../config/api';
 
@@ -45,7 +45,7 @@ export default function HeritageDashboard() {
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--surface-bg)', color: 'var(--surface-fg)' }}>
-      <Header />
+      
       <main style={{ maxWidth: 1000, margin: '0 auto', padding: '2rem 1rem' }}>
         <h1>Heritage Dashboard</h1>
         {loading ? <p>Loading...</p> : null}

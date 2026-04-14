@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 import * as f3 from 'family-chart';
 import 'family-chart/styles/family-chart.css';
 import type { FamilyMember, MarriageEvent } from '../components/GedcomToJson';
-import Header from '../components/Header';
+
 import { Footer } from '../components/Footer';
 import TimelinePanel from '../components/TimelinePanel';
 
@@ -321,7 +321,7 @@ const FamilyTree = () => {
       minHeight: '100vh',
       padding: '0',
     }}>
-      <Header />
+      
 
       {/* ── Decorative header bar ── */}
       <div style={{

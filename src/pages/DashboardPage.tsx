@@ -1,11 +1,17 @@
-import { useEffect, useState } from "react";
-import { DashboardNavbar } from "../components/dashboard-navbar";
-import { DashboardSidebar } from "../components/dashboard-sidebar";
+import React, { useEffect, useState, useRef } from "react";
 import { NudgeBubble } from "../components/nudge-bubble";
 import { PostCard } from "../components/post-card";
 import { API_ENDPOINTS } from "../config/api";
 import { StoryInterviewModal } from "../components/StoryInterviewModal";
 import { PendingTagsNotification } from "../components/recognition/PendingTagsNotification";
+
+// Added TaggedUser interface
+interface TaggedUser {
+  id: number;
+  username: string;
+  full_name?: string;
+  profile_picture_url: string | null;
+}
 
 const GroupsSidebarWidget = () => {
   const [groups, setGroups] = useState<any[]>([]);
@@ -51,6 +57,13 @@ export default function DashboardPage() {
   const [postImage, setPostImage] = useState<File | null>(null);
   const [isPosting, setIsPosting] = useState(false);
 
+  // --- ADDED: Tagging State & Refs ---
+  const [tagSearch, setTagSearch] = useState('');
+  const [tagResults, setTagResults] = useState<TaggedUser[]>([]);
+  const [selectedTags, setSelectedTags] = useState<TaggedUser[]>([]);
+  const [showTagDropdown, setShowTagDropdown] = useState(false);
+  const tagInputRef = useRef<HTMLInputElement>(null);
+
   const fetchFeed = () => {
     fetch(API_ENDPOINTS.POSTS, { credentials: 'include' })
       .then((res) => res.json())
@@ -78,6 +91,33 @@ export default function DashboardPage() {
       .catch(err => console.error("Error fetching prompts:", err));
   }, []);
 
+  // --- ADDED: Tag Search Effect ---
+  useEffect(() => {
+    if (tagSearch.length < 1) {
+      setTagResults([]);
+      setShowTagDropdown(false);
+      return;
+    }
+
+    const timer = setTimeout(async () => {
+      try {
+        const response = await fetch(`${API_ENDPOINTS.SEARCH_USERS}?q=${encodeURIComponent(tagSearch)}`, {
+          credentials: 'include',
+        });
+        const data = await response.json();
+        if (response.ok) {
+          const filtered = (data.users || []).filter((u: TaggedUser) => !selectedTags.find((t) => t.id === u.id));
+          setTagResults(filtered);
+          setShowTagDropdown(filtered.length > 0);
+        }
+      } catch {
+        // ignore
+      }
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [tagSearch, selectedTags]);
+
   const handlePromptClick = (prompt: string) => {
     setSelectedPrompt(prompt);
     setIsStoryModalOpen(true);
@@ -91,8 +131,14 @@ export default function DashboardPage() {
     try {
       const formData = new FormData();
       formData.append('content', postContent.trim());
+      
       if (postImage) {
         formData.append('image', postImage);
+      }
+
+      // --- ADDED: Append tagged users to form data ---
+      if (selectedTags.length > 0) {
+        formData.append('tagged_user_ids', JSON.stringify(selectedTags.map((t) => t.id)));
       }
 
       const res = await fetch(API_ENDPOINTS.CREATE_POST, {
@@ -104,6 +150,11 @@ export default function DashboardPage() {
       if (res.ok) {
         setPostContent("");
         setPostImage(null);
+        
+        // --- ADDED: Clear tag state on success ---
+        setSelectedTags([]);
+        setTagSearch('');
+        
         fetchFeed(); // Re-fetch to show the new post
       } else {
         const err = await res.json();
@@ -118,9 +169,8 @@ export default function DashboardPage() {
 
   return (
     <div className="flex min-h-screen flex-col bg-[#0a0a0a]">
-      <DashboardNavbar />
       <div className="mx-auto flex w-full max-w-7xl flex-1">
-        <DashboardSidebar />
+
         
         <main className="flex-1 border-r border-[#262626] p-6">
           <div className="mx-auto max-w-2xl">
@@ -141,6 +191,50 @@ export default function DashboardPage() {
                   className="w-full resize-none rounded-lg bg-[#0a0a0a] p-3 text-sm text-white outline-none focus:ring-1 focus:ring-[#c88a65] min-h-[80px] border border-[#262626]"
                 />
                 
+                {/* --- ADDED: Tag Input UI (Tailwind styled) --- */}
+                <div className="relative flex flex-wrap items-center gap-2 rounded-lg border border-[#262626] bg-[#0a0a0a] p-2">
+                  {selectedTags.map((tag) => (
+                    <span key={tag.id} className="flex items-center gap-1 rounded-full bg-[#c88a65]/20 px-2 py-1 text-xs text-[#c88a65]">
+                      {tag.full_name || tag.username}
+                      <button 
+                        type="button" 
+                        onClick={() => setSelectedTags((prev) => prev.filter((t) => t.id !== tag.id))}
+                        className="text-white/50 hover:text-white"
+                      >
+                        ×
+                      </button>
+                    </span>
+                  ))}
+                  <input
+                    ref={tagInputRef}
+                    className="flex-1 bg-transparent text-sm text-white outline-none placeholder:text-white/30 min-w-[120px]"
+                    placeholder={selectedTags.length === 0 ? "Tag family members..." : ""}
+                    value={tagSearch}
+                    onChange={(e) => setTagSearch(e.target.value)}
+                    onFocus={() => tagSearch.length > 0 && setShowTagDropdown(true)}
+                    onBlur={() => setTimeout(() => setShowTagDropdown(false), 200)}
+                  />
+
+                  {showTagDropdown && tagResults.length > 0 && (
+                    <div className="absolute left-0 top-full z-10 mt-1 max-h-40 w-full overflow-y-auto rounded-lg border border-[#262626] bg-[#171717] shadow-lg">
+                      {tagResults.map((u) => (
+                        <button 
+                          key={u.id} 
+                          type="button" 
+                          className="w-full px-3 py-2 text-left text-sm text-white transition-colors hover:bg-[#262626]"
+                          onMouseDown={() => {
+                            setSelectedTags((prev) => [...prev, u]);
+                            setTagSearch('');
+                            setShowTagDropdown(false);
+                          }}
+                        >
+                          @{u.username} {u.full_name ? `(${u.full_name})` : ''}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
                 {postImage && (
                   <div className="relative w-max">
                     <img 
@@ -151,7 +245,7 @@ export default function DashboardPage() {
                     <button 
                       type="button" 
                       onClick={() => setPostImage(null)}
-                      className="absolute -top-2 -right-2 bg-red-500 rounded-full p-1 text-white hover:scale-110 transition-transform"
+                      className="absolute -top-2 -right-2 bg-red-500 rounded-full p-1 text-white transition-transform hover:scale-110"
                     >
                       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                         <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -161,7 +255,7 @@ export default function DashboardPage() {
                   </div>
                 )}
 
-                <div className="flex items-center justify-between mt-2">
+                <div className="mt-2 flex items-center justify-between">
                   <label className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-semibold text-white/70 transition-colors hover:bg-[#262626] hover:text-white">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
@@ -255,6 +349,7 @@ export default function DashboardPage() {
 
           {/* Groups sidebar widget */}
           <GroupsSidebarWidget />
+          
           {/* Trending */}
           <div className="rounded-xl border border-[#262626] bg-[#171717] p-4">
             <h3 className="mb-3 text-sm font-bold text-white">Trending</h3>

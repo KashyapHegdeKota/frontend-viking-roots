@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { API_ENDPOINTS } from '../config/api';
-import { SiteHeader } from '../components/site-header';
 import '../styles/AuthPages.css';
 
 export default function AuthenticationPage() {
@@ -86,7 +85,7 @@ export default function AuthenticationPage() {
 
   return (
     <div className="auth-page">
-      <SiteHeader />
+      
       <main className="auth-main">
         <div className="auth-card">
           <h1>Verify Your Email</h1>

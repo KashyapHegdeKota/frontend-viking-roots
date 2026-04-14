@@ -1,7 +1,6 @@
-import { DashboardNavbar } from "@/components/dashboard-navbar";
-import { DashboardSidebar } from "@/components/dashboard-sidebar";
 import { FaceEnrollment } from "@/components/recognition/FaceEnrollment";
 import { FaceTaggingSettings } from "@/components/recognition/FaceTaggingSettings";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { useState, useEffect } from "react";
 import { API_ENDPOINTS } from "../config/api";
 
@@ -44,13 +43,13 @@ export default function SettingsPage() {
 
   return (
     <div className="flex min-h-screen flex-col bg-[#0a0a0a]">
-      <DashboardNavbar />
       <div className="mx-auto flex w-full max-w-7xl flex-1">
-        <DashboardSidebar />
-        
         <main className="flex-1 p-6">
           <div className="mx-auto max-w-2xl">
-            <h1 className="text-3xl font-bold text-white mb-8">Settings</h1>
+            <div className="flex items-center justify-between mb-8">
+              <h1 className="text-3xl font-bold text-white">Settings</h1>
+              <ThemeToggle />
+            </div>
 
             <div className="space-y-8">
               {/* Face Tagging Review Section */}

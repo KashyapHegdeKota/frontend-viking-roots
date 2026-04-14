@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { API_ENDPOINTS } from '../config/api';
-import { SiteHeader } from '../components/site-header';
 import '../styles/AuthPages.css';
 
 export default function LoginPage() {
@@ -45,7 +44,7 @@ export default function LoginPage() {
 
   return (
     <div className="auth-page">
-      <SiteHeader />
+      
       <main className="auth-main">
         <div className="auth-card">
           <h1>Welcome Back</h1>

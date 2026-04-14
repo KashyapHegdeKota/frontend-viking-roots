@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Header from '../components/Header';
+
 import { Footer } from '../components/Footer';
 import { API_BASE_URL } from '../config/api';
 
@@ -31,7 +31,7 @@ export default function ManualAncestoryEntry() {
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--surface-bg)', color: 'var(--surface-fg)' }}>
-      <Header />
+      
       <main style={{ maxWidth: 760, margin: '0 auto', padding: '2rem 1rem' }}>
         <h1>Add Ancestor Manually</h1>
         <form onSubmit={submit} style={{ display: 'grid', gap: 10, border: '1px solid var(--surface-border)', borderRadius: 12, background: 'var(--surface-elev)', padding: '1rem' }}>

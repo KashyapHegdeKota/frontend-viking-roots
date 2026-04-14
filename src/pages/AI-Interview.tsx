@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { API_ENDPOINTS } from '../config/api';
-import { SiteHeader } from '../components/site-header';
 import '../styles/AuthPages.css';
 
 interface Message {
@@ -10,7 +9,7 @@ interface Message {
   timestamp: Date;
 }
 
-export default function VikingRootsQuestionnaire() {
+export default function AIInterview() {
   const navigate = useNavigate();
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState('');
@@ -96,7 +95,6 @@ export default function VikingRootsQuestionnaire() {
 
   return (
     <div className="auth-page">
-      <SiteHeader />
       <main className="chat-main">
         {!hasStarted ? (
           <section className="auth-card">

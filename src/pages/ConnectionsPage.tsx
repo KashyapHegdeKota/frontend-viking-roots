@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { DashboardNavbar } from "@/components/dashboard-navbar";
-import { DashboardSidebar } from "@/components/dashboard-sidebar";
+
 import { API_ENDPOINTS } from "../config/api";
 
 interface UserInfo {
@@ -94,9 +93,8 @@ export default function ConnectionsPage() {
 
   return (
     <div className="flex min-h-screen flex-col bg-[#0a0a0a]">
-      <DashboardNavbar />
       <div className="mx-auto flex w-full max-w-7xl flex-1">
-        <DashboardSidebar />
+
         
         <main className="flex-1 p-6">
           <div className="mx-auto max-w-3xl">
