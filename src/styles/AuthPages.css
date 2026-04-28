@@ -108,15 +108,75 @@
   gap: 0.5rem;
 }
 
+.otp-card {
+  text-align: center;
+}
+
+.otp-icon {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  margin: 0 auto 1rem;
+  border: 1px solid rgba(200, 138, 101, 0.45);
+  border-radius: 999px;
+  background: rgba(200, 138, 101, 0.12);
+  color: #c88a65;
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.otp-copy {
+  margin-bottom: 1.25rem;
+  line-height: 1.6;
+}
+
 .otp-input {
   text-align: center;
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 1.35rem;
+  height: 3.25rem;
+  padding: 0;
+  border-radius: 12px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.otp-input:focus {
+  border-color: #c88a65;
+  box-shadow: 0 0 0 3px rgba(200, 138, 101, 0.2);
+  transform: translateY(-1px);
+}
+
+.otp-hint {
+  margin: -0.2rem 0 0.25rem;
+  color: var(--surface-muted);
+  font-size: 0.82rem;
 }
 
 .otp-note {
   text-align: center;
   color: var(--surface-muted);
+}
+
+.otp-message {
+  margin: 1rem 0 0;
+  border: 1px solid rgba(200, 138, 101, 0.3);
+  border-radius: 10px;
+  background: rgba(200, 138, 101, 0.08);
+  padding: 0.75rem;
+  color: var(--surface-fg);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 420px) {
+  .otp-row {
+    gap: 0.35rem;
+  }
+
+  .otp-input {
+    height: 2.75rem;
+    font-size: 1.1rem;
+  }
 }
 
 .chat-main {
@@ -170,4 +230,50 @@
   gap: 0.6rem;
   padding: 1rem;
   border-top: 1px solid var(--surface-border);
+}
+
+@media (max-width: 640px) {
+  .auth-main {
+    align-items: start;
+    padding: 1rem 0.75rem 2rem;
+  }
+
+  .auth-card {
+    border-radius: 12px;
+    padding: 1rem;
+  }
+
+  .auth-card h1 {
+    font-size: 1.45rem;
+  }
+
+  .auth-form input,
+  .auth-form textarea,
+  .chat-form input {
+    min-height: 2.75rem;
+    font-size: 1rem;
+  }
+
+  .chat-main {
+    padding: 0.75rem;
+  }
+
+  .chat-card {
+    border-radius: 10px;
+  }
+
+  .chat-body {
+    min-height: 48vh;
+    max-height: 58vh;
+    padding: 0.75rem;
+  }
+
+  .chat-bubble {
+    max-width: 90%;
+  }
+
+  .chat-form {
+    grid-template-columns: 1fr;
+    padding: 0.75rem;
+  }
 }

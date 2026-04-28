@@ -49,6 +49,11 @@ export function LoginModal({ open, onClose, onSignUpClick }: LoginModalProps) {
     onSignUpClick?.();
   }
 
+  function handleForgotPasswordClick() {
+    onClose();
+    navigate('/forgot-password');
+  }
+
   // ADDED: Real authentication logic from LoginPage
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -70,10 +75,14 @@ export function LoginModal({ open, onClose, onSignUpClick }: LoginModalProps) {
 
       if (data.username) localStorage.setItem('username', data.username);
       if (data.token) localStorage.setItem('authToken', data.token);
+      localStorage.setItem('isStaff', data.is_staff ? 'true' : 'false');
+      localStorage.setItem('isSuperuser', data.is_superuser ? 'true' : 'false');
 
       onClose(); // Close the modal upon success
 
-      if (data.profile_completed && data.username) {
+      if (data.is_admin) {
+        navigate('/admin/users');
+      } else if (data.profile_completed && data.username) {
         navigate(`/profile/${data.username}`);
       } else {
         navigate('/profile');
@@ -149,6 +158,7 @@ export function LoginModal({ open, onClose, onSignUpClick }: LoginModalProps) {
           </button>
           <button
             type="button"
+            onClick={handleForgotPasswordClick}
             className="text-[#c88a65] transition-opacity hover:opacity-80"
           >
             Forgot Password?

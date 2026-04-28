@@ -77,7 +77,7 @@ export function SignUpModal({ open, onClose }: SignUpModalProps) {
         return;
       }
       onClose();
-      navigate("/login");
+      navigate("/otp-verify", { state: { email } });
     } catch {
       setError("Network error. Please check your connection.");
     } finally {

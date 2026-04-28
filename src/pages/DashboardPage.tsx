@@ -168,21 +168,21 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#0a0a0a]">
-      <div className="mx-auto flex w-full max-w-7xl flex-1">
+    <div className="flex min-h-screen min-w-0 flex-col bg-[#0a0a0a]">
+      <div className="mx-auto flex w-full max-w-7xl min-w-0 flex-1">
 
         
-        <main className="flex-1 border-r border-[#262626] p-6">
+        <main className="min-w-0 flex-1 border-[#262626] p-0 lg:border-r lg:p-6">
           <div className="mx-auto max-w-2xl">
             <PendingTagsNotification />
             
             <div className="mb-8">
-              <h1 className="text-2xl font-bold text-white">Welcome back!</h1>
+              <h1 className="text-xl font-bold text-white sm:text-2xl">Welcome back!</h1>
               <p className="text-white/50">Here's what's happening in your family circle.</p>
             </div>
 
             {/* Create Post Box */}
-            <div className="mb-8 rounded-xl border border-[#262626] bg-[#171717] p-4">
+            <div className="mb-8 rounded-lg border border-[#262626] bg-[#171717] p-3 sm:p-4">
               <form onSubmit={handleCreatePost} className="flex flex-col gap-3">
                 <textarea
                   value={postContent}
@@ -255,8 +255,8 @@ export default function DashboardPage() {
                   </div>
                 )}
 
-                <div className="mt-2 flex items-center justify-between">
-                  <label className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-semibold text-white/70 transition-colors hover:bg-[#262626] hover:text-white">
+                <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  <label className="flex cursor-pointer items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold text-white/70 transition-colors hover:bg-[#262626] hover:text-white sm:justify-start sm:py-1.5">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
                       <circle cx="8.5" cy="8.5" r="1.5"></circle>
@@ -278,7 +278,7 @@ export default function DashboardPage() {
                   <button
                     type="submit"
                     disabled={isPosting || (!postContent.trim() && !postImage)}
-                    className="rounded-lg bg-[linear-gradient(to_right,#c88a65_-55%,white)] px-5 py-1.5 text-sm font-bold text-[#000] transition-all hover:bg-[linear-gradient(to_right,#eab2a0,white)] hover:text-white disabled:opacity-50"
+                    className="min-h-10 rounded-lg bg-[linear-gradient(to_right,#c88a65_-55%,white)] px-5 py-2 text-sm font-bold text-[#000] transition-all hover:bg-[linear-gradient(to_right,#eab2a0,white)] hover:text-white disabled:opacity-50 sm:min-h-0 sm:py-1.5"
                   >
                     {isPosting ? 'Posting...' : 'Post'}
                   </button>
@@ -291,7 +291,7 @@ export default function DashboardPage() {
                 <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#c88a65] border-t-transparent" />
               </div>
             ) : posts.length === 0 ? (
-              <div className="rounded-xl border border-[#262626] bg-[#171717] p-12 text-center">
+              <div className="rounded-lg border border-[#262626] bg-[#171717] p-6 text-center sm:p-12">
                 <p className="mb-4 text-white/50">Your feed is empty. Be the first to share something!</p>
               </div>
             ) : (

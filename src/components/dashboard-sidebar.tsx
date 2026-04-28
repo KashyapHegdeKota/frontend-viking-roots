@@ -1,4 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
+import { Shield } from "lucide-react";
 
 const navItems = [
   {
@@ -112,15 +113,26 @@ const navItems = [
       </svg>
     ),
   },
+  {
+    label: "Admin",
+    href: "/admin/users",
+    icon: <Shield size={20} />,
+  },
 ];
 
 export function DashboardSidebar() {
   const location = useLocation();
+  const canAccessAdmin =
+    localStorage.getItem('isStaff') === 'true' ||
+    localStorage.getItem('isSuperuser') === 'true';
+  const visibleNavItems = canAccessAdmin
+    ? navItems
+    : navItems.filter((item) => item.href !== "/admin/users");
 
   return (
-    <aside className="sticky top-[57px] hidden h-[calc(100vh-57px)] w-52 shrink-0 flex-col border-r border-[#262626] bg-[#0a0a0a] py-6 lg:flex">
-      <nav className="flex flex-1 flex-col gap-1 px-3">
-        {navItems.map((item) => {
+    <aside className="fixed inset-x-0 bottom-0 z-40 flex border-t border-[#262626] bg-[#0a0a0a] px-2 py-2 lg:sticky lg:top-[57px] lg:h-[calc(100vh-57px)] lg:w-52 lg:shrink-0 lg:flex-col lg:border-r lg:border-t-0 lg:px-0 lg:py-6">
+      <nav className="flex w-full gap-1 overflow-x-auto px-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:flex-1 lg:flex-col lg:overflow-visible lg:px-3">
+        {visibleNavItems.map((item) => {
           // Check if pathname starts with href to keep it active on subpages
           const isActive = location.pathname === item.href || location.pathname.startsWith(`${item.href}/`);
           
@@ -128,7 +140,7 @@ export function DashboardSidebar() {
             <Link
               key={item.label}
               to={item.href}
-              className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold transition-colors ${
+              className={`flex min-w-20 flex-col items-center justify-center gap-1 rounded-lg px-2 py-2 text-[11px] font-semibold transition-colors lg:min-w-0 lg:flex-row lg:justify-start lg:gap-3 lg:px-3 lg:py-2.5 lg:text-sm ${
                 isActive
                   ? "bg-[#c88a65]/10 text-[#c88a65]"
                   : "text-white/70 hover:bg-[#262626] hover:text-white"
@@ -143,7 +155,7 @@ export function DashboardSidebar() {
         })}
       </nav>
 
-      <div className="mt-auto px-3 pt-4">
+      <div className="mt-auto hidden px-3 pt-4 lg:block">
         <Link
           to="/help"
           className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold text-white/50 transition-colors hover:bg-[#262626] hover:text-white"

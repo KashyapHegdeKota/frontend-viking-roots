@@ -18,17 +18,19 @@ export function Navbar() {
   const handleLogout = () => {
     localStorage.removeItem('username');
     localStorage.removeItem('authToken');
+    localStorage.removeItem('isStaff');
+    localStorage.removeItem('isSuperuser');
     navigate('/');
   };
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-[#262626] bg-[#0a0a0a]">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-3" aria-label="Main navigation">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-3 py-3 sm:px-5 lg:px-6" aria-label="Main navigation">
         
         {/* 1. Dynamic Logo */}
         <Link to="/" className="flex shrink-0 items-center gap-3">
           <KinLogo size={36} />
-          <span className="text-lg font-bold text-white">Viking Roots</span>
+          <span className="hidden text-lg font-bold text-white min-[390px]:inline">Viking Roots</span>
         </Link>
 
         {/* 2. Center Search Bar (ONLY VISIBLE IF LOGGED IN) */}
@@ -49,7 +51,7 @@ export function Navbar() {
         )}
 
         {/* 3. Right Side Actions */}
-        <div className="flex items-center gap-4 sm:gap-6">
+        <div className="flex min-w-0 items-center gap-2 sm:gap-4 lg:gap-6">
           {username ? (
             // ==========================================
             // LOGGED IN STATE
@@ -82,7 +84,7 @@ export function Navbar() {
               </button>
 
               {/* User Avatar Profile Link */}
-              <div className="flex items-center gap-4 pl-2 sm:pl-4 sm:border-l sm:border-[#262626]">
+              <div className="flex min-w-0 items-center gap-2 pl-1 sm:gap-4 sm:border-l sm:border-[#262626] sm:pl-4">
                 <Link to={`/profile`} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
                   <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#c88a65] text-sm font-bold text-[#0a0a0a]">
                     {userInitial}
@@ -91,7 +93,7 @@ export function Navbar() {
                 </Link>
                 
                 {/* Log Out Button */}
-                <button onClick={handleLogout} className="text-xs font-bold text-white/40 hover:text-white transition-colors uppercase tracking-wider">
+                <button onClick={handleLogout} className="text-[11px] font-bold uppercase tracking-wider text-white/40 transition-colors hover:text-white sm:text-xs">
                   Log Out
                 </button>
               </div>
@@ -101,7 +103,7 @@ export function Navbar() {
             // LOGGED OUT STATE
             // ==========================================
             <>
-              <Link to="/projects" className="text-base font-semibold text-white transition-colors hover:text-[#c88a65]">
+              <Link to="/projects" className="hidden text-base font-semibold text-white transition-colors hover:text-[#c88a65] sm:inline">
                 Explore A Project
               </Link>
               <button onClick={() => setLoginOpen(true)} className="text-base font-semibold text-white transition-colors hover:text-[#c88a65]">

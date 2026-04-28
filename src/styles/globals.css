@@ -116,13 +116,37 @@
 }
 
 @layer base {
+  html,
+  body,
+  #root {
+    min-height: 100%;
+  }
+
   * {
     @apply border-border outline-ring/50;
+    box-sizing: border-box;
   }
+
   body {
     margin: 0;
     background: var(--surface-bg, #0a0a0a);
     color: var(--surface-fg, #f5f5f5);
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  img,
+  video,
+  canvas,
+  svg {
+    max-width: 100%;
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
   }
 }
 
@@ -140,4 +164,26 @@
   --surface-fg: #141414;
   --surface-muted: #545454;
   --surface-border: #ddd2bf;
+}
+
+@media (max-width: 640px) {
+  h1 {
+    overflow-wrap: anywhere;
+  }
+
+  p,
+  a,
+  span,
+  button,
+  input,
+  textarea {
+    min-width: 0;
+  }
+
+  dialog {
+    width: calc(100vw - 1.5rem);
+    max-width: calc(100vw - 1.5rem);
+    max-height: calc(100dvh - 1.5rem);
+    overflow-y: auto;
+  }
 }

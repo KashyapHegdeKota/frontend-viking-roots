@@ -6,6 +6,8 @@ import NotFoundPage from "./pages/NotFoundPage";
 import GroupsPage from "./pages/GroupsPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 import AuthenticationPage from "./pages/AuthenticationPage";
 import UserProfile from "./pages/UserProfile";
 import AIInterview from "./pages/AI-Interview";
@@ -19,6 +21,7 @@ import UploadPage from "./pages/UploadPage";
 import FamilyTree from "./pages/FamilyTree";
 import SettingsPage from "./pages/SettingsPage";
 import ConnectionsPage from "./pages/ConnectionsPage";
+import AdminDashboard from "./pages/AdminDashboard";
 import { Layout} from "@/components/Layout";
 import { DashboardSidebarLayout } from "@/components/DashboardSidebarLayout"; // You'll need to create this
 
@@ -36,6 +39,8 @@ function App() {
         <Route path="/welcome" element={<WelcomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/otp-verify" element={<AuthenticationPage />} />
         <Route path="/profile/setup" element={<ProfileSetup />} />
         <Route path="/ai-interview" element={<AIInterview />} />
@@ -54,6 +59,7 @@ function App() {
           <Route path="/ancestor/add" element={<ManualAncestoryEntry />} /> // TODO: This is currenlty inaccessible and the page also needs modifications 
           <Route path="/familytree" element={<FamilyTree />} />
           <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/admin/users" element={<AdminDashboard />} />
         </Route>
 
       {/* 3. COMPLETELY BARE LAYOUT (No Navbar, No Sidebar) */}

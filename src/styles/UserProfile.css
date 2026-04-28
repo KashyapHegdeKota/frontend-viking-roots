@@ -69,3 +69,41 @@
   background: linear-gradient(to right, #eab2a0, white);
   color: white;
 }
+
+@media (max-width: 640px) {
+  .profile-wrap {
+    padding: 0;
+  }
+
+  .profile-card,
+  .error-container {
+    border-radius: 10px;
+    padding: 0.85rem;
+  }
+
+  .profile-head {
+    align-items: flex-start;
+  }
+
+  .profile-head h1,
+  .profile-head h2 {
+    font-size: 1.25rem;
+    overflow-wrap: anywhere;
+  }
+
+  .profile-avatar {
+    width: 48px;
+    height: 48px;
+    flex: 0 0 auto;
+  }
+
+  .profile-actions {
+    flex-direction: column;
+  }
+
+  .profile-actions button,
+  .error-container button {
+    width: 100%;
+    min-height: 2.5rem;
+  }
+}

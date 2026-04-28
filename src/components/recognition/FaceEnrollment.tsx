@@ -40,7 +40,7 @@ export function FaceEnrollment() {
     if (selectedFiles.length === 0) return;
 
     setUploading(true);
-    setMessage('');
+    setMessage('Processing your photos... This may take 10-20 seconds.');
     const formData = new FormData();
     selectedFiles.forEach(file => formData.append('images', file));
 
@@ -52,14 +52,14 @@ export function FaceEnrollment() {
       });
       const data = await res.json();
       if (res.ok) {
-        setMessage('Enrollment successful!');
+        setMessage('✓ Enrollment successful! You can now be tagged in photos.');
         fetchStatus();
         setSelectedFiles([]);
       } else {
-        setMessage(data.error || 'Enrollment failed.');
+        setMessage(data.error || 'Enrollment failed. Please try again with clearer photos.');
       }
     } catch (err) {
-      setMessage('An error occurred during upload.');
+      setMessage('An error occurred during upload. Please try again.');
     } finally {
       setUploading(false);
     }
@@ -99,7 +99,10 @@ export function FaceEnrollment() {
       {status?.is_enrolled ? (
         <div className="space-y-4">
           <p className="text-sm text-white/70">
-            You have {status.face_count} face samples stored securely in AWS Rekognition.
+            You have {status.face_count} face samples stored securely using advanced facial recognition.
+          </p>
+          <p className="text-xs text-white/50">
+            Your face data is encrypted and stored privately in our database. We use state-of-the-art AI models to recognize you in photos.
           </p>
           <button 
             onClick={handleDelete}
@@ -110,6 +113,15 @@ export function FaceEnrollment() {
         </div>
       ) : (
         <form onSubmit={handleUpload} className="space-y-4">
+          <div className="mb-3 rounded-lg bg-blue-500/10 border border-blue-500/20 p-3">
+            <p className="text-xs text-blue-400">
+              <strong>📸 Tips for best results:</strong>
+              <br />• Upload 3-5 clear, well-lit photos of your face
+              <br />• Include different angles and expressions
+              <br />• Avoid sunglasses, masks, or heavy shadows
+              <br />• Processing takes 10-20 seconds
+            </p>
+          </div>
           <div className="rounded-lg border-2 border-dashed border-[#262626] p-8 text-center transition-colors hover:border-[#c88a65]/40">
             <input
               type="file"
@@ -135,7 +147,7 @@ export function FaceEnrollment() {
             disabled={uploading || selectedFiles.length === 0}
             className="w-full rounded-lg bg-[linear-gradient(to_right,#c88a65_-55%,white)] py-2 text-sm font-bold text-[#000] transition-all hover:bg-[linear-gradient(to_right,#eab2a0,white)] hover:text-white hover:scale-[1.02] disabled:opacity-50 disabled:hover:scale-100"
           >
-            {uploading ? 'Processing...' : 'Complete Enrollment'}
+            {uploading ? 'Processing... Please wait' : 'Complete Enrollment'}
           </button>
         </form>
       )}

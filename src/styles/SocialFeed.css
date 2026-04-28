@@ -198,3 +198,44 @@
   padding: 1rem;
   background: var(--surface-elev);
 }
+
+@media (max-width: 640px) {
+  .social-wrap {
+    padding: 0;
+  }
+
+  .create-post-card,
+  .post-card,
+  .loading-state,
+  .error-state {
+    border-radius: 10px;
+    padding: 0.85rem;
+  }
+
+  .post-header {
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .post-author {
+    min-width: 0;
+  }
+
+  .post-time {
+    flex: 0 0 auto;
+    font-size: 0.75rem;
+  }
+
+  .post-footer,
+  .post-actions-bar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .action-btn,
+  .post-submit-btn,
+  .error-state button {
+    width: 100%;
+    min-height: 2.4rem;
+  }
+}

@@ -7,8 +7,12 @@ export const API_BASE_URL = rawApiBaseUrl.replace(/\/$/, '');
 export const API_ENDPOINTS = {
   REGISTER: `${API_BASE_URL}/form/register/`,
   LOGIN: `${API_BASE_URL}/form/login/`,
+  PASSWORD_RESET: `${API_BASE_URL}/api/password-reset/`,
+  PASSWORD_RESET_CONFIRM: `${API_BASE_URL}/api/password-reset/confirm/`,
   PROFILE_STATUS: `${API_BASE_URL}/form/profile/status/`,
   PROFILE: `${API_BASE_URL}/form/profile/`,
+  ADMIN_USERS: `${API_BASE_URL}/api/admin/users/`,
+  ADMIN_USER: (id: number) => `${API_BASE_URL}/api/admin/users/${id}/`,
   
   // ADDED: The missing profile endpoints
   PROFILE_UPDATE: `${API_BASE_URL}/form/profile/update/`,

@@ -12,7 +12,7 @@ export function DashboardSidebarLayout() {
       <div className="mx-auto flex w-full max-w-7xl flex-1">
         <DashboardSidebar />
         
-        <main className="flex-1 p-6 border-l border-[#262626]">
+        <main className="w-full min-w-0 flex-1 border-[#262626] px-3 py-4 pb-24 sm:px-5 lg:border-l lg:p-6">
           {/* Outlet injects UserProfile, SettingsPage, or DashboardPage here */}
           <Outlet />
         </main>

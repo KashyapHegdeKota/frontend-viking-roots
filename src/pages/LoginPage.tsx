@@ -29,8 +29,12 @@ export default function LoginPage() {
 
       if (data.username) localStorage.setItem('username', data.username);
       if (data.token) localStorage.setItem('authToken', data.token);
+      localStorage.setItem('isStaff', data.is_staff ? 'true' : 'false');
+      localStorage.setItem('isSuperuser', data.is_superuser ? 'true' : 'false');
 
-      if (data.profile_completed && data.username) {
+      if (data.is_admin) {
+        navigate('/admin/users');
+      } else if (data.profile_completed && data.username) {
         navigate(`/profile/${data.username}`);
       } else {
         navigate('/profile');
@@ -78,6 +82,8 @@ export default function LoginPage() {
           </form>
 
           <div className="auth-links">
+            <Link to="/forgot-password">Forgot password?</Link>
+            <br />
             <Link to="/register">Not a member? Sign Up</Link>
           </div>
         </div>

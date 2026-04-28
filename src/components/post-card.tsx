@@ -100,28 +100,28 @@ export function PostCard({ post }: PostCardProps) {
   const authorInitial = authorUsername ? authorUsername[0].toUpperCase() : '?';
 
   return (
-    <article className="overflow-hidden rounded-xl border border-[#262626] bg-[#171717]">
+    <article className="overflow-hidden rounded-lg border border-[#262626] bg-[#171717] sm:rounded-xl">
       {/* Post header */}
-      <div className="flex items-center justify-between px-4 py-3">
-        <div className="flex items-center gap-3">
+      <div className="flex items-center justify-between gap-3 px-3 py-3 sm:px-4">
+        <div className="flex min-w-0 items-center gap-3">
           {authorProfilePicUrl ? (
             <img
               src={authorProfilePicUrl}
               alt={authorUsername}
-              className="h-10 w-10 rounded-full object-cover"
+              className="h-10 w-10 shrink-0 rounded-full object-cover"
             />
           ) : (
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#c88a65] text-sm font-bold text-[#0a0a0a]">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#c88a65] text-sm font-bold text-[#0a0a0a]">
               {authorInitial}
             </div>
           )}
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="text-sm font-bold text-white">{authorUsername}</span>
+          <div className="min-w-0">
+            <div className="flex min-w-0 flex-wrap items-center gap-1.5 sm:gap-2">
+              <span className="truncate text-sm font-bold text-white">{authorUsername}</span>
               {groupName && (
                 <>
                   <span className="text-xs text-white/40">•</span>
-                  <span className="text-xs font-semibold text-[#c88a65]">{groupName}</span>
+                  <span className="truncate text-xs font-semibold text-[#c88a65]">{groupName}</span>
                 </>
               )}
             </div>
@@ -156,8 +156,8 @@ export function PostCard({ post }: PostCardProps) {
       )}
 
       {/* Engagement bar */}
-      <div className="flex items-center justify-between border-b border-[#262626] px-4 py-2.5">
-        <div className="flex items-center gap-5">
+      <div className="flex flex-col gap-2 border-b border-[#262626] px-3 py-2.5 sm:flex-row sm:items-center sm:justify-between sm:px-4">
+        <div className="flex flex-wrap items-center gap-3 sm:gap-5">
           <button onClick={handleLike} className="flex items-center gap-1.5 text-sm transition-colors">
             <svg width="18" height="18" viewBox="0 0 24 24" fill={liked ? "#c88a65" : "none"} stroke={liked ? "#c88a65" : "white"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
@@ -179,7 +179,7 @@ export function PostCard({ post }: PostCardProps) {
             <span>Share</span>
           </button>
         </div>
-        <button onClick={() => setSaved(!saved)} className="flex items-center gap-1.5 text-sm transition-colors">
+        <button onClick={() => setSaved(!saved)} className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-[#262626] py-2 text-sm transition-colors sm:w-auto sm:border-0 sm:py-0">
           <svg width="18" height="18" viewBox="0 0 24 24" fill={saved ? "#c88a65" : "none"} stroke={saved ? "#c88a65" : "white"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
           </svg>
@@ -189,7 +189,7 @@ export function PostCard({ post }: PostCardProps) {
 
       {/* Tagged users */}
       {taggedUsers.length > 0 && (
-        <div className="flex flex-wrap items-center gap-2 px-4 py-2.5">
+        <div className="flex flex-wrap items-center gap-2 px-3 py-2.5 sm:px-4">
           <span className="text-xs font-semibold text-white/40">Tagged:</span>
           {taggedUsers.map((u) => (
             <span key={u.id} className="rounded-full border border-[#262626] px-3 py-1 text-xs font-semibold text-white">
@@ -200,12 +200,12 @@ export function PostCard({ post }: PostCardProps) {
       )}
 
       {/* Caption */}
-      <div className="px-4 pb-2 pt-2">
+      <div className="px-3 pb-2 pt-2 sm:px-4">
         <p className="text-sm leading-relaxed text-white/80">{content}</p>
       </div>
 
       {/* Comment input */}
-      <form onSubmit={handleComment} className="flex items-center gap-3 border-t border-[#262626] px-4 py-3">
+      <form onSubmit={handleComment} className="flex items-center gap-2 border-t border-[#262626] px-3 py-3 sm:gap-3 sm:px-4">
         <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#c88a65] text-xs font-bold text-[#0a0a0a]">
           {currentUserInitial}
         </div>
@@ -214,7 +214,7 @@ export function PostCard({ post }: PostCardProps) {
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           placeholder="Write a comment..."
-          className="h-9 flex-1 rounded-full border border-[#262626] bg-transparent px-4 text-sm text-white placeholder-[#6b7280] outline-none transition-colors focus:border-[#c88a65]"
+          className="h-9 min-w-0 flex-1 rounded-full border border-[#262626] bg-transparent px-3 text-sm text-white placeholder-[#6b7280] outline-none transition-colors focus:border-[#c88a65] sm:px-4"
         />
         <button type="submit" className="text-white/40 transition-colors hover:text-[#c88a65]">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
