@@ -9,7 +9,7 @@ export default function About() {
   return (
     <div style={{ minHeight: '100vh', background: 'var(--surface-bg)', color: 'var(--surface-fg)' }}>
       
-      <main style={{ maxWidth: 1000, margin: '0 auto', padding: '2rem 1rem' }}>
+      <main style={{ maxWidth: 1000, margin: '0 auto', padding: '2rem 1rem', textAlign: 'center' }}>
         <h1>{t('pages.aboutTitle')}</h1>
         <p style={{ color: 'var(--surface-muted)' }}>
           {t('pages.aboutCopy')}
