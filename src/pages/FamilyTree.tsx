@@ -3,7 +3,6 @@ import * as f3 from 'family-chart';
 import 'family-chart/styles/family-chart.css';
 import type { FamilyMember, MarriageEvent } from '../components/GedcomToJson';
 
-import { Footer } from '../components/Footer';
 import TimelinePanel from '../components/TimelinePanel';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5173';
@@ -207,60 +206,69 @@ const FamilyTree = () => {
   };
 
   const buildChart = (data: FamilyMember[]) => {
-    if (!containerRef.current || data.length === 0) return;
-    injectStyles();
+  if (!containerRef.current || data.length === 0) return;
+  injectStyles();
 
-    if (f3ChartRef.current) {
-      try { f3ChartRef.current.editTreeInstance?.destroy(); } catch (_) {}
-    }
-    containerRef.current.innerHTML = '';
-    containerRef.current.id = 'FamilyChart';
+  if (f3ChartRef.current) {
+    try { f3ChartRef.current.editTreeInstance?.destroy(); } catch (_) {}
+  }
+  containerRef.current.innerHTML = '';
+  containerRef.current.id = 'FamilyChart';
 
-    try {
-      const chart = f3.createChart('#FamilyChart', data as f3.Data);
+  try {
+    const chart = f3.createChart('#FamilyChart', data as f3.Data);
 
-      const cardHtml = chart
-        .setCardHtml()
-        .setCardDisplay([['first name', 'last name'], ['birthday']])
-        .setMiniTree(true);
+    const cardHtml = chart
+      .setCardHtml()
+      .setCardDisplay([['first name', 'last name'], ['birthday']])
+      .setMiniTree(true);
 
-      const editTreeInst = chart.editTree();
-      editTreeInst
-        .setFields(['first name', 'last name', 'birthday', 'gender'])
-        .setEditFirst(false)
-        .setOnChange(async (changeData: any) => {
-          // This triggers whenever the user clicks "Submit" in the built-in side panel
-          console.log("Changes detected in built-in editor", changeData);
-          
-          // 1. Export the entire tree state from the library
+    const editTreeInst = chart.editTree();
+    editTreeInst
+      .setFields(['first name', 'last name', 'birthday', 'gender'])
+      .setEditFirst(false)
+      .setOnChange(() => {
+        setTimeout(async () => {
+          // Force f3 to flush its internal state
+          chart.updateTree({ initial: false });
+
           const updatedTree = editTreeInst.exportData();
 
-          // 2. Send the updated tree to your Django 'bulk-sync' endpoint
-          // Note: We'll need a backend endpoint that handles the full list update
+          // Debug — check if new person appears
+          // console.log("Sending to server:", updatedTree.length, "nodes");
+          // updatedTree.forEach((n: any) =>
+          //   console.log(n.id, n.data?.['first name'], n.data?.['last name'])
+          // );
+
           try {
             const response = await fetch(`${API_BASE_URL}/api/heritage/sync-tree/`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
+              credentials: 'include',
               body: JSON.stringify({ tree: updatedTree })
             });
-            
+
+            const responseData = await response.json();
+
             if (response.ok) {
-              console.log("Saga successfully synced with vault.");
-              // Optional: Refresh local state to ensure IDs are synced
-              // fetchTreeData(); 
+              console.log("Saga successfully synced.", responseData);
+            } else {
+              console.error("Sync failed:", responseData);
             }
           } catch (err) {
             console.error("Failed to sync saga:", err);
           }
-        });
+        }, 300);
+      });
 
-      editTreeInst.setCardClickOpen(cardHtml);
-      chart.updateTree({ initial: true });
-      f3ChartRef.current = chart;
-    } catch (err) {
-      console.error('Error creating chart:', err);
-    }
-  };
+    editTreeInst.setCardClickOpen(cardHtml);
+    chart.updateTree({ initial: true });
+    f3ChartRef.current = chart;
+  } catch (err) {
+    console.error('Error creating chart:', err);
+  }
+};
+
   const resetChart = () => {
     if (f3ChartRef.current) {
       try { f3ChartRef.current.editTreeInstance?.destroy(); } catch (_) {}
@@ -529,8 +537,6 @@ const FamilyTree = () => {
           />
         </div>
       )}
-
-      <Footer />
     </div>
   );
 };
