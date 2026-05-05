@@ -18,7 +18,7 @@ const socialLinks = [
 
 export function Footer() {
   return (
-    <footer className="w-full border-t border-[#262626] bg-[#0a0a0a] px-6 py-12">
+    <footer className="w-full border-t border-border bg-background px-6 py-12">
       <div className="mx-auto flex max-w-7xl flex-col items-center gap-6">
         <Link to="/" aria-label="Viking Roots home">
           <KinLogo size={56} />
@@ -30,7 +30,7 @@ export function Footer() {
               <li key={link.label}>
                 <Link
                   to={link.href}
-                  className="text-sm text-white/70 transition-colors hover:text-[#c88a65]"
+                  className="text-sm text-muted-foreground transition-colors hover:text-primary"
                 >
                   {link.label}
                 </Link>

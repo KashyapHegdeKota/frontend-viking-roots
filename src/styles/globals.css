@@ -119,25 +119,25 @@
   * {
     @apply border-border outline-ring/50;
   }
+  
   body {
     margin: 0;
-    background: var(--surface-bg, #0a0a0a);
-    color: var(--surface-fg, #f5f5f5);
+    /* Use the variable that Tailwind v4 is already tracking */
+    background-color: var(--background);
+    color: var(--foreground);
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 }
 
-:root[data-theme='dark'] {
-  --surface-bg: #0a0a0a;
-  --surface-elev: #171717;
-  --surface-fg: #f5f5f5;
-  --surface-muted: #b0b0b0;
-  --surface-border: #2a2a2a;
+/* Ensure these variables are exactly what your ThemeProvider expects */
+:root {
+  --background: oklch(1 0 0); /* White */
+  --foreground: oklch(0.145 0 0); /* Dark text */
+  --sidebar: oklch(0.98 0.01 90); /* Light sidebar */
 }
 
-:root[data-theme='light'] {
-  --surface-bg: #f4f1e9;
-  --surface-elev: #ffffff;
-  --surface-fg: #141414;
-  --surface-muted: #545454;
-  --surface-border: #ddd2bf;
+.dark {
+  --background: oklch(0.145 0 0); /* Black */
+  --foreground: oklch(0.985 0 0); /* Light text */
+  --sidebar: oklch(0.1 0 0); /* Dark sidebar */
 }

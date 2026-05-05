@@ -228,9 +228,30 @@ const FamilyTree = () => {
       editTreeInst
         .setFields(['first name', 'last name', 'birthday', 'gender'])
         .setEditFirst(false)
-        .setOnChange(() => {
-          const updated = editTreeInst.exportData() as FamilyMember[];
-          setFamilyData(updated);
+        .setOnChange(async (changeData: any) => {
+          // This triggers whenever the user clicks "Submit" in the built-in side panel
+          console.log("Changes detected in built-in editor", changeData);
+          
+          // 1. Export the entire tree state from the library
+          const updatedTree = editTreeInst.exportData();
+
+          // 2. Send the updated tree to your Django 'bulk-sync' endpoint
+          // Note: We'll need a backend endpoint that handles the full list update
+          try {
+            const response = await fetch(`${API_BASE_URL}/api/heritage/sync-tree/`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ tree: updatedTree })
+            });
+            
+            if (response.ok) {
+              console.log("Saga successfully synced with vault.");
+              // Optional: Refresh local state to ensure IDs are synced
+              // fetchTreeData(); 
+            }
+          } catch (err) {
+            console.error("Failed to sync saga:", err);
+          }
         });
 
       editTreeInst.setCardClickOpen(cardHtml);
@@ -240,7 +261,6 @@ const FamilyTree = () => {
       console.error('Error creating chart:', err);
     }
   };
-
   const resetChart = () => {
     if (f3ChartRef.current) {
       try { f3ChartRef.current.editTreeInstance?.destroy(); } catch (_) {}
@@ -315,7 +335,7 @@ const FamilyTree = () => {
   const borderColor = '#2a1e06';
 
   return (
-    <div style={{
+        <div className="dark" style={{
       fontFamily: "'Cormorant Garamond', Georgia, serif",
       background: 'linear-gradient(180deg, #0a0702 0%, #060401 100%)',
       minHeight: '100vh',

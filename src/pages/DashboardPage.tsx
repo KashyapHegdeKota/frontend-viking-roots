@@ -5,7 +5,6 @@ import { API_ENDPOINTS } from "../config/api";
 import { StoryInterviewModal } from "../components/StoryInterviewModal";
 import { PendingTagsNotification } from "../components/recognition/PendingTagsNotification";
 
-// Added TaggedUser interface
 interface TaggedUser {
   id: number;
   username: string;
@@ -26,17 +25,17 @@ const GroupsSidebarWidget = () => {
   if (groups.length === 0) return null;
 
   return (
-    <div className="rounded-xl border border-[#262626] bg-[#171717] p-4">
-      <h3 className="mb-3 text-sm font-bold text-white">Suggested Circles</h3>
+    <div className="rounded-xl border border-border bg-card p-4">
+      <h3 className="mb-3 text-sm font-bold text-foreground">Suggested Circles</h3>
       <div className="flex flex-col gap-3">
         {groups.map((group) => (
           <div key={group.id} className="flex items-center gap-3">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#c88a65]/10 text-xs font-bold text-[#c88a65]">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-xs font-bold text-primary">
               {group.name[0]}
             </div>
             <div className="flex-1 overflow-hidden">
-              <p className="truncate text-xs font-semibold text-white">{group.name}</p>
-              <p className="text-[10px] text-white/50">{group.member_count} members</p>
+              <p className="truncate text-xs font-semibold text-foreground">{group.name}</p>
+              <p className="text-[10px] text-muted-foreground/70">{group.member_count} members</p>
             </div>
           </div>
         ))}
@@ -52,12 +51,10 @@ export default function DashboardPage() {
   const [selectedPrompt, setSelectedPrompt] = useState<string | null>(null);
   const [isStoryModalOpen, setIsStoryModalOpen] = useState(false);
 
-  // New post state
   const [postContent, setPostContent] = useState("");
   const [postImage, setPostImage] = useState<File | null>(null);
   const [isPosting, setIsPosting] = useState(false);
 
-  // --- ADDED: Tagging State & Refs ---
   const [tagSearch, setTagSearch] = useState('');
   const [tagResults, setTagResults] = useState<TaggedUser[]>([]);
   const [selectedTags, setSelectedTags] = useState<TaggedUser[]>([]);
@@ -80,7 +77,6 @@ export default function DashboardPage() {
   useEffect(() => {
     fetchFeed();
 
-    // Fetch dynamic story prompts
     fetch(API_ENDPOINTS.STORY_PROMPTS, { credentials: 'include' })
       .then(res => res.json())
       .then(data => {
@@ -91,7 +87,6 @@ export default function DashboardPage() {
       .catch(err => console.error("Error fetching prompts:", err));
   }, []);
 
-  // --- ADDED: Tag Search Effect ---
   useEffect(() => {
     if (tagSearch.length < 1) {
       setTagResults([]);
@@ -131,12 +126,11 @@ export default function DashboardPage() {
     try {
       const formData = new FormData();
       formData.append('content', postContent.trim());
-      
+
       if (postImage) {
         formData.append('image', postImage);
       }
 
-      // --- ADDED: Append tagged users to form data ---
       if (selectedTags.length > 0) {
         formData.append('tagged_user_ids', JSON.stringify(selectedTags.map((t) => t.id)));
       }
@@ -150,12 +144,9 @@ export default function DashboardPage() {
       if (res.ok) {
         setPostContent("");
         setPostImage(null);
-        
-        // --- ADDED: Clear tag state on success ---
         setSelectedTags([]);
         setTagSearch('');
-        
-        fetchFeed(); // Re-fetch to show the new post
+        fetchFeed();
       } else {
         const err = await res.json();
         alert(err.error || 'Failed to create post');
@@ -168,38 +159,37 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#0a0a0a]">
+    <div className="flex min-h-screen flex-col bg-background">
       <div className="mx-auto flex w-full max-w-7xl flex-1">
 
-        
-        <main className="flex-1 border-r border-[#262626] p-6">
+        <main className="flex-1 border-r border-border p-6">
           <div className="mx-auto max-w-2xl">
             <PendingTagsNotification />
-            
+
             <div className="mb-8">
-              <h1 className="text-2xl font-bold text-white">Welcome back!</h1>
-              <p className="text-white/50">Here's what's happening in your family circle.</p>
+              <h1 className="text-2xl font-bold text-foreground">Welcome back!</h1>
+              <p className="text-muted-foreground/70">Here's what's happening in your family circle.</p>
             </div>
 
             {/* Create Post Box */}
-            <div className="mb-8 rounded-xl border border-[#262626] bg-[#171717] p-4">
+            <div className="mb-8 rounded-xl border border-border bg-card p-4">
               <form onSubmit={handleCreatePost} className="flex flex-col gap-3">
                 <textarea
                   value={postContent}
                   onChange={(e) => setPostContent(e.target.value)}
                   placeholder="Share a memory, photo, or update..."
-                  className="w-full resize-none rounded-lg bg-[#0a0a0a] p-3 text-sm text-white outline-none focus:ring-1 focus:ring-[#c88a65] min-h-[80px] border border-[#262626]"
+                  className="w-full resize-none rounded-lg bg-background p-3 text-sm text-foreground outline-none focus:ring-1 focus:ring-primary min-h-[80px] border border-border"
                 />
-                
-                {/* --- ADDED: Tag Input UI (Tailwind styled) --- */}
-                <div className="relative flex flex-wrap items-center gap-2 rounded-lg border border-[#262626] bg-[#0a0a0a] p-2">
+
+                {/* Tag Input */}
+                <div className="relative flex flex-wrap items-center gap-2 rounded-lg border border-border bg-background p-2">
                   {selectedTags.map((tag) => (
-                    <span key={tag.id} className="flex items-center gap-1 rounded-full bg-[#c88a65]/20 px-2 py-1 text-xs text-[#c88a65]">
+                    <span key={tag.id} className="flex items-center gap-1 rounded-full bg-primary/20 px-2 py-1 text-xs text-primary">
                       {tag.full_name || tag.username}
-                      <button 
-                        type="button" 
+                      <button
+                        type="button"
                         onClick={() => setSelectedTags((prev) => prev.filter((t) => t.id !== tag.id))}
-                        className="text-white/50 hover:text-white"
+                        className="text-muted-foreground hover:text-foreground"
                       >
                         ×
                       </button>
@@ -207,7 +197,7 @@ export default function DashboardPage() {
                   ))}
                   <input
                     ref={tagInputRef}
-                    className="flex-1 bg-transparent text-sm text-white outline-none placeholder:text-white/30 min-w-[120px]"
+                    className="flex-1 bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground/70 min-w-[120px]"
                     placeholder={selectedTags.length === 0 ? "Tag family members..." : ""}
                     value={tagSearch}
                     onChange={(e) => setTagSearch(e.target.value)}
@@ -216,12 +206,12 @@ export default function DashboardPage() {
                   />
 
                   {showTagDropdown && tagResults.length > 0 && (
-                    <div className="absolute left-0 top-full z-10 mt-1 max-h-40 w-full overflow-y-auto rounded-lg border border-[#262626] bg-[#171717] shadow-lg">
+                    <div className="absolute left-0 top-full z-10 mt-1 max-h-40 w-full overflow-y-auto rounded-lg border border-border bg-card shadow-lg">
                       {tagResults.map((u) => (
-                        <button 
-                          key={u.id} 
-                          type="button" 
-                          className="w-full px-3 py-2 text-left text-sm text-white transition-colors hover:bg-[#262626]"
+                        <button
+                          key={u.id}
+                          type="button"
+                          className="w-full px-3 py-2 text-left text-sm text-foreground transition-colors hover:bg-muted"
                           onMouseDown={() => {
                             setSelectedTags((prev) => [...prev, u]);
                             setTagSearch('');
@@ -237,13 +227,13 @@ export default function DashboardPage() {
 
                 {postImage && (
                   <div className="relative w-max">
-                    <img 
-                      src={URL.createObjectURL(postImage)} 
-                      alt="Upload preview" 
-                      className="h-24 rounded-lg object-cover border border-[#262626]"
+                    <img
+                      src={URL.createObjectURL(postImage)}
+                      alt="Upload preview"
+                      className="h-24 rounded-lg object-cover border border-border"
                     />
-                    <button 
-                      type="button" 
+                    <button
+                      type="button"
                       onClick={() => setPostImage(null)}
                       className="absolute -top-2 -right-2 bg-red-500 rounded-full p-1 text-white transition-transform hover:scale-110"
                     >
@@ -256,7 +246,7 @@ export default function DashboardPage() {
                 )}
 
                 <div className="mt-2 flex items-center justify-between">
-                  <label className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-semibold text-white/70 transition-colors hover:bg-[#262626] hover:text-white">
+                  <label className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-semibold text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
                       <circle cx="8.5" cy="8.5" r="1.5"></circle>
@@ -278,7 +268,7 @@ export default function DashboardPage() {
                   <button
                     type="submit"
                     disabled={isPosting || (!postContent.trim() && !postImage)}
-                    className="rounded-lg bg-[linear-gradient(to_right,#c88a65_-55%,white)] px-5 py-1.5 text-sm font-bold text-[#000] transition-all hover:bg-[linear-gradient(to_right,#eab2a0,white)] hover:text-white disabled:opacity-50"
+                    className="rounded-lg bg-primary px-5 py-1.5 text-sm font-bold text-primary-foreground transition-all hover:opacity-90 disabled:opacity-50"
                   >
                     {isPosting ? 'Posting...' : 'Post'}
                   </button>
@@ -288,11 +278,11 @@ export default function DashboardPage() {
 
             {loading ? (
               <div className="flex justify-center py-12">
-                <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#c88a65] border-t-transparent" />
+                <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
               </div>
             ) : posts.length === 0 ? (
-              <div className="rounded-xl border border-[#262626] bg-[#171717] p-12 text-center">
-                <p className="mb-4 text-white/50">Your feed is empty. Be the first to share something!</p>
+              <div className="rounded-xl border border-border bg-card p-12 text-center">
+                <p className="mb-4 text-muted-foreground/70">Your feed is empty. Be the first to share something!</p>
               </div>
             ) : (
               <div className="flex flex-col gap-6">
@@ -301,7 +291,7 @@ export default function DashboardPage() {
                     <PostCard post={post} />
                     {i === 0 && (
                       <div className="mt-6">
-                        <NudgeBubble 
+                        <NudgeBubble
                           question="What traditions did your family keep?"
                           primaryAction="Answer"
                           secondaryAction="Later"
@@ -316,30 +306,30 @@ export default function DashboardPage() {
         </main>
 
         {/* Right sidebar */}
-        <aside className="sticky top-[57px] hidden h-[calc(100vh-57px)] w-72 shrink-0 flex-col gap-6 overflow-y-auto border-l border-[#262626] p-6 xl:flex">
+        <aside className="sticky top-[57px] hidden h-[calc(100vh-57px)] w-72 shrink-0 flex-col gap-6 overflow-y-auto border-l border-border p-6 xl:flex">
           {/* Story prompts */}
-          <div className="rounded-xl border border-[#262626] bg-[#171717] p-4">
-            <h3 className="mb-3 text-sm font-bold text-white">Story Prompts</h3>
+          <div className="rounded-xl border border-border bg-card p-4">
+            <h3 className="mb-3 text-sm font-bold text-foreground">Story Prompts</h3>
             <div className="flex flex-col gap-3">
               {prompts.length > 0 ? (
                 prompts.map((prompt, idx) => (
-                  <button 
+                  <button
                     key={idx}
                     onClick={() => handlePromptClick(prompt)}
-                    className="rounded-lg border border-[#262626] p-3 text-left text-xs text-white/70 transition-colors hover:border-[#c88a65]/40 hover:text-white"
+                    className="rounded-lg border border-border p-3 text-left text-xs text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground"
                   >
                     {prompt}
                   </button>
                 ))
               ) : (
                 <>
-                  <button onClick={() => handlePromptClick("What is your earliest childhood memory?")} className="rounded-lg border border-[#262626] p-3 text-left text-xs text-white/70 transition-colors hover:border-[#c88a65]/40 hover:text-white">
+                  <button onClick={() => handlePromptClick("What is your earliest childhood memory?")} className="rounded-lg border border-border p-3 text-left text-xs text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground">
                     What is your earliest childhood memory?
                   </button>
-                  <button onClick={() => handlePromptClick("What traditions did your family keep?")} className="rounded-lg border border-[#262626] p-3 text-left text-xs text-white/70 transition-colors hover:border-[#c88a65]/40 hover:text-white">
+                  <button onClick={() => handlePromptClick("What traditions did your family keep?")} className="rounded-lg border border-border p-3 text-left text-xs text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground">
                     What traditions did your family keep?
                   </button>
-                  <button onClick={() => handlePromptClick("Who was the storyteller in your family?")} className="rounded-lg border border-[#262626] p-3 text-left text-xs text-white/70 transition-colors hover:border-[#c88a65]/40 hover:text-white">
+                  <button onClick={() => handlePromptClick("Who was the storyteller in your family?")} className="rounded-lg border border-border p-3 text-left text-xs text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground">
                     Who was the storyteller in your family?
                   </button>
                 </>
@@ -349,16 +339,16 @@ export default function DashboardPage() {
 
           {/* Groups sidebar widget */}
           <GroupsSidebarWidget />
-          
+
           {/* Trending */}
-          <div className="rounded-xl border border-[#262626] bg-[#171717] p-4">
-            <h3 className="mb-3 text-sm font-bold text-white">Trending</h3>
+          <div className="rounded-xl border border-border bg-card p-4">
+            <h3 className="mb-3 text-sm font-bold text-foreground">Trending</h3>
             <div className="flex flex-wrap gap-2">
               {["#VintagePhotos", "#FamilyStories", "#GimliMB", "#IcelandicRoots", "#1950s", "#PrairieLife"].map(
                 (tag) => (
                   <span
                     key={tag}
-                    className="rounded-full border border-[#262626] px-3 py-1 text-xs text-white/60 transition-colors hover:border-[#c88a65]/40 hover:text-[#c88a65]"
+                    className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
                   >
                     {tag}
                   </span>
@@ -369,7 +359,7 @@ export default function DashboardPage() {
         </aside>
       </div>
 
-      <StoryInterviewModal 
+      <StoryInterviewModal
         isOpen={isStoryModalOpen}
         onClose={() => setIsStoryModalOpen(false)}
         initialPrompt={selectedPrompt || ""}

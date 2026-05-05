@@ -118,10 +118,9 @@ export function DashboardSidebar() {
   const location = useLocation();
 
   return (
-    <aside className="sticky top-[57px] hidden h-[calc(100vh-57px)] w-52 shrink-0 flex-col border-r border-[#262626] bg-[#0a0a0a] py-6 lg:flex">
+    <aside className="sticky top-[57px] hidden h-[calc(100vh-57px)] w-52 shrink-0 flex-col border-r border-border bg-sidebar py-6 lg:flex transition-colors duration-300">
       <nav className="flex flex-1 flex-col gap-1 px-3">
         {navItems.map((item) => {
-          // Check if pathname starts with href to keep it active on subpages
           const isActive = location.pathname === item.href || location.pathname.startsWith(`${item.href}/`);
           
           return (
@@ -130,11 +129,11 @@ export function DashboardSidebar() {
               to={item.href}
               className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold transition-colors ${
                 isActive
-                  ? "bg-[#c88a65]/10 text-[#c88a65]"
-                  : "text-white/70 hover:bg-[#262626] hover:text-white"
+                  ? "bg-primary/10 text-primary" // Uses your primary gold variable
+                  : "text-muted-foreground hover:bg-accent hover:text-foreground"
               }`}
             >
-              <span className={isActive ? "text-[#c88a65]" : "text-white/50"}>
+              <span className={isActive ? "text-primary" : "text-muted-foreground/70"}>
                 {item.icon}
               </span>
               {item.label}
@@ -146,7 +145,7 @@ export function DashboardSidebar() {
       <div className="mt-auto px-3 pt-4">
         <Link
           to="/help"
-          className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold text-white/50 transition-colors hover:bg-[#262626] hover:text-white"
+          className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="12" cy="12" r="10" />

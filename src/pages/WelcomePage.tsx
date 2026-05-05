@@ -15,19 +15,19 @@ export default function WelcomePage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#0a0a0a]">
+    <div className="flex min-h-screen flex-col bg-background">
 
       {/* Main content */}
       <main className="flex flex-1 items-center justify-center px-6 py-12">
         <div className="w-full max-w-3xl">
-          <div className="relative overflow-hidden rounded-2xl border border-[#262626] bg-[#262626]/60 p-8 shadow-2xl md:p-12">
+          <div className="relative overflow-hidden rounded-2xl border border-border bg-card p-8 shadow-2xl md:p-12">
             {/* Decorative sparkles */}
-            <div className="pointer-events-none absolute right-8 top-6 text-[#c88a65]/30">
+            <div className="pointer-events-none absolute right-8 top-6 text-primary/30">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
               </svg>
             </div>
-            <div className="pointer-events-none absolute right-24 top-16 text-[#c88a65]/20">
+            <div className="pointer-events-none absolute right-24 top-16 text-primary/20">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
               </svg>
@@ -35,10 +35,10 @@ export default function WelcomePage() {
 
             {/* Heading */}
             <div className="mb-8 text-center">
-              <h1 className="mb-2 text-3xl font-bold text-white md:text-4xl">
+              <h1 className="mb-2 text-3xl font-bold text-foreground md:text-4xl">
                 Welcome to Your Family Storybuilder!
               </h1>
-              <p className="text-base text-white/60">
+              <p className="text-base text-muted-foreground">
                 Let's start with a few details for your profile.
               </p>
             </div>
@@ -46,13 +46,13 @@ export default function WelcomePage() {
             <div className="flex flex-col gap-8 md:flex-row">
               {/* Mascot speech bubble */}
               <div className="flex flex-col items-center gap-3 md:w-1/3">
-                <div className="flex h-20 w-20 items-center justify-center rounded-full border-2 border-[#c88a65] bg-[#c88a65]/10">
+                <div className="flex h-20 w-20 items-center justify-center rounded-full border-2 border-primary bg-primary/10">
                   <KinLogo size={48} />
                 </div>
-                <div className="relative rounded-xl border border-[#c88a65]/30 bg-[#0a0a0a] p-4">
-                  <div className="absolute -top-2 left-1/2 h-4 w-4 -translate-x-1/2 rotate-45 border-l border-t border-[#c88a65]/30 bg-[#0a0a0a]" />
-                  <p className="relative text-center text-sm text-white/80">
-                    <span className="font-bold text-[#c88a65]">Hello!</span> Let's build
+                <div className="relative rounded-xl border border-primary/30 bg-background p-4">
+                  <div className="absolute -top-2 left-1/2 h-4 w-4 -translate-x-1/2 rotate-45 border-l border-t border-primary/30 bg-background" />
+                  <p className="relative text-center text-sm text-muted-foreground">
+                    <span className="font-bold text-primary">Hello!</span> Let's build
                     the first chapter of your family story.
                   </p>
                 </div>
@@ -60,8 +60,8 @@ export default function WelcomePage() {
                 {/* Decorative family photos collage */}
                 <div className="mt-4 hidden md:block">
                   <div className="relative h-32 w-40">
-                    <div className="absolute left-0 top-0 h-20 w-16 rotate-[-6deg] rounded-md border border-[#c88a65]/20 bg-[#0a0a0a] p-1 shadow-lg">
-                      <div className="flex h-full w-full items-center justify-center rounded bg-[#262626]">
+                    <div className="absolute left-0 top-0 h-20 w-16 rotate-[-6deg] rounded-md border border-primary/20 bg-background p-1 shadow-lg">
+                      <div className="flex h-full w-full items-center justify-center rounded bg-muted">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6b7280" strokeWidth="1.5">
                           <rect x="3" y="3" width="18" height="18" rx="2" />
                           <circle cx="8.5" cy="8.5" r="1.5" />
@@ -69,8 +69,8 @@ export default function WelcomePage() {
                         </svg>
                       </div>
                     </div>
-                    <div className="absolute left-8 top-2 h-20 w-16 rotate-[3deg] rounded-md border border-[#c88a65]/20 bg-[#0a0a0a] p-1 shadow-lg">
-                      <div className="flex h-full w-full items-center justify-center rounded bg-[#262626]">
+                    <div className="absolute left-8 top-2 h-20 w-16 rotate-[3deg] rounded-md border border-primary/20 bg-background p-1 shadow-lg">
+                      <div className="flex h-full w-full items-center justify-center rounded bg-muted">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6b7280" strokeWidth="1.5">
                           <rect x="3" y="3" width="18" height="18" rx="2" />
                           <circle cx="8.5" cy="8.5" r="1.5" />
@@ -78,8 +78,8 @@ export default function WelcomePage() {
                         </svg>
                       </div>
                     </div>
-                    <div className="absolute left-16 top-4 h-20 w-16 rotate-[8deg] rounded-md border border-[#c88a65]/20 bg-[#0a0a0a] p-1 shadow-lg">
-                      <div className="flex h-full w-full items-center justify-center rounded bg-[#262626]">
+                    <div className="absolute left-16 top-4 h-20 w-16 rotate-[8deg] rounded-md border border-primary/20 bg-background p-1 shadow-lg">
+                      <div className="flex h-full w-full items-center justify-center rounded bg-muted">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6b7280" strokeWidth="1.5">
                           <rect x="3" y="3" width="18" height="18" rx="2" />
                           <circle cx="8.5" cy="8.5" r="1.5" />
@@ -94,7 +94,7 @@ export default function WelcomePage() {
               {/* Form */}
               <form onSubmit={handleNext} className="flex flex-1 flex-col gap-5">
                 <div className="flex flex-col gap-1.5">
-                  <label htmlFor="welcomeName" className="text-sm font-semibold text-white">
+                  <label htmlFor="welcomeName" className="text-sm font-semibold text-foreground">
                     What is your full name?
                   </label>
                   <input
@@ -104,13 +104,13 @@ export default function WelcomePage() {
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     placeholder="Karen Erikkson"
-                    className="h-11 rounded-md border border-[#c88a65] bg-transparent px-3 text-sm text-white placeholder-[#6b7280] outline-none focus:ring-2 focus:ring-[#c88a65]/60"
+                    className="h-11 rounded-md border border-primary bg-transparent px-3 text-sm text-foreground placeholder-muted-foreground outline-none focus:ring-2 focus:ring-primary/60"
                   />
-                  <span className="text-xs text-[#6b7280]">Ex: Martha Johnsonson</span>
+                  <span className="text-xs text-muted-foreground">Ex: Martha Johnsonson</span>
                 </div>
 
                 <div className="flex flex-col gap-1.5">
-                  <label htmlFor="welcomeBirth" className="text-sm font-semibold text-white">
+                  <label htmlFor="welcomeBirth" className="text-sm font-semibold text-foreground">
                     Date of birth
                   </label>
                   <input
@@ -118,13 +118,13 @@ export default function WelcomePage() {
                     type="date"
                     value={birthDate}
                     onChange={(e) => setBirthDate(e.target.value)}
-                    className="h-11 rounded-md border border-[#c88a65] bg-transparent px-3 text-sm text-white outline-none focus:ring-2 focus:ring-[#c88a65]/60 [color-scheme:dark]"
+                    className="h-11 rounded-md border border-primary bg-transparent px-3 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/60 [color-scheme:dark]"
                   />
-                  <span className="text-xs text-[#6b7280]">Ex: October 24, 1955</span>
+                  <span className="text-xs text-muted-foreground">Ex: October 24, 1955</span>
                 </div>
 
                 <div className="flex flex-col gap-1.5">
-                  <label htmlFor="welcomePlace" className="text-sm font-semibold text-white">
+                  <label htmlFor="welcomePlace" className="text-sm font-semibold text-foreground">
                     Where were you born?
                   </label>
                   <input
@@ -133,12 +133,12 @@ export default function WelcomePage() {
                     value={birthPlace}
                     onChange={(e) => setBirthPlace(e.target.value)}
                     placeholder="Winnipeg, Manitoba"
-                    className="h-11 rounded-md border border-[#c88a65] bg-transparent px-3 text-sm text-white placeholder-[#6b7280] outline-none focus:ring-2 focus:ring-[#c88a65]/60"
+                    className="h-11 rounded-md border border-primary bg-transparent px-3 text-sm text-foreground placeholder-muted-foreground outline-none focus:ring-2 focus:ring-primary/60"
                   />
                 </div>
 
                 <div className="flex flex-col gap-1.5">
-                  <label htmlFor="welcomeOrigin" className="text-sm font-semibold text-white">
+                  <label htmlFor="welcomeOrigin" className="text-sm font-semibold text-foreground">
                     Family heritage or origin (optional)
                   </label>
                   <input
@@ -147,13 +147,13 @@ export default function WelcomePage() {
                     value={familyOrigin}
                     onChange={(e) => setFamilyOrigin(e.target.value)}
                     placeholder="Icelandic, Norwegian..."
-                    className="h-11 rounded-md border border-[#c88a65] bg-transparent px-3 text-sm text-white placeholder-[#6b7280] outline-none focus:ring-2 focus:ring-[#c88a65]/60"
+                    className="h-11 rounded-md border border-primary bg-transparent px-3 text-sm text-foreground placeholder-muted-foreground outline-none focus:ring-2 focus:ring-primary/60"
                   />
                 </div>
 
                 <button
                   type="submit"
-                  className="mt-2 h-12 w-full rounded-full bg-[linear-gradient(to_right,#c88a65_-55%,white)] text-base font-bold tracking-widest text-[#000] transition-all hover:bg-[linear-gradient(to_right,#eab2a0,white)] hover:text-white"
+                  className="mt-2 h-12 w-full rounded-full bg-primary text-base font-bold tracking-widest text-primary-foreground transition-all hover:opacity-90"
                 >
                   NEXT
                 </button>
@@ -161,13 +161,13 @@ export default function WelcomePage() {
             </div>
 
             {/* Privacy note */}
-            <div className="mt-8 flex items-center justify-between border-t border-[#262626] pt-6">
-              <p className="text-xs text-white/40">
+            <div className="mt-8 flex items-center justify-between border-t border-border pt-6">
+              <p className="text-xs text-muted-foreground/70">
                 Only you can see this. We will never share without your permission.
               </p>
               <button
                 onClick={() => navigate("/dashboard")}
-                className="text-sm font-semibold text-[#c88a65] transition-opacity hover:opacity-80"
+                className="text-sm font-semibold text-primary transition-opacity hover:opacity-80"
               >
                 Skip this for now &gt;
               </button>
@@ -177,9 +177,9 @@ export default function WelcomePage() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-[#262626] bg-[#0a0a0a] px-6 py-6">
+      <footer className="border-t border-border bg-background px-6 py-6">
         <div className="mx-auto flex max-w-7xl items-center justify-between">
-          <div className="flex items-center gap-2 text-xs text-white/40">
+          <div className="flex items-center gap-2 text-xs text-muted-foreground/70">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <circle cx="12" cy="12" r="10" />
               <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
@@ -187,15 +187,9 @@ export default function WelcomePage() {
             <span>English</span>
           </div>
           <nav className="flex gap-6">
-            <Link to="/about" className="text-xs text-white/40 transition-colors hover:text-[#c88a65]">
-              About Us
-            </Link>
-            <Link to="/help" className="text-xs text-white/40 transition-colors hover:text-[#c88a65]">
-              Help
-            </Link>
-            <Link to="/privacy" className="text-xs text-white/40 transition-colors hover:text-[#c88a65]">
-              Privacy
-            </Link>
+            <Link to="/about" className="text-xs text-muted-foreground/70 transition-colors hover:text-primary">About Us</Link>
+            <Link to="/help" className="text-xs text-muted-foreground/70 transition-colors hover:text-primary">Help</Link>
+            <Link to="/privacy" className="text-xs text-muted-foreground/70 transition-colors hover:text-primary">Privacy</Link>
           </nav>
         </div>
       </footer>

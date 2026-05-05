@@ -3,11 +3,10 @@ import { Navbar } from "./navbar";
 
 export function Layout() {
   return (
-    <div className="flex min-h-screen flex-col bg-[#0a0a0a]">
-      {/* The unified Navbar stays locked at the top */}
+    // Changed bg-[#0a0a0a] to bg-background
+    <div className="flex min-h-screen flex-col bg-background transition-colors duration-300">
       <Navbar />
       
-      {/* The Outlet swaps between Dashboard, Profile, Feed, etc. */}
       <main className="flex-1">
         <Outlet /> 
       </main>

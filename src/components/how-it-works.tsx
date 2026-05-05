@@ -18,9 +18,9 @@ const steps = [
 
 export function HowItWorks() {
   return (
-    <section className="w-full border-t border-[#262626] bg-[#0a0a0a] px-6 py-16 lg:py-20">
+    <section className="w-full border-t border-border bg-background px-6 py-16 lg:py-20">
       <div className="mx-auto max-w-7xl">
-        <h2 className="mb-10 text-4xl font-bold text-white lg:text-5xl">
+        <h2 className="mb-10 text-4xl font-bold text-foreground lg:text-5xl">
           How it works ?
         </h2>
 
@@ -30,7 +30,7 @@ export function HowItWorks() {
               key={step.title}
               className="relative rounded-md p-6"
             >
-              {/* Gradient Border using mask to keep background transparent */}
+              {/* Gradient border — uses explicit colors since it's a decorative SVG-style effect, not a theme token */}
               <div
                 className="absolute inset-0 rounded-md pointer-events-none"
                 style={{
@@ -41,7 +41,7 @@ export function HowItWorks() {
                   maskComposite: "exclude",
                 }}
               />
-              <h3 
+              <h3
                 className="mb-3 text-base font-bold uppercase tracking-wide"
                 style={{
                   backgroundImage: "linear-gradient(135deg, #f5d5c6 0%, #c8967d 50%, #784a38 100%)",
@@ -53,7 +53,7 @@ export function HowItWorks() {
               >
                 {step.title}
               </h3>
-              <p className="relative text-sm leading-relaxed text-white/80">
+              <p className="relative text-sm leading-relaxed text-muted-foreground">
                 {step.description}
               </p>
             </div>

@@ -53,27 +53,27 @@ export function FaceTaggingSettings() {
     }
   };
 
-  if (loading) return <div className="animate-pulse h-24 bg-[#171717] rounded-xl" />;
+  if (loading) return <div className="animate-pulse h-24 bg-muted rounded-xl" />;
 
   return (
-    <div className="rounded-xl border border-[#262626] bg-[#171717] p-6">
-      <h3 className="text-lg font-bold text-white mb-4">Privacy & Tagging</h3>
-      
+    <div className="rounded-xl border border-border bg-card p-6">
+      <h3 className="text-lg font-bold text-foreground mb-4">Privacy & Tagging</h3>
+
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-sm font-semibold text-white">Enable Face Tagging</p>
-            <p className="text-xs text-white/50">Allow Viking Roots to suggest tags for you in friends' photos.</p>
+            <p className="text-sm font-semibold text-foreground">Enable Face Tagging</p>
+            <p className="text-xs text-muted-foreground/70">Allow Viking Roots to suggest tags for you in friends' photos.</p>
           </div>
           <button
             onClick={handleToggle}
             disabled={saving}
             className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${
-              settings.face_tagging_enabled ? 'bg-[#c88a65]' : 'bg-[#262626]'
+              settings.face_tagging_enabled ? 'bg-primary' : 'bg-muted'
             }`}
           >
             <span
-              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+              className={`inline-block h-4 w-4 transform rounded-full bg-background transition-transform ${
                 settings.face_tagging_enabled ? 'translate-x-6' : 'translate-x-1'
               }`}
             />
@@ -82,14 +82,14 @@ export function FaceTaggingSettings() {
 
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-sm font-semibold text-white">Tagging Scope</p>
-            <p className="text-xs text-white/50">Who can trigger tag suggestions for you?</p>
+            <p className="text-sm font-semibold text-foreground">Tagging Scope</p>
+            <p className="text-xs text-muted-foreground/70">Who can trigger tag suggestions for you?</p>
           </div>
           <select
             value={settings.tagging_scope}
             onChange={handleScopeChange}
             disabled={saving || !settings.face_tagging_enabled}
-            className="rounded-lg border border-[#262626] bg-[#0a0a0a] px-3 py-1 text-xs text-white outline-none focus:border-[#c88a65]"
+            className="rounded-lg border border-border bg-background px-3 py-1 text-xs text-foreground outline-none focus:border-primary"
           >
             <option value="friends_only">Friends Only</option>
             <option value="manual_approval">Manual Approval</option>
